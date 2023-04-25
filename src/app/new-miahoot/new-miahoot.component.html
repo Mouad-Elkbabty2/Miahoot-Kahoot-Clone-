@@ -1,0 +1,17 @@
+<h1>Ajouter une question</h1>
+
+
+<form (ngSubmit)="onSubmit()">
+  <label for="question">Entrez une nouvelle question :</label>
+  <input type="text" id="question" name="question" [(ngModel)]="newQuestion"/><br/>
+  <label for="question">Entrez une nouvelle réponse :</label>
+  <input type="text" id="réponses" name="réponses" [(ngModel)]="newReponse"/><br/> <p (click)="ajouteRep()" >+</p>
+
+  <button type="submit">Ajouter</button>
+</form>
+
+<h2>Liste des questions :</h2>
+<ul>
+  <li *ngFor="let question of questions">{{ question }}</li>
+</ul>
+
