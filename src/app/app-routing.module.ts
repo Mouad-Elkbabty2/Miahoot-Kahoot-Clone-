@@ -3,11 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccueilComponent } from './accueil-component/accueil-component.component';
 import { MyMiahootsComponent } from './my-miahoots/my-miahoots.component';
 const routes: Routes = [
-  {
-    path: '',
-    title: 'Accueil',
-    component: AccueilComponent,
-  },
+  {path: '',title: 'Accueil', component: AccueilComponent,},
   { path: 'my-miahoots', component: MyMiahootsComponent },
 
 
