@@ -13,6 +13,7 @@ export interface FormElement{
   reponses: string[];
 }
 
+
 const QUESTION_DATA: FormElement = {question: "oui?", reponses: ["oui", "non"]}
 
 const ELEMENT_DATA: Miahoot = {
@@ -30,6 +31,11 @@ export class EditMiahootComponent {
   // miahoot: Miahoot;
   miahootId: any;
   miahoot = ELEMENT_DATA;
+  clicked = false;
+
+  affiche(){
+    this.clicked = !this.clicked;
+  }
 
   // constructor(private route: ActivatedRoute, private miahootService: MiahootService) { }
   constructor(private route: ActivatedRoute) { }

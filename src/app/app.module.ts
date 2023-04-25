@@ -20,8 +20,7 @@ import { FormsModule } from '@angular/forms';
 =======
 import { MatSortModule } from '@angular/material/sort';
 import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
-import { FormsModule } from '@angular/forms'; 
->>>>>>> 15e8db8a0543c59ffc300bb84ca445073005d134
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';>>>>>>> 15e8db8a0543c59ffc300bb84ca445073005d134
 
 
 @NgModule({
@@ -47,7 +46,8 @@ import { FormsModule } from '@angular/forms';
     MatPaginatorModule,
     MatSelectModule,
     MatSortModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

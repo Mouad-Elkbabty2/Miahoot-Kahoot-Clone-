@@ -1,9 +1,9 @@
 <h1>{{miahoot.name}}</h1>
 <div *ngFor="let element of miahoot.questions">
     <div class="question-box">
-    <h2>{{element.question}}</h2>
+    <h2 (click)="affiche()">{{element.question}} <mat-icon>arrow_drop_down</mat-icon></h2>
     <div *ngFor="let reponse of element.reponses; let i = index">
-        <div class="answer-box">
+        <div *ngIf="clicked==true" class="answer-box">
             <input type="text" [(ngModel)]="element.reponses[i]" />
         </div>
     </div>  
