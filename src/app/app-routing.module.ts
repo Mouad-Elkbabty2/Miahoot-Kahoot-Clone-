@@ -10,7 +10,6 @@ const routes: Routes = [
   },
   { path: 'my-miahoots', component: MyMiahootsComponent },
 
-
 ];
 
 @NgModule({
