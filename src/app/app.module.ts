@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSortModule } from '@angular/material/sort'
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MatSelectModule } from '@angular/material/select';
     MatIconModule,
     MatFormFieldModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
