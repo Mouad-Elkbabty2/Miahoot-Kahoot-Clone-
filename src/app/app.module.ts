@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { AccueilComponent } from './accueil-component/accueil-component.component';
+import { MatSortModule } from '@angular/material/sort'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AccueilComponent } from './accueil-component/accueil-component.componen
     MatIconModule,
     MatFormFieldModule,
     MatPaginatorModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

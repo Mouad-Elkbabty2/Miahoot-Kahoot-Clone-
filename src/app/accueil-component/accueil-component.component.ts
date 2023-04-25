@@ -12,5 +12,4 @@ export class AccueilComponent{
   onLoginClick() {
     this.router.navigate(['/my-miahoots']);
   }
-  
 }

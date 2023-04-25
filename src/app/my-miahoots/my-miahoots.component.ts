@@ -3,23 +3,16 @@ import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
-export interface PeriodicElement {
+export interface Miahoot {
+  id: number;
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  date: Date;
 }
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+const ELEMENT_DATA: Miahoot[] = [
+  {id: 1, name: "questionnaire zz", date: new Date("2023-04-25")},
+  {id: 2, name: "questionnaire aaa", date: new Date("01/05/2001")},
+  {id: 3, name: "questionnaire bbb", date: new Date("2001-05-01")},
+  {id: 4, name: "questionnaire alm", date: new Date()},
 ];
 /**
  * @title Table with sorting
@@ -30,7 +23,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./my-miahoots.component.scss']
 })
 export class MyMiahootsComponent implements AfterViewInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['id', 'name', 'date', 'actions'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
   constructor(private _liveAnnouncer: LiveAnnouncer) {}
@@ -41,16 +34,11 @@ export class MyMiahootsComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  /** Announce the change in sort state for assistive technology. */
-  announceSortChange(sortState: Sort) {
-    // This example uses English messages. If your application supports
-    // multiple language, you would internationalize these strings.
-    // Furthermore, you can customize the message to add additional
-    // details about the values being sorted.
-    if (sortState.direction) {
-      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
-    } else {
-      this._liveAnnouncer.announce('Sorting cleared');
-    }
+  editMiahoot(miahoot: Miahoot) {
+    // Action à effectuer lors de la modification d'un Miahoot
+  }
+
+  deleteMiahoot(miahoot: Miahoot) {
+    // Action à effectuer lors de la suppression d'un Miahoot
   }
 }
