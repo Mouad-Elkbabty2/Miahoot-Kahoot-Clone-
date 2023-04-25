@@ -15,13 +15,15 @@ import { AccueilComponent } from './accueil-component/accueil-component.componen
 import { MatSortModule } from '@angular/material/sort';
 import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AccueilComponent,
     MyMiahootsComponent,
-    EditMiahootComponent
+    EditMiahootComponent,
+    NewMiahootComponent
   ],
   imports: [
     BrowserModule,

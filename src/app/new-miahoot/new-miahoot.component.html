@@ -1,17 +1,36 @@
-<h1>Ajouter une question</h1>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
 
-<form (ngSubmit)="onSubmit()">
-  <label for="question">Entrez une nouvelle question :</label>
-  <input type="text" id="question" name="question" [(ngModel)]="newQuestion"/><br/>
-  <label for="question">Entrez une nouvelle réponse :</label>
-  <input type="text" id="réponses" name="réponses" [(ngModel)]="newReponse"/><br/> <p (click)="ajouteRep()" >+</p>
+<body>
+  <h1>Ajouter une question</h1>
 
-  <button type="submit">Ajouter</button>
-</form>
+  <form (ngSubmit)="onSubmit()">
+    <input placeholder="Entrez une nouvelle question" type="text" id="question" name="question"
+      [(ngModel)]="newQuestion" />
+    <button type="submit">Ajouter</button>
+  </form>
 
-<h2>Liste des questions :</h2>
-<ul>
-  <li *ngFor="let question of questions">{{ question }}</li>
-</ul>
+  <ul>
+    <li *ngFor="let questRep of questRep; let i = index">
+      <h3>Question N° {{i+1}} : {{ questRep.question }}</h3>
+      <input type="text" id="réponses-{{i}}" name="réponses-{{i}}" [(ngModel)]="newReponses[i]" />
+      <button type="button" (click)="ajouteRep(i)">+</button>
+      <ul>
+        <li *ngFor="let reponse of questRep.reponses; let j = index">
+          {{ reponse }} <input type="checkbox" id="correcte-{{i}}-{{j}}" name="correcte-{{i}}-{{j}}"
+            [(ngModel)]="questRep.estCorrecte[j]" />
+        </li>
+        <input *ngIf="editable" type="text">
+      </ul>
+    </li>
+  </ul>
+</body>
 
+</html>
