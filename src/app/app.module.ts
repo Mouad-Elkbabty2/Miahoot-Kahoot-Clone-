@@ -12,13 +12,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { AccueilComponent } from './accueil-component/accueil-component.component';
-import { MatSortModule } from '@angular/material/sort'
+import { MatSortModule } from '@angular/material/sort';
+import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
+import { FormsModule } from '@angular/forms'; 
 
 @NgModule({
   declarations: [
     AppComponent,
     AccueilComponent,
-    MyMiahootsComponent
+    MyMiahootsComponent,
+    EditMiahootComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { MatSortModule } from '@angular/material/sort'
     MatFormFieldModule,
     MatPaginatorModule,
     MatSelectModule,
-    MatSortModule
+    MatSortModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,13 @@
+<h1>{{miahoot.name}}</h1>
+<div *ngFor="let element of miahoot.questions">
+    <div class="question-box">
+    <h2>{{element.question}}</h2>
+    <div *ngFor="let reponse of element.reponses; let i = index">
+        <div class="answer-box">
+            <input type="text" [(ngModel)]="element.reponses[i]" />
+        </div>
+    </div>  
+    <button mat-raised-button color="primary" (click)="saveChanges()">Enregistrer</button>
+    </div>
+</div>
+  
