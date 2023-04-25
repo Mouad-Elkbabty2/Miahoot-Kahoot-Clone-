@@ -41,4 +41,8 @@ export class MyMiahootsComponent implements AfterViewInit {
   deleteMiahoot(miahoot: Miahoot) {
     // Action à effectuer lors de la suppression d'un Miahoot
   }
+
+  createNewMiahoot(){
+    
+  }
 }
