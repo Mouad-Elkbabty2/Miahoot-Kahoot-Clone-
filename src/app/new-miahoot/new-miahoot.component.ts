@@ -17,7 +17,10 @@ export class NewMiahootComponent {
   newReponses: string[] = [];
   newCorrect: boolean[] = [];
   editable = false;
-  
+  tempReponses: string[] = [];
+  editingIndex: number[] = [];
+
+
   constructor(private elementRef: ElementRef){}
   onSubmit() {
     // Vérifier si la nouvelle question n'est pas vide (après avoir enlevé les espaces blancs)
@@ -35,11 +38,16 @@ export class NewMiahootComponent {
 
   ajouteRep(i: number) {
     // Vérifier si la nouvelle réponse n'est pas vide (après avoir enlevé les espaces blancs)
-    if (this.newReponses[i].trim()) {
-      this.questRep[i].reponses.push(this.newReponses[i]);
-      this.newReponses[i] = '';
+    if (this.tempReponses[i].trim()) {
+      this.questRep[i].reponses.push(this.tempReponses[i]);
+      this.tempReponses[i] = '';
       this.newCorrect[i] = false;
     }
+}
+
+  saveRep(i: number, j: number) {
+    this.questRep[i].reponses[j] = this.tempReponses[i];
+    this.editingIndex = [];
   }
   
   supprimeQuest(i:number){
@@ -50,9 +58,9 @@ export class NewMiahootComponent {
     this.questRep[i].reponses.splice(j,1);
   }
   editRep(i:number,j:number){
-    this.questRep[i].reponses[j] = this.newReponses[j];
-    this.questRep[i].reponses = [...this.questRep[i].reponses]; // mettre à jour la valeur de questRep[i].reponses
-    this.editable = false;
+    
+    this.editingIndex[i] = j;
+    this.tempReponses[i] = this.questRep[i].reponses[j];
   }
   
   
