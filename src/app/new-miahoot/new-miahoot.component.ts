@@ -49,4 +49,11 @@ export class NewMiahootComponent {
   supprimeRep(i:number,j:number){
     this.questRep[i].reponses.splice(j,1);
   }
+  editRep(i:number,j:number){
+    this.questRep[i].reponses[j] = this.newReponses[j];
+    this.questRep[i].reponses = [...this.questRep[i].reponses]; // mettre à jour la valeur de questRep[i].reponses
+    this.editable = false;
+  }
+  
+  
 }

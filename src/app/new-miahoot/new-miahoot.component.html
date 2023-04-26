@@ -19,19 +19,27 @@
 
   <ul>
     <li *ngFor="let questRep of questRep; let i = index">
-      <h3>Question N° {{i+1}} : {{ questRep.question }} <button (click)="supprimeQuest(i)"><mat-icon >delete</mat-icon></button> </h3> 
+      <h3>Question N° {{i+1}} : {{ questRep.question }} <button
+          (click)="supprimeQuest(i)"><mat-icon>delete</mat-icon></button> </h3>
       <br>
       <input type="text" id="réponses-{{i}}" name="réponses-{{i}}" [(ngModel)]="newReponses[i]" />
       <button type="button" (click)="ajouteRep(i)">+</button>
       <ul>
         <ng-container *ngIf="editable==false">
           <li *ngFor="let reponse of questRep.reponses; let j = index">
-            <button (click)="supprimeRep(i,j)"><mat-icon >delete</mat-icon></button>
-            {{ reponse }}  
-            <input placeholder="Entrez une nouvelle réponse" type="checkbox" id="correcte-{{i}}-{{j}}" 
-            name="correcte-{{i}}-{{j}}" [(ngModel)]="questRep.estCorrecte[j]" />
+            <button (click)="supprimeRep(i,j)"><mat-icon>delete</mat-icon></button>
+            <button (click)="editable=true"><mat-icon>update</mat-icon></button>
+            {{ reponse }}
+            <input placeholder="Entrez une nouvelle réponse" type="checkbox" id="correcte-{{i}}-{{j}}"
+              name="correcte-{{i}}-{{j}}" [(ngModel)]="questRep.estCorrecte[j]" />
           </li>
         </ng-container>
+        <ng-container *ngIf="editable">
+          <li *ngFor="let reponse of questRep.reponses; let j = index">
+              <input placeholder="Entrez une nouvelle réponse" type="text" [(ngModel)]="newReponses[j]"/>
+              <button (click)="editRep(i,j)"> > </button>
+          </li>
+      </ng-container>
       </ul>
     </li>
   </ul>
