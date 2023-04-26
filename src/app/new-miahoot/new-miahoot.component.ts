@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 
 interface QuestionReponses {
   question: string;
@@ -18,6 +18,7 @@ export class NewMiahootComponent {
   newCorrect: boolean[] = [];
   editable = false;
   
+  constructor(private elementRef: ElementRef){}
   onSubmit() {
     // Vérifier si la nouvelle question n'est pas vide (après avoir enlevé les espaces blancs)
     if (this.newQuestion.trim()) {
@@ -41,4 +42,11 @@ export class NewMiahootComponent {
     }
   }
   
+  supprimeQuest(i:number){
+    this.questRep.splice(i,1);
+  }
+
+  supprimeRep(i:number,j:number){
+    this.questRep[i].reponses.splice(j,1);
+  }
 }
