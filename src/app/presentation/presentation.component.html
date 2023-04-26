@@ -1,0 +1,12 @@
+<h2 class="h2">Question N°{{ questionId }}</h2>
+
+<mat-card class="card-container">
+   <mat-card-title>{{ question }}</mat-card-title>
+  <mat-list>
+    <mat-list-item class="list-item" *ngFor="let reponse of reponses" 
+                    (click)="selectionnerReponse(reponse)"
+                    [ngClass]="{ 'selected': reponseSelectionnee && reponseSelectionnee === reponse }">
+      {{ reponse }}
+    </mat-list-item>
+  </mat-list>  
+</mat-card>

@@ -1,0 +1,39 @@
+.selected{
+    background-color: rgba(7, 255, 7, 0.198);
+    transform: translateY(2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 
+    0 3px 6px rgba(0, 0, 0, 0.23);
+
+}
+
+.selected:hover{
+    background-color: rgba(7, 255, 7, 0.198) !important;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 
+    0 3px 6px rgba(0, 0, 0, 0.23);
+}
+
+.card-container {
+    width: 50%;
+    margin: 0 auto;
+  }
+
+.list-item:hover{
+    background-color: rgba(0, 0, 0, 0.039);
+}
+
+.list-item {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+  }
+  
+  .list-item:hover {
+    transform: translateY(2px);
+    background-color: rgba(0, 0, 0, 0.051);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 
+                0 3px 6px rgba(0, 0, 0, 0.23);
+  }
+  
+  .h2{
+    margin-top : 5px;
+    margin-left: 10px;
+  }

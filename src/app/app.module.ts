@@ -16,6 +16,12 @@ import { MatSortModule } from '@angular/material/sort';
 import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
+import { PresentationComponent } from './presentation/presentation.component';
+import { CommonModule } from '@angular/common';
+import { MatListModule } from '@angular/material/list';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatCardModule} from '@angular/material/card';
+
 
 @NgModule({
   declarations: [
@@ -23,7 +29,8 @@ import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
     AccueilComponent,
     MyMiahootsComponent,
     EditMiahootComponent,
-    NewMiahootComponent
+    NewMiahootComponent,
+    PresentationComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +45,10 @@ import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
     MatSelectModule,
     MatSortModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule, 
+    MatListModule,
+    CommonModule,
+    MatChipsModule,MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]
