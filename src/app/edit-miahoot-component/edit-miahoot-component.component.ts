@@ -2,17 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 // import { MiahootService } from '../miahoot.service';
 import { NgModel } from '@angular/forms';
-
-export interface Miahoot {
-  name : string;
-  questions: FormElement[];
-}
-
-export interface FormElement{
-  question: string;
-  reponses: string[];
-}
-
+import { Miahoot, FormElement } from '../data.service';
 
 const QUESTION_DATA: FormElement = {question: "oui?", reponses: ["oui", "non"]}
 
