@@ -46,11 +46,12 @@ export class MyMiahootsComponent implements AfterViewInit {
   }
 
   createNewMiahoot(){
-    
+    this.router.navigate(['/new-miahoot']);
   }
 
   goToMiahoot(id: number) {
     this.router.navigate(['/']);
   }
+
   
 }
