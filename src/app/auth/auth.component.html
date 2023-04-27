@@ -1,10 +1,10 @@
-<div *ngIf="user | async as user">
-    <p *ngIf="user.isAnonymous">Signed in as anonymous user</p>
-    <p *ngIf="user.displayName">Welcome, {{ user.displayName }}</p>
+<div *ngIf="user | async as U">
+    <p *ngIf="U.isAnonymous">Signed in as anonymous user</p>
+    <p *ngIf="U.displayName">Welcome, {{ U.displayName }}</p>
     <!-- <img *ngIf="user.photoURL" [src]="user.photoURL" alt="Profile picture"> -->
     <!-- <button mat-button (click)="login()" *ngIf="showLoginButton">LOGIN</button> -->
-    <!-- <button *ngIf="showLoginButton" (click)="login()">Sign in with Google</button>
-    <button *ngIf="showLoginButton" (click)="loginAnonymously()">Sign in Anonymously</button>
-    <button *ngIf="showLogoutButton" (click)="logout()">Sign out</button> -->
-    <button class="nav-link" (click)="login()">Se connecter</button>
+    <!-- <button *ngIf="showLoginButton" (click)="login()">Sign in with Google</button> -->
+    <button *ngIf="showLogoutButton" (click)="logout()">Sign out</button>
 </div>
+<button class="nav-link" *ngIf="showLoginButton" (click)="loginAnonymously()">Connection Anonyme</button>
+<button class="nav-link" *ngIf="showLoginButton" (click)="login()">Se connecter</button>

@@ -39,6 +39,7 @@ export class MyMiahootsComponent implements AfterViewInit {
 
   editMiahoot(miahoot: Miahoot) {
     // Action à effectuer lors de la modification d'un Miahoot
+    
   }
 
   deleteMiahoot(miahoot: Miahoot) {
@@ -46,11 +47,12 @@ export class MyMiahootsComponent implements AfterViewInit {
   }
 
   createNewMiahoot(){
-    this.router.navigate(['/new-miahoot']);
+    this.router.navigate(['/edit-miahoot']);
   }
 
   goToMiahoot(id: number) {
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
+    this.router.navigate(['/edit-miahoot']);
   }
 
   
