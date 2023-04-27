@@ -41,11 +41,14 @@
       </button>
     </th>
     <td mat-cell *matCellDef="let miahoot">
-      <button mat-icon-button (click)="goToMiahoot(miahoot.id)">
+      <button mat-icon-button color="accent" (click)="editMiahoot(miahoot)">
         <mat-icon>edit</mat-icon>
       </button>
       <button mat-icon-button color="warn" (click)="deleteMiahoot(miahoot)">
         <mat-icon>delete</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="lectureMiahoot(miahoot)">
+        <mat-icon>play_arrow</mat-icon>
       </button>
     </td>
   </ng-container>

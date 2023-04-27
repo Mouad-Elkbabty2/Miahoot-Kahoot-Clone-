@@ -13,7 +13,7 @@ import { AuthComponent } from './auth/auth.component';
 const routes: Routes = [
   {path: '',title: 'Accueil', component: AccueilComponent,},
   { path: 'my-miahoots', component: MyMiahootsComponent },
-  { path: 'new-miahoot', component: NewMiahootComponent },
+  { path: 'new-miahoot/:id', component: NewMiahootComponent },
   { path: 'edit-miahoot', component: EditMiahootComponent },
   { path: 'presentation/:id', component: PresentationComponent },
   { path: 'test', component:AuthComponent}
