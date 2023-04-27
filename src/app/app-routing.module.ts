@@ -6,6 +6,7 @@ import { MyMiahootsComponent } from './my-miahoots/my-miahoots.component';
 import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
 import { FormsModule } from '@angular/forms';
 import { PresentationComponent } from './presentation/presentation.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'new-miahoot', component: NewMiahootComponent },
   { path: 'edit-miahoot', component: EditMiahootComponent },
   { path: 'presentation/:id', component: PresentationComponent },
+  { path: 'test', component:AuthComponent}
 ];
 
 @NgModule({
