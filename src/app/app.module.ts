@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatCardModule} from '@angular/material/card';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatCardModule} from '@angular/material/card';
     MyMiahootsComponent,
     EditMiahootComponent,
     NewMiahootComponent,
-    PresentationComponent
+    PresentationComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
