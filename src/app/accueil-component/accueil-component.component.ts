@@ -8,8 +8,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./accueil-component.component.scss']
 })
 export class AccueilComponent{
-  constructor(private router: Router) { }
-  onLoginClick() {
-    this.router.navigate(['/my-miahoots']);
   }
-}
+

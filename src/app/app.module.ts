@@ -21,6 +21,14 @@ import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatCardModule} from '@angular/material/card';
+import { AuthComponent } from './auth/auth.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { NavbarComponent } from './navbar/navbar.component';
+
 
 
 @NgModule({
@@ -30,7 +38,9 @@ import {MatCardModule} from '@angular/material/card';
     MyMiahootsComponent,
     EditMiahootComponent,
     NewMiahootComponent,
-    PresentationComponent
+    PresentationComponent,
+    AuthComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +58,13 @@ import {MatCardModule} from '@angular/material/card';
     ReactiveFormsModule, 
     MatListModule,
     CommonModule,
-    MatChipsModule,MatCardModule
+    MatChipsModule,
+    MatCardModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideDatabase(() => getDatabase()),
+
   ],
   providers: [],
   bootstrap: [AppComponent]
