@@ -38,13 +38,8 @@ export class MyMiahootsComponent implements AfterViewInit {
   }
 
   editMiahoot(miahoot: Miahoot) {
-<<<<<<< HEAD
-    // Action à effectuer lors de la modification d'un Miahoot
-    
-=======
     let id : number = miahoot.id;
     this.router.navigate(['/new-miahoot/'+miahoot.id]);
->>>>>>> 4dbc128f8218616b273a41369549f8b83b0477ef
   }
 
   deleteMiahoot(miahoot: Miahoot): void {
@@ -58,20 +53,9 @@ export class MyMiahootsComponent implements AfterViewInit {
   }
 
   createNewMiahoot(){
-<<<<<<< HEAD
-    this.router.navigate(['/edit-miahoot']);
-  }
-
-  goToMiahoot(id: number) {
-    // this.router.navigate(['/']);
-    this.router.navigate(['/edit-miahoot']);
-  }
-
-=======
     const lastElement = ELEMENT_DATA.slice(-1)[0];
     const lastId = lastElement.id+1;
     this.router.navigate(['/new-miahoot/'+lastId]);
   }
->>>>>>> 4dbc128f8218616b273a41369549f8b83b0477ef
   
 }
