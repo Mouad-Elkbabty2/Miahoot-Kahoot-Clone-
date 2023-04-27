@@ -28,6 +28,9 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MiahootService } from './services/miahoot.service';
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 
@@ -60,13 +63,14 @@ import { NavbarComponent } from './navbar/navbar.component';
     CommonModule,
     MatChipsModule,
     MatCardModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
 
   ],
-  providers: [],
+  providers: [MiahootService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

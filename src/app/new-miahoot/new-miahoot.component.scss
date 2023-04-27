@@ -2,7 +2,9 @@ body {
   margin-left: 10px;
   margin-top: 10px;
 }
-h1, h2 {
+
+h1,
+h2 {
   font-family: Arial, sans-serif;
 }
 
@@ -18,6 +20,10 @@ ul {
 
 li {
   margin-bottom: 20px;
+}
+
+li.question {
+  display: block;
 }
 
 li h3 {
@@ -49,42 +55,60 @@ li ul li input[type="text"]:focus {
 }
 
 input {
-    border: none;
-    border-bottom: 1px solid gray;
-    transition: border-bottom-color 0.2s ease-in-out;
-    width : 15%;
-    outline: none; /* pour supprimer le focus */
-  }
-  
-  input:hover {
-    border-bottom-color: #ff007f;
-  }
-  
+  border: none;
+  border-bottom: 1px solid gray;
+  transition: border-bottom-color 0.2s ease-in-out;
+  width: 15%;
+  outline: none; /* pour supprimer le focus */
+}
 
-  button{
-    margin-left: 10px;
-    border-radius: 0px;
-    background-color: white;
-    border: 1px solid #ff007f;
-    padding: 6px 10px;
-    color : #ff007f
-    
-  }
+input:hover {
+  border-bottom-color: #ff007f;
+}
 
-  button:hover {
-    background-color: #ff007f;
-    color: white;
-  }
-  input[type="checkbox"]:checked {
-    accent-color: #ff007f !important;
-    border-radius: 0%;
-  }
-  
-  button:focus {
-    outline: none;
-  }
-  
-  button::before {
-    font-size: 20px;
-    font-weight: bold;
-  }
+button {
+  margin-left: 10px;
+  border-radius: 0px;
+  background-color: white;
+  border: 1px solid #ff007f;
+  padding: 6px 10px;
+  color: #ff007f;
+}
+
+button:hover {
+  background-color: #ff007f;
+  color: white;
+}
+
+input[type="checkbox"]:checked {
+  accent-color: #ff007f !important;
+  border-radius: 0%;
+}
+
+button:focus {
+  outline: none;
+}
+
+button::before {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+ul {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+li ul li {
+  display: flex;
+  align-items: center;
+}
+
+#delete {
+  margin-left: auto;
+}
+li #delete {
+  margin-top : 5px;
+  margin-right: 80%;
+}

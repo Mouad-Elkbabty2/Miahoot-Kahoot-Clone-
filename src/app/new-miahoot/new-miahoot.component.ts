@@ -1,5 +1,6 @@
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MiahootService } from '../services/miahoot.service';
 
 interface QuestionReponses {
   question: string;
@@ -66,12 +67,14 @@ export class NewMiahootComponent {
   questionRep: QuestionReponses;
 
 
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute) { }
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute,private miahootService: MiahootService ) { }
 
   ngOnInit() {
     const miahootId = parseInt(this.route.snapshot.paramMap.get('id') ?? '-1', 10);
     this.miahoot = miahoots.find(miahoot => miahoot.id === miahootId) ?? { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] };
     this.questRep=this.miahoot.questrep;
+    this.miahootService.getMiahoot(1).subscribe(miahoot => console.log(miahoot)); 
+    
   }
 
   onSubmit() {
