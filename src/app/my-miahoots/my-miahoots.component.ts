@@ -38,20 +38,24 @@ export class MyMiahootsComponent implements AfterViewInit {
   }
 
   editMiahoot(miahoot: Miahoot) {
-    // Action à effectuer lors de la modification d'un Miahoot
+    let id : number = miahoot.id;
+    this.router.navigate(['/new-miahoot/'+miahoot.id]);
   }
 
-  deleteMiahoot(miahoot: Miahoot) {
-    // Action à effectuer lors de la suppression d'un Miahoot
+  deleteMiahoot(miahoot: Miahoot): void {
+    this.dataSource.data = this.dataSource.data.filter(m => m !== miahoot);
+  }
+
+  lectureMiahoot(miahoot: Miahoot){
+    console.log(miahoot.id);
+    let id : number = miahoot.id;
+    this.router.navigate(['/presentation/'+id]);
   }
 
   createNewMiahoot(){
-    this.router.navigate(['/new-miahoot']);
+    const lastElement = ELEMENT_DATA.slice(-1)[0];
+    const lastId = lastElement.id+1;
+    this.router.navigate(['/new-miahoot/'+lastId]);
   }
-
-  goToMiahoot(id: number) {
-    this.router.navigate(['/']);
-  }
-
   
 }
