@@ -18,21 +18,9 @@
   </form>
   <ul>
     <li *ngFor="let questRep of questRep; let i = index">
-      <h3 (dblclick)="editingQuestionIndex[i] = true">Question N° {{i+1}} :
-        <ng-container *ngIf="editingQuestionIndex[i]">
-            <input type="text" [(ngModel)]="questRep.question" (blur)="editingQuestionIndex[i] = false" (keydown.enter)="editingQuestionIndex[i] = false"
-                   style="width: {{questRep.question.length}}%;"/>
-        </ng-container>
-        <ng-container *ngIf="!editingQuestionIndex[i]">
-            {{ questRep.question }}
-        </ng-container>
-        <button (click)="supprimeQuest(i)"><mat-icon>delete</mat-icon></button>
-    </h3>
-    
-    
-      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponses-{{i}}" name="réponses-{{i}}"
-        [(ngModel)]="tempReponses[i]" />
-
+      <h3>Question N° {{i+1}} : {{ questRep.question }} <button
+          (click)="supprimeQuest(i)"><mat-icon>delete</mat-icon></button> </h3>
+      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponses-{{i}}" name="réponses-{{i}}"/>
       <button type="button" (click)="ajouteRep(i)">+</button>
       <ul>
         <ng-container *ngIf="editable==false">
@@ -49,4 +37,6 @@
         </ng-container>
       </ul>
     </li>
- 
+  </ul>
+</body>
+</html>

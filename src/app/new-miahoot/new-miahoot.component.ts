@@ -74,8 +74,8 @@ export class NewMiahootComponent {
     const miahootId = parseInt(this.route.snapshot.paramMap.get('id') ?? '-1', 10);
     this.miahoot = miahoots.find(miahoot => miahoot.id === miahootId) ?? { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] };
     this.questRep=this.miahoot.questrep;
-    this.miahootService.getMiahoot(1).subscribe(miahoot => console.log(miahoot)); 
-    
+
+    this.miahootService.getMiahoot(5).subscribe(miahoot => console.log(miahoot)); 
   }
 
   onSubmit() {
@@ -93,17 +93,23 @@ export class NewMiahootComponent {
   }
 
   ajouteRep(i: number) {
+    let rep = document.querySelector<HTMLInputElement>(`#réponses-${i}`)?.value;
     // Vérifier si la nouvelle réponse n'est pas vide (après avoir enlevé les espaces blancs)
-    if (this.tempReponses[i].trim()) {
-      this.questRep[i].reponses.push(this.tempReponses[i]);
-      this.tempReponses[i] = '';
-      this.newCorrect[i] = false;
-    }
+    if(rep != null){
+      if (rep.trim()) {
+        this.questRep[i].reponses.push(rep);
+        document.querySelector<HTMLInputElement>(`#réponses-${i}`)!.value = '';
+        this.newCorrect[i] = false;
+      }
+  }
   }
 
   saveRep(i: number, j: number) {
-    this.questRep[i].reponses[j] = this.tempReponses[i];
-    this.editingIndexrep = [];
+    if(this.tempReponses[i]){
+      this.questRep[i].reponses[j] = this.tempReponses[i];
+      this.editingIndexrep = [];
+      this.tempReponses[i] = "";
+    }
   }
 
   supprimeQuest(i: number) {
@@ -118,6 +124,21 @@ export class NewMiahootComponent {
     this.editingIndexrep[i] = j;
     this.tempReponses[i] = this.questRep[i].reponses[j];
   }
+
+
+    // delete miahoot
+/*   delete(id: number) {
+    this.miahootService.deleteMiahoot(id).subscribe(
+      () => console.log("miahoot deleted successfully"),
+      error => console.error(error)
+    );
+  } */
+
+/*   createMiahoot() {
+    const miahoot = {};
+    this.miahootService.createMiahoot(miahoot);
+  }
+ */
 
 
 }

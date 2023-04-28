@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class MiahootService {
 
-  private apiUrl = '/miahoot';
+  private apiUrl = '/api/miahoot';
 
   constructor(private http: HttpClient) { }
 
@@ -15,15 +15,17 @@ export class MiahootService {
     return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-/*   createMiahoot(miahoot: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, miahoot);
-  }
-
-  updateMiahoot(id: number, miahoot: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${id}`, miahoot);
+  createMiahoot(miahoot: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/`, miahoot);
   }
 
   deleteMiahoot(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${id}`);
-  } */
+  } 
+/*
+  updateMiahoot(id: number, miahoot: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, miahoot);
+  }*/
+
+
 }
