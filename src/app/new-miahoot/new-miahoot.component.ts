@@ -62,7 +62,8 @@ export class NewMiahootComponent {
   newCorrect: boolean[] = [];
   editable = false;
   tempReponses: string[] = [];
-  editingIndex: number[] = [];
+  editingIndexrep: number[] = [];
+  editingQuestionIndex: boolean[]=[];
   //cette variable est pour tester
   questionRep: QuestionReponses;
 
@@ -102,7 +103,7 @@ export class NewMiahootComponent {
 
   saveRep(i: number, j: number) {
     this.questRep[i].reponses[j] = this.tempReponses[i];
-    this.editingIndex = [];
+    this.editingIndexrep = [];
   }
 
   supprimeQuest(i: number) {
@@ -114,7 +115,7 @@ export class NewMiahootComponent {
   }
   editRep(i: number, j: number) {
 
-    this.editingIndex[i] = j;
+    this.editingIndexrep[i] = j;
     this.tempReponses[i] = this.questRep[i].reponses[j];
   }
 
