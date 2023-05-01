@@ -74,8 +74,6 @@ export class NewMiahootComponent {
     const miahootId = parseInt(this.route.snapshot.paramMap.get('id') ?? '-1', 10);
     this.miahoot = miahoots.find(miahoot => miahoot.id === miahootId) ?? { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] };
     this.questRep=this.miahoot.questrep;
-
-    this.miahootService.getMiahoot(5).subscribe(miahoot => console.log(miahoot)); 
   }
 
   onSubmit() {

@@ -30,6 +30,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MiahootService } from './services/miahoot.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TestApiComponent } from './test-api/test-api.component';
 
 
 
@@ -43,7 +44,8 @@ import { HttpClientModule } from '@angular/common/http';
     NewMiahootComponent,
     PresentationComponent,
     AuthComponent,
-    NavbarComponent
+    NavbarComponent,
+    TestApiComponent
   ],
   imports: [
     BrowserModule,

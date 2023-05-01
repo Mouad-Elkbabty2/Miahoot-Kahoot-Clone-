@@ -1,0 +1,42 @@
+<div>
+    <h2>Tester les APIs de Miahoot</h2>
+    <p>
+        ID du miahoot : <input type="number" [(ngModel)]="miahootId">
+        <button (click)="getMiahoot()">Chercher le miahoot</button> <br><br>
+        <button (click)="createMiahoot()">Créer un miahoot</button>
+    </p>
+
+    <h2>Tester les APIs de question</h2>
+    <p>
+        ID de la question : <input type="number" [(ngModel)]="questionId">
+        <button (click)="getQuestion(questionId)">Chercher la question</button>
+    </p>
+
+    <p *ngIf="!question">Question non trouvée</p>
+    <p *ngIf="question">Resultat : {{ question | json }}</p>
+
+    <p>
+        <button (click)="deleteQuestion(4)">Supprimer question avec ID 4</button>
+    </p>
+
+    <p>
+        <button (click)="createQuestion(2)">Créer nouvelle question pour miahoot ID 2</button>
+    </p>
+
+    <p>
+        <input type="text" [(ngModel)]="label" placeholder="Nouveau libellé de question">
+        <button (click)="updateQuestionLabel(3, label)">Modifier libellé question avec ID 3</button>
+    </p>
+</div>
+
+<br>
+<br>
+<div>
+    <div>
+        <button (click)="createTeacher()">Add Teacher</button> <br>
+        <label for="teacherName">Teacher ID:</label>
+        <input id="teacherID" name="teacherID" placeholder="Enter id..." [(ngModel)]="teacherId" />
+        <button (click)="deleteTeacher()">Delete Teacher</button>
+      </div>
+
+</div>
