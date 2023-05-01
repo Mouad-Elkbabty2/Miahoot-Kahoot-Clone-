@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-presentation',
-  templateUrl: './presentation.component.html',
-  styleUrls: ['./presentation.component.scss']
+  selector: 'app-participant',
+  templateUrl: './participant.component.html',
+  styleUrls: ['./participant.component.scss']
 })
-export class PresentationComponent implements OnInit {
+export class ParticipantComponent implements OnInit {
   questionId: number;
   reponses: string[];
   question: string;

@@ -16,7 +16,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
-import { PresentationComponent } from './presentation/presentation.component';
+import { ParticipantComponent } from './participant/participant.component';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
 import {MatChipsModule} from '@angular/material/chips';
@@ -31,6 +31,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { MiahootService } from './services/miahoot.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TestApiComponent } from './test-api/test-api.component';
+import { PresentateurComponent } from './presentateur/presentateur.component';
 
 
 
@@ -42,10 +43,11 @@ import { TestApiComponent } from './test-api/test-api.component';
     MyMiahootsComponent,
     EditMiahootComponent,
     NewMiahootComponent,
-    PresentationComponent,
+    ParticipantComponent,
     AuthComponent,
     NavbarComponent,
-    TestApiComponent
+    TestApiComponent,
+    PresentateurComponent
   ],
   imports: [
     BrowserModule,
