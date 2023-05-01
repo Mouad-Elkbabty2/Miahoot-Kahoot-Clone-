@@ -56,7 +56,19 @@ export class TestApiComponent implements OnInit {
         console.error(error);
         console.log("Failed to create miahoot. Please try again.");
       });
-}
+  }
+
+  updateMiahoot(id:number) {
+    const miahoot = {};
+    this.miService.updateMiahoot(id,miahoot)
+      .then(() => {
+        console.log("Miahoot updated successfully");
+      })
+      .catch(error => {
+        console.error(error);
+        console.log("Failed to update miahoot. Please try again.\n error : ",error.status+ " "+ error.statusText);
+      });
+  }
 
 
   //----------------- API Question -----------------------

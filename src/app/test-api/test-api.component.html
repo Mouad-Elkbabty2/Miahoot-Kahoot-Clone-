@@ -1,9 +1,11 @@
 <div>
     <h2>Tester les APIs de Miahoot</h2>
     <p>
-        ID du miahoot : <input type="number" [(ngModel)]="miahootId">
-        <button (click)="getMiahoot()">Chercher le miahoot</button> <br><br>
+        ID du miahoot : <input type="number" [(ngModel)]="miahootId"> <br>
+        <button (click)="getMiahoot()">Chercher le miahoot</button> 
         <button (click)="createMiahoot()">Créer un miahoot</button>
+        <button (click)="updateMiahoot(miahootId)" >Mettre à jour le Miahoot</button>
+
     </p>
 
     <h2>Tester les APIs de question</h2>

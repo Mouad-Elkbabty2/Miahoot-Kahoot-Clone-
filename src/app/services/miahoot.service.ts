@@ -29,6 +29,11 @@ export class MiahootService {
     return firstValueFrom(this.http.delete(`${this.urlMi}/${id}`));
   }
 
+  async updateMiahoot(id: number, miahoot: Partial<Miahoot>): Promise<Miahoot> {
+    return firstValueFrom(this.http.put<Miahoot>(`${this.urlMi}/${id}`, miahoot));
+  }
+  
+
   //----------------- API Question --------------------
 
   async getQuestion(id: number): Promise<Question> {
