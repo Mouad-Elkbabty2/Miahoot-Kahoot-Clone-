@@ -18,25 +18,33 @@
   </form>
   <ul>
     <li *ngFor="let questRep of questRep; let i = index">
-      <h3>Question N° {{i+1}} : {{ questRep.question }} <button
-          (click)="supprimeQuest(i)"><mat-icon>delete</mat-icon></button> </h3>
-      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponses-{{i}}" name="réponses-{{i}}"/>
+      <h3>Question N° {{i+1}} : {{ questRep.question }}
+        <button id="delQuest" (click)="supprimeQuest(i)">
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </h3>
+      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponses-{{i}}" name="réponses-{{i}}" />
       <button type="button" (click)="ajouteRep(i)">+</button>
       <ul>
         <ng-container *ngIf="editable==false">
           <li *ngFor="let reponse of questRep.reponses; let j = index">
             <ng-container *ngIf="editingIndexrep[i] === j">
-              <input placeholder="Entrez une nouvelle réponse" type="text" [(ngModel)]="tempReponses[i]" />
-              <button (click)="saveRep(i,j)">Enregistrer</button>
+              <input placeholder="Entrez une nouvelle réponse" 
+                     type="text" 
+                     [(ngModel)]="tempReponses[i]" />
+              <button id="saveRep"(click)="saveRep(i,j)"><mat-icon>save_alt</mat-icon></button>
             </ng-container>
             <ng-container *ngIf="editingIndexrep[i] !== j">
               <span (dblclick)="editRep(i,j)">{{ reponse }}</span>
             </ng-container>
-            <button (click)="supprimeRep(i,j)" id="delete">Supprimer</button>
+            <button id="deleteRep" (click)="supprimeRep(i,j)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </li>
         </ng-container>
       </ul>
     </li>
   </ul>
 </body>
+
 </html>
