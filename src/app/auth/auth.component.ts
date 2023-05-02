@@ -23,8 +23,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(private auth: Auth, private fs : Firestore) {
     if (auth) {
       authState(this.auth).pipe(
-       // traceUntilFirst('auth'),
-       // map(u => !!u),
         tap(async (U: User | null) => {
           if (!!U) {
             const user = U; // await this.auth.currentUser;

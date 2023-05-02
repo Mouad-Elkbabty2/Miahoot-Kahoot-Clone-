@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
-import { User } from 'firebase/auth';
-import { FirestoreDataConverter } from 'firebase/firestore';
+import { FirestoreDataConverter, doc, getDoc, setDoc } from 'firebase/firestore';
 import { Miahoot, Participant, Concepteur, Presentateur, Response, Question, Teacher } from './models/models';
+import { Firestore } from '@angular/fire/firestore';
+import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
+import { Observable, tap } from 'rxjs';
+
 
 
 export interface MiahootUser{
   readonly name:string;
   readonly mail:string;
-  // readonly user_type : number;
+  readonly user_type : number;
   readonly miahootProjected:number
 }
 
@@ -26,7 +29,33 @@ export interface STATE{
 
 export class DataService {
 
-  constructor() { }
+  obsMiUser : Observable<MiahootUser | undefined>;
+
+  constructor(private auth: Auth, private fs : Firestore) {
+    if (auth) {
+      authState(this.auth).pipe(
+        tap(async (U: User | null) => {
+          if (!!U) {
+            const user = U; // await this.auth.currentUser;
+            if (user) {
+              const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
+              const snapUser = await getDoc(userDocRef);
+              if (!snapUser.exists()) {
+                setDoc(userDocRef, {
+                  name: user.displayName ?? user.email ?? user.uid,
+                  mail: user.email ?? "",
+                  miahootProjected: 0,
+                } as MiahootUser);
+              }
+            }
+          }
+        })
+      ).subscribe((U: User | null) => {
+        const isLoggedIn = !!U;
+      });
+    }
+    
+  }
 }
 
 export const FsUserConverter : FirestoreDataConverter<STATE["user"]> = {
@@ -40,7 +69,6 @@ export const FsUserConverter : FirestoreDataConverter<STATE["user"]> = {
 }
 
 export interface QCMProjected { 
-
       question: string; 
   
       responses: string[]; // Les réponses possibles 
