@@ -26,6 +26,17 @@ export interface Question {
     responses?: Response[];
 }
 
+export type VOTES = { 
+    [participantUID: string]: boolean
+  };
+
+export interface QCMProjected { 
+question: string; 
+responses: string[]; // Les réponses possibles 
+votes: VOTES; // Autant d'entrée dans le tableau que de réponses possibles 
+};
+
+
 export interface Miahoot {
     id?: number;
     concepteur?: Concepteur;
