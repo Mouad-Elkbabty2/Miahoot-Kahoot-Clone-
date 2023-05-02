@@ -23,11 +23,11 @@ export class AuthComponent implements OnInit, OnDestroy {
   constructor(private auth: Auth, private fs : Firestore) {
     if (auth) {
       authState(this.auth).pipe(
-        traceUntilFirst('auth'),
-        map(u => !!u),
-        tap(async (isLoggedIn: boolean) => {
-          if (isLoggedIn) {
-            const user = await this.auth.currentUser;
+       // traceUntilFirst('auth'),
+       // map(u => !!u),
+        tap(async (U: User | null) => {
+          if (!!U) {
+            const user = U; // await this.auth.currentUser;
             if (user) {
               const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
               const snapUser = await getDoc(userDocRef);
@@ -41,35 +41,13 @@ export class AuthComponent implements OnInit, OnDestroy {
             }
           }
         })
-      ).subscribe((isLoggedIn: boolean) => {
+      ).subscribe((U: User | null) => {
+        const isLoggedIn = !!U;
         this.showLoginButton = !isLoggedIn;
         this.showLogoutButton = isLoggedIn;
       });
     }
     
-  
-
-    // authState(this.auth).pipe(
-    //   filter( u => !!u ),
-    //   map( u => u as User ),
-    //   tap( async u => {
-    //     if(!u.isAnonymous){
-    //       const docUser =  doc(this.fs, `users/${u.uid}`).withConverter(FsUserConverter) ;
-    //       const snapUser = await getDoc( docUser );
-    //       if (!snapUser.exists()) {
-    //         setDoc(docUser, {
-    //           name: u.displayName ?? u.email ?? u.uid,
-    //           mail: u.email ?? "",
-    //           miahootProjected: 0,
-    //           // photoURL: u.photoURL ?? "https://cdn-icons-png.flaticon.com/512/1077/1077012.png"
-    //         } satisfies MiahootUser)
-    //     }
-    //     }
-    //   })
-    //   ).subscribe((isLoggedIn: boolean) => {
-    //         this.showLoginButton = !isLoggedIn;
-    //         this.showLogoutButton = isLoggedIn;
-    //       });
   }
 
   ngOnInit(): void { }
