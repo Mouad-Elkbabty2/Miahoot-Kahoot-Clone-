@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
 import { User } from 'firebase/auth';
 import { FirestoreDataConverter } from 'firebase/firestore';
+import { Miahoot, Participant, Concepteur, Presentateur, Response, Question, Teacher } from './models/models';
+
 
 export interface MiahootUser{
   readonly name:string;
   readonly mail:string;
-}
-
-export interface Miahoot {
-  name : string;
-  questions: FormElement[];
-}
-
-export interface FormElement{
-  question: string;
-  reponses: string[];
+  // readonly user_type : number;
+  readonly miahootProjected:number
 }
 
 export type VOTES = { 
@@ -29,6 +23,7 @@ export interface STATE{
 @Injectable({
   providedIn: 'root'
 })
+
 export class DataService {
 
   constructor() { }
@@ -38,8 +33,9 @@ export const FsUserConverter : FirestoreDataConverter<STATE["user"]> = {
   toFirestore: U => U,
   fromFirestore: snap => ({
     mail: snap.get("mail"),
-    uid: snap.get("ui"),
-    name: snap.get("name")
+    name: snap.get("name"),
+    user_type: snap.get("userType"),
+    miahootProjected: snap.get("miahootProjected")
   })
 }
 
