@@ -7,16 +7,18 @@ import { FormsModule } from '@angular/forms';
 import { ParticipantComponent } from './participant/participant.component';
 import { AuthComponent } from './auth/auth.component';
 import { TestApiComponent } from './test-api/test-api.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 
 const routes: Routes = [
   {path: '',title: 'Accueil', component: AccueilComponent,},
-  { path: 'my-miahoots', component: MyMiahootsComponent },
-  { path: 'new-miahoot/:id', component: NewMiahootComponent },
+  { path: 'my-miahoots', component: MyMiahootsComponent, canActivate: [AuthGuard]},
+  { path: 'new-miahoot/:id', component: NewMiahootComponent, canActivate: [AuthGuard]  }, //canActivate interdit l'accés à certains utilisateur
   { path: 'testApi', component:TestApiComponent},
   { path: 'participant/:id', component: ParticipantComponent },
   { path: 'test', component:AuthComponent},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

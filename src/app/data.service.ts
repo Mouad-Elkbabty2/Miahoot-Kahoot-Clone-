@@ -9,9 +9,9 @@ import { Observable, tap } from 'rxjs';
 
 export interface MiahootUser{
   readonly name:string;
-  readonly mail:string;
-  readonly user_type : number;
-  readonly miahootProjected:number
+  readonly mail?:string;
+  readonly user_type? : number;
+  readonly miahootProjected?:number
 }
 
 export type VOTES = { 

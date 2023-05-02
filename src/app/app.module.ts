@@ -32,6 +32,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestApiComponent } from './test-api/test-api.component';
 import { PresentateurComponent } from './presentateur/presentateur.component';
 import { LoggedComponent } from './logged/logged.component';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AuthGuard } from './guard/auth.guard';
+
 
 
 
@@ -53,6 +57,8 @@ import { LoggedComponent } from './logged/logged.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
     MatButtonModule,
     MatTableModule,
     MatDialogModule,
@@ -74,7 +80,10 @@ import { LoggedComponent } from './logged/logged.component';
     provideDatabase(() => getDatabase()),
 
   ],
-  providers: [MiahootService],
+  providers: [
+    MiahootService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
