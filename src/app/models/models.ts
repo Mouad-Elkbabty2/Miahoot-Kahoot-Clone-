@@ -1,15 +1,15 @@
 export interface Participant {
     id: number;
     nom: string;
-    participantMiahoot: string;
+    participantMiahoot: number;
 }
 
 export interface Concepteur {
-    createdMiahoots: string[];
+    createdMiahoots: number[];
 }
 
 export interface Presentateur {
-    createdMiahoots: string[];
+    createdMiahoots: number[];
 }
 
 export interface Response {

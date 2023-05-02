@@ -13,7 +13,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { AccueilComponent } from './accueil-component/accueil-component.component';
 import { MatSortModule } from '@angular/material/sort';
-import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
 import { ParticipantComponent } from './participant/participant.component';
@@ -32,6 +31,7 @@ import { MiahootService } from './services/miahoot.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TestApiComponent } from './test-api/test-api.component';
 import { PresentateurComponent } from './presentateur/presentateur.component';
+import { LoggedComponent } from './logged/logged.component';
 
 
 
@@ -41,13 +41,13 @@ import { PresentateurComponent } from './presentateur/presentateur.component';
     AppComponent,
     AccueilComponent,
     MyMiahootsComponent,
-    EditMiahootComponent,
     NewMiahootComponent,
     ParticipantComponent,
     AuthComponent,
     NavbarComponent,
     TestApiComponent,
-    PresentateurComponent
+    PresentateurComponent,
+    LoggedComponent
   ],
   imports: [
     BrowserModule,
