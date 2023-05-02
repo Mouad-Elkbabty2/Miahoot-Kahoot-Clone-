@@ -7,6 +7,7 @@ import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
 import { FormsModule } from '@angular/forms';
 import { ParticipantComponent } from './participant/participant.component';
 import { AuthComponent } from './auth/auth.component';
+import { TestApiComponent } from './test-api/test-api.component';
 
 
 
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'my-miahoots', component: MyMiahootsComponent },
   { path: 'new-miahoot/:id', component: NewMiahootComponent },
   { path: 'edit-miahoot', component: EditMiahootComponent },
+  { path: 'testApi', component:TestApiComponent},
   { path: 'participant/:id', component: ParticipantComponent },
   { path: 'test', component:AuthComponent}
 ];

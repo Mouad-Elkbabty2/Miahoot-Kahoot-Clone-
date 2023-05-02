@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title>MIAHOOT - Accueil</title>
-	<link rel="stylesheet" type="text/css" href="accueil-component.component.scss">
-</head>
 <body>
 	<h1>MIAHOOT</h1>
 	<form>
-		<input type="text" placeholder="Entrez le PIN..." id="id" name="id">
-		<button type="submit">Rejoindre Partie</button>
-	</form>
+		<div class="input-container">
+		  <div class="input-wrapper">
+			<input type="number" pattern="[0-9]*" placeholder="Entrez le PIN..." id="pin" name="pin" [(ngModel)]="pin" />
+			<button id="submit" (click)="validerPin()"><mat-icon>chevron_right</mat-icon></button>
+		  </div>
+		</div>
+		<p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p> 
+		<div *ngIf="pinSaisi && pinValide">
+		  <input type="text" placeholder="Nom de participant" id="nom" name="nom" [(ngModel)]="nom" (input)="validerNom()" />
+		</div>
+		<button [ngClass]="{'disabled': !nomSaisi}" type="submit" [disabled]="!nomSaisi" (click)="test()">Rejoindre la partie</button>
+	  </form>
+	  
+
 </body>
+
 </html>

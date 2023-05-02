@@ -81,8 +81,9 @@ button {
 }
 
 button:hover {
-  background-color: #ff007f;
+  background-color: #1abc9c;
   color: white;
+  border: 1px solid #1abc9c;
 }
 
 input[type="checkbox"]:checked {
@@ -110,10 +111,32 @@ li ul li {
   align-items: center;
 }
 
-#delete {
-  margin-left: auto;
-}
-li #delete {
+
+li #deleteRep {
   margin-top : 5px;
   margin-right: 80%;
+}
+
+h3{
+  display: flex;
+}
+#delQuest{
+  border : 0px !important;
+  padding: 0%;
+  align-items: center;
+  margin-top: 1.5px;
+}
+#delQuest:hover{
+  background-color : transparent !important;
+  color: #1abc9c;
+}
+
+#deleteRep,#saveRep {
+  margin-left: auto;
+  border : 0px !important;
+}
+
+#deleteRep:hover, #saveRep:hover {
+  color: #1abc9c;
+  background-color: transparent;
 }

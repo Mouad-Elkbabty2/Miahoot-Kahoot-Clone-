@@ -19,8 +19,8 @@ import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
 import { ParticipantComponent } from './participant/participant.component';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatCardModule} from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
 import { AuthComponent } from './auth/auth.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -30,6 +30,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MiahootService } from './services/miahoot.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TestApiComponent } from './test-api/test-api.component';
 import { PresentateurComponent } from './presentateur/presentateur.component';
 
 
@@ -45,6 +46,7 @@ import { PresentateurComponent } from './presentateur/presentateur.component';
     ParticipantComponent,
     AuthComponent,
     NavbarComponent,
+    TestApiComponent,
     PresentateurComponent
   ],
   imports: [
