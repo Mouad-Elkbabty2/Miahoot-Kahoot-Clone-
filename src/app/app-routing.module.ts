@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'new-miahoot/:id', component: NewMiahootComponent },
   { path: 'testApi', component:TestApiComponent},
   { path: 'participant/:id', component: ParticipantComponent },
-  { path: 'test', component:AuthComponent}
+  { path: 'test', component:AuthComponent},
 ];
 
 @NgModule({

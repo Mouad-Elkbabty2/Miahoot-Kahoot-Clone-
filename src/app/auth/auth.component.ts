@@ -22,15 +22,32 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   constructor(private auth: Auth, private fs : Firestore) {
     if (auth) {
-      this.user = authState(this.auth);
-      this.userDisposable = authState(this.auth).pipe(
+      authState(this.auth).pipe(
         traceUntilFirst('auth'),
         map(u => !!u),
+        tap(async (isLoggedIn: boolean) => {
+          if (isLoggedIn) {
+            const user = await this.auth.currentUser;
+            if (user) {
+              const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
+              const snapUser = await getDoc(userDocRef);
+              if (!snapUser.exists()) {
+                setDoc(userDocRef, {
+                  name: user.displayName ?? user.email ?? user.uid,
+                  mail: user.email ?? "",
+                  miahootProjected: 0,
+                } as MiahootUser);
+              }
+            }
+          }
+        })
       ).subscribe((isLoggedIn: boolean) => {
         this.showLoginButton = !isLoggedIn;
         this.showLogoutButton = isLoggedIn;
       });
     }
+    
+  
 
     // authState(this.auth).pipe(
     //   filter( u => !!u ),
@@ -64,19 +81,29 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   async login() {
-    // this.router.navigate(['/my-miahoots']);
-    // return await signInWithPopup(this.auth, new GoogleAuthProvider());
     const googleProvider = new GoogleAuthProvider();
     googleProvider.setCustomParameters({
       prompt: 'select_account'
     });
     try {
-      await signInWithPopup(this.auth, googleProvider);
+      const credential = await signInWithPopup(this.auth, googleProvider);
+      const user = credential.user;
+      if (user) {
+        const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
+        const snapUser = await getDoc(userDocRef);
+        if (!snapUser.exists()) {
+          setDoc(userDocRef, {
+            name: user.displayName ?? user.email ?? user.uid,
+            mail: user.email ?? "",
+            miahootProjected: 0,
+          } as MiahootUser);
+        }
+      }
     } catch(err) {
       console.error("On a tué brutalement la fenetre de log...")
     }
-    
   }
+  
 
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
