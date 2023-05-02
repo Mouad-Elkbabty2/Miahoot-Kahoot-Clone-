@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, map, of, switchMap } from 'rxjs';
 import { Miahoot, Question, Teacher } from '../models/models';
 import { firstValueFrom } from 'rxjs';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,7 @@ export class MiahootService {
   private urlQuestion = '/api/question';
   private urlTeacher = '/api/teacher';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   //------------------ API Miahoot --------------------
 
@@ -44,6 +46,10 @@ export class MiahootService {
     return firstValueFrom(this.http.post<Question>(`${this.urlQuestion}/miahoot/${miahootId}`, question));
   }
 
+  /*
+    updateMiahoot(id: number, miahoot: any): Observable<any> {
+      return this.http.put(`${this.apiUrl}/${id}`, miahoot);
+    }*/
   async deleteQuestion(id: number): Promise<any> {
     return firstValueFrom(this.http.delete(`${this.urlQuestion}/${id}`));
   }
@@ -66,3 +72,4 @@ export class MiahootService {
     return firstValueFrom(this.http.delete(`${this.urlTeacher}/${id}`));
   }
 }
+
