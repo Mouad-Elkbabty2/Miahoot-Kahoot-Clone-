@@ -2,7 +2,14 @@ body {
   margin-left: 10px;
   margin-top: 10px;
 }
-h1, h2 {
+
+.large-input {
+  height: 30px;
+  width: 90%;
+}
+
+h1,
+h2 {
   font-family: Arial, sans-serif;
 }
 
@@ -18,6 +25,10 @@ ul {
 
 li {
   margin-bottom: 20px;
+}
+
+li.question {
+  display: block;
 }
 
 li h3 {
@@ -49,42 +60,83 @@ li ul li input[type="text"]:focus {
 }
 
 input {
-    border: none;
-    border-bottom: 1px solid gray;
-    transition: border-bottom-color 0.2s ease-in-out;
-    width : 15%;
-    outline: none; /* pour supprimer le focus */
-  }
-  
-  input:hover {
-    border-bottom-color: #ff007f;
-  }
-  
+  border: none;
+  border-bottom: 1px solid gray;
+  transition: border-bottom-color 0.2s ease-in-out;
+  width: 15%;
+  outline: none; /* pour supprimer le focus */
+}
 
-  button{
-    margin-left: 10px;
-    border-radius: 0px;
-    background-color: white;
-    border: 1px solid #ff007f;
-    padding: 6px 10px;
-    color : #ff007f
-    
-  }
+input:hover {
+  border-bottom-color: #ff007f;
+}
 
-  button:hover {
-    background-color: #ff007f;
-    color: white;
-  }
-  input[type="checkbox"]:checked {
-    accent-color: #ff007f !important;
-    border-radius: 0%;
-  }
-  
-  button:focus {
-    outline: none;
-  }
-  
-  button::before {
-    font-size: 20px;
-    font-weight: bold;
-  }
+button {
+  margin-left: 10px;
+  border-radius: 0px;
+  background-color: white;
+  border: 1px solid #ff007f;
+  padding: 6px 10px;
+  color: #ff007f;
+}
+
+button:hover {
+  background-color: #1abc9c;
+  color: white;
+  border: 1px solid #1abc9c;
+}
+
+input[type="checkbox"]:checked {
+  accent-color: #ff007f !important;
+  border-radius: 0%;
+}
+
+button:focus {
+  outline: none;
+}
+
+button::before {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+ul {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+li ul li {
+  display: flex;
+  align-items: center;
+}
+
+
+li #deleteRep {
+  margin-top : 5px;
+  margin-right: 80%;
+}
+
+h3{
+  display: flex;
+}
+#delQuest{
+  border : 0px !important;
+  padding: 0%;
+  align-items: center;
+  margin-top: 1.5px;
+}
+#delQuest:hover{
+  background-color : transparent !important;
+  color: #1abc9c;
+}
+
+#deleteRep,#saveRep {
+  margin-left: auto;
+  border : 0px !important;
+}
+
+#deleteRep:hover, #saveRep:hover {
+  color: #1abc9c;
+  background-color: transparent;
+}

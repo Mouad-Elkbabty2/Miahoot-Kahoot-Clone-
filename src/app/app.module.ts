@@ -16,11 +16,11 @@ import { MatSortModule } from '@angular/material/sort';
 import { EditMiahootComponent } from './edit-miahoot-component/edit-miahoot-component.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NewMiahootComponent } from './new-miahoot/new-miahoot.component';
-import { PresentationComponent } from './presentation/presentation.component';
+import { ParticipantComponent } from './participant/participant.component';
 import { CommonModule } from '@angular/common';
 import { MatListModule } from '@angular/material/list';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatCardModule} from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatCardModule } from '@angular/material/card';
 import { AuthComponent } from './auth/auth.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
@@ -28,6 +28,11 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { NavbarComponent } from './navbar/navbar.component';
+import { MiahootService } from './services/miahoot.service';
+import { HttpClientModule } from '@angular/common/http';
+import { TestApiComponent } from './test-api/test-api.component';
+import { PresentateurComponent } from './presentateur/presentateur.component';
+
 
 
 
@@ -38,9 +43,11 @@ import { NavbarComponent } from './navbar/navbar.component';
     MyMiahootsComponent,
     EditMiahootComponent,
     NewMiahootComponent,
-    PresentationComponent,
+    ParticipantComponent,
     AuthComponent,
-    NavbarComponent
+    NavbarComponent,
+    TestApiComponent,
+    PresentateurComponent
   ],
   imports: [
     BrowserModule,
@@ -60,13 +67,14 @@ import { NavbarComponent } from './navbar/navbar.component';
     CommonModule,
     MatChipsModule,
     MatCardModule,
+    HttpClientModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
 
   ],
-  providers: [],
+  providers: [MiahootService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

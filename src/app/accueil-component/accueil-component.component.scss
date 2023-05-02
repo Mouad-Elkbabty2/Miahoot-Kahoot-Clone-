@@ -21,82 +21,89 @@ label {
 	font-size: 1.5rem;
 	color: #555;
 	margin-bottom: 1rem;
-}
-
-input[type="text"] {
-	padding: 1rem;
-	border: none;
-	border-radius: 10px;
-	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-	font-size: 1.2rem;
-	margin-bottom: 2rem;
-}
-
-button[type="submit"] {
-	padding: 1rem 2rem;
-	background-color: #ff007f;
-	color: #fff;
-	border: none;
-	border-radius: 10px;
-	font-size: 1.2rem;
-	cursor: pointer;
-}
-
-button[type="submit"]:hover {
-	background-color: #17856f;
-	transition: background-color 0.3s ease-in-out;
-}
-
-button[type="submit"] {
-    /* ... */
-    animation: none; /* Désactive l'animation par défaut */
-  }
-  
-button[type="button"] {
-    background-color: #1abc9c;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    padding: 12px 24px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-button[type="button"]:hover {
-	background-color: #17856f;
-	transition: background-color 0.3s ease-in-out;
-}
-
-span {
-	display: inline-block;
-	margin: 0 0px;
-	font-size: 16px;
-	color: #666;
-}
-
-label {
 	display: inline-block;
 	margin-right: 10px;
-	font-size: 16px;
 }
 
-input[type="text"] {
+input {
 	padding: 12px;
 	font-size: 16px;
-	border-radius: 4px;
+	border-radius: 0px;
 	border: none;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	margin-bottom: 1.5rem;
+	outline: none;
+}
+
+button[type="submit"],
+button[type="button"] {
+	padding: 12px 24px;
+	font-size: 16px;
+	cursor: pointer;
+	border-radius: 0px;
+	transition: background-color 0.2s ease-in-out;
+	margin-left: 10px;
 }
 
 button[type="submit"] {
 	background-color: #1abc9c;
-	border: none;
 	color: white;
-	padding: 12px 24px;
-	font-size: 16px;
-	cursor: pointer;
-	border-radius: 4px;
-	transition: background-color 0.2s ease-in-out;
-	margin-left: 10px;
+	border: none;
 }
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+	background-color: #17856f;
+}
+
+.input-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#submit {
+	background-color: transparent;
+	border: none;
+	font-size: 1.5em;
+	color: #1abc9c;
+	cursor: pointer;
+	margin-top: -7px;
+	position: absolute;
+	top: 50%;
+	right: 0;
+	transform: translateY(-50%);
+}
+
+.input-wrapper {
+	position: relative;
+}
+
+#pin {
+	padding-right: 50px;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+#submit:hover mat-icon {
+	animation: rotateX 1s;
+}
+
+@keyframes rotateX {
+	0% {
+		transform: rotateY(0deg);
+	}
+
+	100% {
+		transform: rotateY(360deg);
+	}
+}
+
+button.disabled {
+	background-color: #1abc9c88 !important;
+	cursor: not-allowed;
+}
+  
