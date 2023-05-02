@@ -7,6 +7,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./participant.component.scss']
 })
 export class ParticipantComponent implements OnInit {
+
+  //@Input() questionId!: number 
+  //@Input() label!:String 
+  //@Input() reponses!:Reponse[]
+
   questionId: number;
   reponses: string[];
   question: string;

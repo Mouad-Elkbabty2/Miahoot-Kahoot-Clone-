@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { MiahootService } from '../services/miahoot.service';
+import { Miahoot } from '../services/miahoot.service';
 
 
 
@@ -28,6 +30,8 @@ export interface QCMProjected {
 };
 
 
+
+
 @Component({
   selector: 'app-presentateur',
   templateUrl: './presentateur.component.html',
@@ -36,18 +40,45 @@ export interface QCMProjected {
 
 export class PresentateurComponent {
 
-  qcmCourant : QCMProjected = qcmCourant;
+  qcmCourant : number = 0;
   participants: string[];
+  //miahoot$ = this.miahootService.obsProjectedMiahoot;
+  miahoots : Miahoot[] = [
+    {
+      id: 1,
+      questrep: [{
+        question: "Quel est le plus grand pays du monde en termes de surface ?",
+        reponses: ["Russie", "Chine", "États-Unis", "Canada"],
+        estCorrecte: [true, false, false, false]
+      }]
+    },
+    {
+      id: 2,
+      questrep: [{
+        question: "Quel est le plus grand pays du monde en termes de superficie en eau ?",
+        reponses: ["Australie", "Qatar", "Arabie saoudite", "Tunisie"],
+        estCorrecte: [true, false, false, false]
+      },{
+        question: "Quel est le plus grand pays du monde en termes de surface ?",
+        reponses: ["Russie", "Chine", "États-Unis", "Canada"],
+        estCorrecte: [true, false, false, false]
+      }]
+    },
+    {
+      id: 3,
+      questrep: [{
+        question: "Quel est le plus haut sommet du monde ?",
+        reponses: ["Mont Everest", "Kilimandjaro", "Mont Blanc", "Aconcagua"],
+        estCorrecte: [true, false, false, false]
+      }]
+    }, { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] }
+  ];
 
-  constructor() {}
+  miahoot : Miahoot = this.miahoots[0];
 
-  get question(): string {
-    return this.qcmCourant.question;
-  }
+  constructor(private miahootService: MiahootService){}
 
-  get responses(): string[] {
-    return this.qcmCourant.responses;
-  }
+
 
   setVotes(votes: any) {
     // TODO: Afficher les votes dans l'interface

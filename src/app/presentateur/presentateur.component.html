@@ -1,1 +1,11 @@
-<p>presentateur works!</p>
+<h2>Présentateur</h2>
+
+<!--        <div *ngIf="miahoot$ | async as miahoot">       -->
+  <h3>{{ miahoot.questrep[qcmCourant].question }}</h3>
+  <ul>
+    <li *ngFor="let reponse of miahoot.questrep[qcmCourant].reponses">
+      {{ reponse }}
+    </li>
+  </ul>
+<!-- </div>-->
+
