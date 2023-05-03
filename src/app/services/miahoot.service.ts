@@ -11,7 +11,7 @@ import { firstValueFrom } from 'rxjs';
 })
 export class MiahootService {
 
-  private urlMi = '/api/miahoot';
+  private urlMi = '/api/miahoots';
   private urlQuestion = '/api/question';
   private urlTeacher = '/api/teacher';
 
@@ -23,8 +23,8 @@ export class MiahootService {
     return firstValueFrom(this.http.get<Miahoot>(`${this.urlMi}/${id}`));
   }
 
-  async createMiahoot(miahoot: Miahoot): Promise<Miahoot> {
-    return firstValueFrom(this.http.post<Miahoot>(`${this.urlMi}/`, miahoot));
+  async createMiahoot(miahoot: Miahoot,id:number): Promise<Miahoot> {
+    return firstValueFrom(this.http.post<Miahoot>(`${this.urlMi}/concepteur/${id}`, miahoot));
   }
 
   async deleteMiahoot(id: number): Promise<any> {

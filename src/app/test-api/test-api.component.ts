@@ -48,7 +48,7 @@ export class TestApiComponent implements OnInit {
 
   createMiahoot() {
     const miahoot = {};
-    this.miService.createMiahoot(miahoot)
+    this.miService.createMiahoot(miahoot,this.teacherId)
       .then(() => {
         console.log("Miahoot created successfully");
       })
