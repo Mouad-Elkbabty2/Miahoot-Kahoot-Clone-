@@ -50,6 +50,18 @@ export class MyMiahootsComponent implements AfterViewInit {
     console.log(miahoot.id);
     let id : number = miahoot.id;
     this.router.navigate(['/presentation/'+id]);
+
+    //Modifier sur firebase le projected Miahoot pour l'utilisateur connecté}
+
+      //Créer la collection Projected Miahoots
+
+        //Dans cette collection creer un Miahoot avec les données du miahoot passé en paramètre
+
+          //Sous collection QCM
+
+            //Sous collection votes qui fera référence aux utilisateurs
+
+              //Sous collection réponse
   }
 
   createNewMiahoot(){

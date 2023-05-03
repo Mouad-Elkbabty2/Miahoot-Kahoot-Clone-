@@ -80,7 +80,6 @@ export class AuthComponent implements OnInit, OnDestroy {
     }
   }
   
-
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
   }
