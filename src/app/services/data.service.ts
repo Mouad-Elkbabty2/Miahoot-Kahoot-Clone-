@@ -10,9 +10,6 @@ interface MiahootUser{
   readonly mail:string;
 }
 
-
-
-
 //a deplacer plus tard
 export interface QuestionReponses {
   question: string;
@@ -57,10 +54,6 @@ const miahoots: Miahoot[] = [
 ];
 // fin des éléments à supprimer ou déplacer
 
-
-
-
-
 export type VOTES = {
   [participantUID: string]: true
 }
@@ -77,7 +70,7 @@ export interface MiahootProjected {
   creator: string;
   presentator: string;
   currentQCM: string;
-  // QCMs: QCMProjected; 
+  QCMs: QCMProjected; 
 }
 
 export const FsMiahootProjectedConverter: FirestoreDataConverter<MiahootProjected> = {
@@ -87,6 +80,7 @@ export const FsMiahootProjectedConverter: FirestoreDataConverter<MiahootProjecte
     creator: snap.get("creator"),
     presentator: snap.get("presentator"),
     currentQCM: snap.get("currentQCM"),
+    QCMs: snap.get("QCMs")
   })
 
 }

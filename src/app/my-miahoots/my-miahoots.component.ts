@@ -1,8 +1,15 @@
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import { Auth, authState, User } from '@angular/fire/auth';
+import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
+import firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
+import { EMPTY, from, Observable, of, switchMap, tap } from 'rxjs';
+import { FsUserConverter, MiahootUser } from '../data.service';
+import { MiahootService } from '../services/miahoot.service';
 
 
 export interface Miahoot {
@@ -29,7 +36,18 @@ export class MyMiahootsComponent implements AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'date', 'status' ,'actions'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  constructor(private _liveAnnouncer: LiveAnnouncer,private router: Router) {}
+  public user: User | null = null;
+
+  constructor(
+    private router: Router, 
+    private auth: Auth, 
+    private fs : Firestore, 
+    private miService : MiahootService
+  ) {
+    authState(auth).subscribe((user) => {
+      this.user = user;
+    });
+  }
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -46,22 +64,20 @@ export class MyMiahootsComponent implements AfterViewInit {
     this.dataSource.data = this.dataSource.data.filter(m => m !== miahoot);
   }
 
-  lectureMiahoot(miahoot: Miahoot){
-    console.log(miahoot.id);
-    let id : number = miahoot.id;
-    this.router.navigate(['/presentation/'+id]);
+  lectureMiahoot(miahootId: number){
+    //Ajouter le miahoot correspondant au miahootId a la collection projectedMiahoots
+    const miahoot = this.miService.getMiahoot(miahootId);
 
-    //Modifier sur firebase le projected Miahoot pour l'utilisateur connecté}
-
-      //Créer la collection Projected Miahoots
-
-        //Dans cette collection creer un Miahoot avec les données du miahoot passé en paramètre
-
-          //Sous collection QCM
-
-            //Sous collection votes qui fera référence aux utilisateurs
-
-              //Sous collection réponse
+    // Update the user's projectedMiahoot field in Firestore
+    if (this.user) {
+      const userId = this.user.uid;
+      const docRef = doc(this.fs, `users/${userId}`);
+      updateDoc(docRef, { projectedMiahoot: miahootId }).then(() => {
+        this.router.navigate(['/presentateur/' + miahootId]);
+      }).catch((error) => {
+        console.error('Error updating Firestore document:', error);
+      });
+    }
   }
 
   createNewMiahoot(){
