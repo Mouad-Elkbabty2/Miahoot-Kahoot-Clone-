@@ -35,6 +35,7 @@ import { LoggedComponent } from './logged/logged.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthGuard } from './guard/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 
 
@@ -51,7 +52,8 @@ import { AuthGuard } from './guard/auth.guard';
     NavbarComponent,
     TestApiComponent,
     PresentateurComponent,
-    LoggedComponent
+    LoggedComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
