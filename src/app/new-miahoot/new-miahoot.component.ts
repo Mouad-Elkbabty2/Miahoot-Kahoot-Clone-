@@ -1,6 +1,7 @@
-import { Component, ElementRef, HostListener } from '@angular/core';
+import { Component, ElementRef,ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MiahootService } from '../services/miahoot.service';
+import { Miahoot } from '../models/models';
 
 interface QuestionReponses {
   question: string;
@@ -8,72 +9,47 @@ interface QuestionReponses {
   estCorrecte: boolean[];
 }
 
-interface Miahoot {
+/* interface Miahoot {
   id: number;
   questrep: QuestionReponses[];
-}
-
-// Exemple d'objet pour tester la structure Miahoot
-const miahoots: Miahoot[] = [
-  {
-    id: 1,
-    questrep: [{
-      question: "Quel est le plus grand pays du monde en termes de surface ?",
-      reponses: ["Russie", "Chine", "États-Unis", "Canada"],
-      estCorrecte: [true, false, false, false]
-    }]
-  },
-  {
-    id: 2,
-    questrep: [{
-      question: "Quel est le plus grand pays du monde en termes de superficie en eau ?",
-      reponses: ["Australie", "Qatar", "Arabie saoudite", "Tunisie"],
-      estCorrecte: [true, false, false, false]
-    },{
-      question: "Quel est le plus grand pays du monde en termes de surface ?",
-      reponses: ["Russie", "Chine", "États-Unis", "Canada"],
-      estCorrecte: [true, false, false, false]
-    }]
-  },
-  {
-    id: 3,
-    questrep: [{
-      question: "Quel est le plus haut sommet du monde ?",
-      reponses: ["Mont Everest", "Kilimandjaro", "Mont Blanc", "Aconcagua"],
-      estCorrecte: [true, false, false, false]
-    }]
-  }, { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] }
-];
-
-
-
+} */
 
 @Component({
   selector: 'app-new-miahoot',
   templateUrl: './new-miahoot.component.html',
-  styleUrls: ['./new-miahoot.component.scss']
+  styleUrls: ['./new-miahoot.component.scss'],
 })
-export class NewMiahootComponent {
+export class NewMiahootComponent implements OnInit {
 
-  miahoot: Miahoot;
   questRep: QuestionReponses[] = [];
   newQuestion = '';
   newReponses: string[] = [];
   newCorrect: boolean[] = [];
   editable = false;
-  tempReponses: string[] = [];
+  tempReponses: string[] | undefined [] = [];
   editingIndexrep: number[] = [];
   editingQuestionIndex: boolean[]=[];
   //cette variable est pour tester
   questionRep: QuestionReponses;
+  miahoots : Miahoot;
+  id = Number(this.route.snapshot.paramMap.get('id'));
+  newResp : string;
+  estValide : boolean;
 
 
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute,private miahootService: MiahootService ) { }
+  constructor(private elementRef: ElementRef, private route: ActivatedRoute,private miService: MiahootService ) { }
 
   ngOnInit() {
-    const miahootId = parseInt(this.route.snapshot.paramMap.get('id') ?? '-1', 10);
-    this.miahoot = miahoots.find(miahoot => miahoot.id === miahootId) ?? { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] };
-    this.questRep=this.miahoot.questrep;
+    console.log(this.id+" initialized");
+    
+    this.miService.getMiahoot(this.id)
+    .then(miahoot => {
+      console.log(miahoot);
+      this.miahoots = miahoot;
+    })
+    .catch(err => console.error(err));
+
+    console.log("weeeey : "+this.editingIndexrep);
   }
 
   onSubmit() {
@@ -102,28 +78,39 @@ export class NewMiahootComponent {
   }
   }
 
-  saveRep(i: number, j: number) {
-    if(this.tempReponses[i]){
-      this.questRep[i].reponses[j] = this.tempReponses[i];
-      this.editingIndexrep = [];
-      this.tempReponses[i] = "";
-    }
+  saveRep(j: number, id : number | undefined) {
+    let rep = document.querySelector<HTMLInputElement>(`#editRéponse-${j}`)?.value;    
+    this.miService.updateReponse(id,{label:rep,estValide:false});
+    const label = this.miService.getResponseById(id).then(res => res.label)
+    this.editingIndexrep[j] = -1;
   }
 
-  supprimeQuest(i: number) {
-    this.questRep.splice(i, 1);
+  supprimeQuest(id: number | undefined){
+    this.miService.deleteQuestion(id);
   }
 
-  supprimeRep(i: number, j: number) {
-    this.questRep[i].reponses.splice(j, 1);
+  supprimeRep(id : number | undefined){
+    this.miService.deleteReponse(id);
   }
   editRep(i: number, j: number) {
-
     this.editingIndexrep[i] = j;
-    this.tempReponses[i] = this.questRep[i].reponses[j];
   }
 
+  ajouterQuestion(){
+    this.miService.createQuestion(this.id,{label:this.newQuestion});
+    window.location.reload();
+  }
 
+  ajouterReponse(i: number,questId: number | undefined){
+    let rep = document.querySelector<HTMLInputElement>(`#réponse-${i}`)?.value;
+    if(rep != null){
+      if (rep.trim()) {
+        this.miService.createReponse(questId,{label:rep,estValide:this.estValide});
+        document.querySelector<HTMLInputElement>(`#réponses-${i}`)!.value = '';
+        this.newCorrect[i] = false;
+      }
+  }
+}
     // delete miahoot
 /*   delete(id: number) {
     this.miahootService.deleteMiahoot(id).subscribe(

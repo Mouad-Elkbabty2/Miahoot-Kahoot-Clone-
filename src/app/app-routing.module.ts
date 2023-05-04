@@ -15,7 +15,7 @@ import { PresentateurComponent } from './presentateur/presentateur.component';
 
 const routes: Routes = [
   {path: '',title: 'Accueil', component: AccueilComponent,},
-  { path: 'my-miahoots', component: MyMiahootsComponent, canActivate: [AuthGuard]},
+  { path: 'my-miahoots/:id', component: MyMiahootsComponent, canActivate: [AuthGuard]},
   { path: 'new-miahoot/:id', component: NewMiahootComponent, canActivate: [AuthGuard]  }, //canActivate interdit l'accés à certains utilisateur
   { path: 'testApi', component:TestApiComponent},
   { path: 'participant/:id', component: ParticipantComponent },

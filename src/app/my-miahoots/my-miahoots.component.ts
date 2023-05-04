@@ -1,10 +1,10 @@
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { EMPTY, from, Observable, of, switchMap, tap } from 'rxjs';
@@ -32,9 +32,9 @@ const ELEMENT_DATA: Miahoot[] = [
   templateUrl: './my-miahoots.component.html',
   styleUrls: ['./my-miahoots.component.scss']
 })
-export class MyMiahootsComponent implements AfterViewInit {
+export class MyMiahootsComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['id', 'name', 'date', 'status' ,'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource: MatTableDataSource<any>;
 
   public user: User | null = null;
 
@@ -42,7 +42,8 @@ export class MyMiahootsComponent implements AfterViewInit {
     private router: Router, 
     private auth: Auth, 
     private fs : Firestore, 
-    private miService : MiahootService
+    private miService : MiahootService,
+    private route: ActivatedRoute
   ) {
     authState(auth).subscribe((user) => {
       this.user = user;
@@ -51,13 +52,23 @@ export class MyMiahootsComponent implements AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
+
+  ngOnInit(): void {
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.miService.miahootsByTeacherId(id)
+    .then(miahoot => {
+      console.log(miahoot);
+      
+      this.dataSource = new MatTableDataSource(miahoot);
+    })
+    .catch(err => console.error(err));
+  }
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-  editMiahoot(miahoot: Miahoot) {
-    let id : number = miahoot.id;
-    this.router.navigate(['/new-miahoot/'+miahoot.id]);
+  editMiahoot(miahootId: number) {
+    this.router.navigate(['/new-miahoot/'+miahootId]);
   }
 
   deleteMiahoot(miahoot: Miahoot): void {
@@ -83,7 +94,8 @@ export class MyMiahootsComponent implements AfterViewInit {
   createNewMiahoot(){
     const lastElement = ELEMENT_DATA.slice(-1)[0];
     const lastId = lastElement.id+1;
-    this.router.navigate(['/new-miahoot/'+lastId]);
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.router.navigate(['/new-miahoot/'+id]);
   }
   
 }

@@ -15,7 +15,6 @@ export class TestApiComponent implements OnInit {
   question: any;
   message: string;
   label: string;
-  newTeacher: Teacher = {};
   teacherId: number;
   miahootId : number;
 
@@ -113,10 +112,11 @@ export class TestApiComponent implements OnInit {
 
 
   //----------------- API Teacher -----------------------
-  createTeacher(): void {
-    this.miService.createTeacher({})
+  createTeacher() {
+    this.miService.createTeacher({nom : "Mr Bouhaliw"})
       .then((teacher) => {
-        console.log("teacher added successfully");
+        console.log("teacher added successfully id :" +teacher.id);
+        return teacher;
       })
       .catch((error) => {
         console.error(error);

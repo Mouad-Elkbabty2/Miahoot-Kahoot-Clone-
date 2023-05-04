@@ -13,10 +13,9 @@ export interface Presentateur {
 }
 
 export interface Response {
-    id: number;
-    label: string;
+    id?: number;
+    label?: string;
     estValide: boolean;
-    question: string;
 }
 
 export interface Question {
@@ -48,7 +47,7 @@ export interface Miahoot {
 
 export interface Teacher {
     id?: number;
-    nom?: string;
+    nom: string;
     createdMiahoots?: Miahoot[];
     presentedMiahoots?: Miahoot[];
   }

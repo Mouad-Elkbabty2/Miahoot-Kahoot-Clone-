@@ -10,8 +10,8 @@ import { Observable, tap } from 'rxjs';
 export interface MiahootUser{
   readonly name:string;
   readonly mail?:string;
-  readonly user_type? : number;
-  readonly miahootProjected?:number
+  readonly miahootProjected?:number;
+  teacherId?:number;
 }
 
 export type VOTES = { 
@@ -63,8 +63,8 @@ export const FsUserConverter : FirestoreDataConverter<STATE["user"]> = {
   fromFirestore: snap => ({
     mail: snap.get("mail"),
     name: snap.get("name"),
-    user_type: snap.get("userType"),
-    miahootProjected: snap.get("miahootProjected")
+    miahootProjected: snap.get("miahootProjected"),
+    teacherId: snap.get("teacherId"),
   })
 }
 
