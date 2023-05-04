@@ -9,6 +9,7 @@ import { AuthComponent } from './auth/auth.component';
 import { TestApiComponent } from './test-api/test-api.component';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { PresentateurComponent } from './presentateur/presentateur.component';
 
 
 
@@ -20,6 +21,7 @@ const routes: Routes = [
   { path: 'participant/:id', component: ParticipantComponent },
   { path: 'test', component:AuthComponent},
   { path: 'login', component:LoginComponent},
+  { path: 'presentateur/:id', component:PresentateurComponent},
   { path: '**', redirectTo: '' }
 ];
 

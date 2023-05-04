@@ -1,11 +1,30 @@
 <h2>Présentateur</h2>
 
 <!--        <div *ngIf="miahoot$ | async as miahoot">       -->
-  <h3>{{ miahoot.questrep[qcmCourant].question }}</h3>
-  <ul>
-    <li *ngFor="let reponse of miahoot.questrep[qcmCourant].reponses">
-      {{ reponse }}
-    </li>
-  </ul>
+  <mat-card>
+    <mat-card-title>Question n°{{ qcmCourant.id }} : {{ qcmCourant.label }}</mat-card-title>
+    <mat-list>
+      <h3 mat-subheader>Réponses :</h3>
+      <mat-list-item
+        *ngFor="let reponse of qcmCourant.responses"
+        [ngStyle]="{
+          'background-color': showAnswers && reponse.estValide ? 'lightgreen' : 'inherit'
+        }"
+      >
+        {{ reponse.id }} : {{ reponse.label }}
+      </mat-list-item>
+    </mat-list>
+    <button mat-raised-button (click)="afficherRep()">Afficher les réponses</button>
+    <button mat-raised-button color="primary" [disabled]=" (indexQuestion === 0) || disable"
+     (click)="questionSwitcher(-1)">Question précédente ⬅️</button>
+    <button mat-raised-button color="primary" [disabled]="( miahoot.questions !== undefined &&indexQuestion === miahoot.questions.length - 1 )|| 
+    disable"
+    (click)="questionSwitcher(1)">Question suivante ➡️</button>
+    <button mat-raised-button (click)="retToMyMiahoot()">Retourner à mes miahoot</button>
+  </mat-card>
+  
+  
+  
+  
 <!-- </div>-->
 

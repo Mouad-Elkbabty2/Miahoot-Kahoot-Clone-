@@ -49,7 +49,7 @@ export class MyMiahootsComponent implements AfterViewInit {
   lectureMiahoot(miahoot: Miahoot){
     console.log(miahoot.id);
     let id : number = miahoot.id;
-    this.router.navigate(['/presentation/'+id]);
+    this.router.navigate(['/presentateur/'+id]);
 
     //Modifier sur firebase le projected Miahoot pour l'utilisateur connecté}
 
@@ -62,6 +62,7 @@ export class MyMiahootsComponent implements AfterViewInit {
             //Sous collection votes qui fera référence aux utilisateurs
 
               //Sous collection réponse
+
   }
 
   createNewMiahoot(){
