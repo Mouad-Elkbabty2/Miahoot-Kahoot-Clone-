@@ -1,0 +1,9 @@
+<div class="form-container">
+    <h3 class="form-title">Créer votre Miahoot</h3>
+    <mat-form-field appearance="fill">
+      <mat-label>Titre</mat-label>
+      <input placeholder="Entrez le titre du miahoot" [(ngModel)]="label" type="text" matInput>
+    </mat-form-field>
+    <button (click)="createMiahoot()" mat-raised-button class="form-button">Créer</button>
+  </div>
+  

@@ -37,19 +37,18 @@ export class NewMiahootComponent implements OnInit {
   estValide : boolean;
 
 
-  constructor(private elementRef: ElementRef, private route: ActivatedRoute,private miService: MiahootService ) { }
+  constructor(private elementRef: ElementRef, 
+              private route: ActivatedRoute,
+              private miService: MiahootService,) { }
 
   ngOnInit() {
     console.log(this.id+" initialized");
-    
     this.miService.getMiahoot(this.id)
     .then(miahoot => {
       console.log(miahoot);
       this.miahoots = miahoot;
     })
     .catch(err => console.error(err));
-
-    console.log("weeeey : "+this.editingIndexrep);
   }
 
   onSubmit() {

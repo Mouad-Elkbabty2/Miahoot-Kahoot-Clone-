@@ -24,7 +24,7 @@ export class MiahootService {
     return firstValueFrom(this.http.get<Miahoot>(`${this.urlMi}/${id}`));
   }
 
-  async createMiahoot(miahoot: Miahoot,id:number): Promise<Miahoot> {
+  async createMiahoot(miahoot: Miahoot,id:string): Promise<Miahoot> {
     return firstValueFrom(this.http.post<Miahoot>(`${this.urlMi}/concepteur/${id}`, miahoot));
   }
 
@@ -32,7 +32,7 @@ export class MiahootService {
     return firstValueFrom(this.http.delete(`${this.urlMi}/${id}`));
   }
 
-  async updateMiahoot(id: number, miahoot: Partial<Miahoot>): Promise<Miahoot> {
+  async updateMiahoot(id: number, miahoot: Miahoot): Promise<Miahoot> {
     return firstValueFrom(this.http.put<Miahoot>(`${this.urlMi}/${id}`, miahoot));
   }
   
@@ -73,7 +73,7 @@ export class MiahootService {
     return firstValueFrom(this.http.delete(`${this.urlTeacher}/${id}`));
   }
 
-  async miahootsByTeacherId(id: number): Promise<any> {
+  async miahootsByTeacherId(id: string | null): Promise<any> {
     return firstValueFrom(this.http.get(`${this.urlTeacher}/${id}/miahoots`));
   }
 

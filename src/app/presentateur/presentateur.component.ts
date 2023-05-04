@@ -12,7 +12,7 @@ export class PresentateurComponent {
 
   
   //miahoot$ = this.miahootService.obsProjectedMiahoot;
-  miahoots : Miahoot[] = [
+/*   miahoots : Miahoot[] = [
     
     { id: 2}
     ,{
@@ -41,7 +41,7 @@ export class PresentateurComponent {
         {id: 3, label :"maybe", estValide: false,question:''}, {id: 4, label :"nahwi mk", estValide: true,question:''}]}
     
     ]
-    }]
+    }] */
 
 
   miahoot : Miahoot ;
@@ -55,7 +55,7 @@ export class PresentateurComponent {
 
   ngOnInit(): void {
     this.miahootProjected = parseInt(this.route.snapshot.paramMap.get('id') ?? '-1', 10);
-    this.miahoot = this.miahoots[this.miahootProjected];
+    //this.miahoot = this.miahoots[this.miahootProjected];
     if(this.miahoot.questions !== undefined){
       this.disable = false;
       this.qcmCourant = this.miahoot.questions[this.indexQuestion];

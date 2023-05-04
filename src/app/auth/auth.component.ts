@@ -84,25 +84,25 @@ export class AuthComponent implements OnInit, OnDestroy {
           
           // Create teacher record in Spring Boot backend
           const teacherName = user.displayName || user.email || user.uid;
-          this.miService.createTeacher({ nom: teacherName })
+          this.miService.createTeacher({ nom: teacherName, fireBaseId : user.uid})
             .then((teacher) => {
               console.log("Teacher added successfully");
               // Update user document with teacherId
-              updateDoc(userDocRef, { teacherId: teacher.id });
-              localStorage.setItem('teacherId', teacher.id);  
+/*               updateDoc(userDocRef, { teacherId: teacher.id });
+              localStorage.setItem('teacherId', teacher.id);  */ 
             })
             .catch((error) => {
               console.error(error);
             });
         }
-        else { 
+       /*  else { 
           localStorage.setItem('teacherId', snapUser.data()?.teacherId?.toString() ?? '');
-        }
+        } */
         localStorage.setItem('userType', JSON.stringify(userType));
         const teacherId = localStorage.getItem('teacherId');
         // Navigate based on userType
         if (userType === 1) {
-          this.router.navigate([`/my-miahoots/${teacherId}`]);  
+          this.router.navigate([`/my-miahoots/${user.uid}`]);  
         } else {
           this.router.navigate(['/participant/1']);
         }

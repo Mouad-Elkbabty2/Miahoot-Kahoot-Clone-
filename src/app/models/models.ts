@@ -43,6 +43,8 @@ export interface Miahoot {
     participants?: Participant[];
     nom?: string;
     questions?: Question[];
+    miahootBirthday? : Date;
+    status? : number;
 }
 
 export interface Teacher {
@@ -50,4 +52,5 @@ export interface Teacher {
     nom: string;
     createdMiahoots?: Miahoot[];
     presentedMiahoots?: Miahoot[];
+    fireBaseId : String;
   }
