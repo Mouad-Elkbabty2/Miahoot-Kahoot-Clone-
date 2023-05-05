@@ -31,9 +31,9 @@ export type VOTES = {
   };
 
 export interface QCMProjected { 
-question: string; 
-responses: string[]; // Les réponses possibles 
-votes: VOTES; // Autant d'entrée dans le tableau que de réponses possibles 
+    question: string; 
+    responses: string[]; // Les réponses possibles 
+    votes: VOTES; // Autant d'entrée dans le tableau que de réponses possibles 
 };
 
 

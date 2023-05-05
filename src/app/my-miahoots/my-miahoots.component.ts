@@ -1,7 +1,7 @@
 import {LiveAnnouncer} from '@angular/cdk/a11y';
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
-import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
+import { addDoc, collection, doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import 'firebase/compat/firestore';
 import { EMPTY, from, Observable, of, switchMap, tap } from 'rxjs';
 import { FsUserConverter, MiahootUser } from '../data.service';
 import { MiahootService } from '../services/miahoot.service';
+// import { Miahoot } from '../models/models';
 
 
 export interface Miahoot {
@@ -53,10 +54,10 @@ export class MyMiahootsComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    return;
   }
 
   editMiahoot(miahoot: Miahoot) {
-    let id : number = miahoot.id;
     this.router.navigate(['/new-miahoot/'+miahoot.id]);
   }
 
@@ -64,10 +65,7 @@ export class MyMiahootsComponent implements AfterViewInit {
     this.dataSource.data = this.dataSource.data.filter(m => m !== miahoot);
   }
 
-  lectureMiahoot(miahootId: number){
-    //Ajouter le miahoot correspondant au miahootId a la collection projectedMiahoots
-    const miahoot = this.miService.getMiahoot(miahootId);
-
+  async lectureMiahoot(miahootId: number){
     // Update the user's projectedMiahoot field in Firestore
     if (this.user) {
       const userId = this.user.uid;
@@ -76,14 +74,52 @@ export class MyMiahootsComponent implements AfterViewInit {
         this.router.navigate(['/presentateur/' + miahootId]);
       }).catch((error) => {
         console.error('Error updating Firestore document:', error);
+        return;
       });
     }
+    ///////////////////////////////////////////////////////////////////////////////////
+    //Ajouter le miahoot correspondant au miahootId a la collection projectedMiahoots//
+    ///////////////////////////////////////////////////////////////////////////////////
+    // const miahoot = this.miService.getMiahoot(miahootId);
+    // if (!miahoot) {
+    //     console.error(`Miahoot ${miahootId} not found`);
+    //     return;
+    // }
+    // const docUser = doc(fs, `users/${U.uid}`).withConverter(FsUserConverter);
+    // Create the projectedMiahoot document
+    // const projectedMiahootRef = await addDoc(collection(this.fs, 'projectedMiahoots'), {
+    //     name: (await miahoot).nom,
+    //     // currentQCM: miahoot.QCMs[0].question
+    //     currentQCM: (await miahoot).questions?[0]
+    // });
+
+    // Add the QCMs to the projectedMiahoot document
+    // for (const qcm of (await miahoot).questions) {
+    //     const qcmDocRef = await addDoc(collection(projectedMiahootRef, 'QCMs'), {
+    //         question: qcm.question,
+    //         responses: qcm.responses
+    //     });
+
+    //     // Add the votes subcollection to the QCM document
+    //     for (let i = 0; i < qcm.responses.length; i++) {
+    //         await setDoc(doc(qcmDocRef, `votes/${i}`), {});
+    //     }
+    // }
+
+    // Update the user's projectedMiahoot field in Firestore
+    // if (this.user) {
+    //     const userId = this.user.uid;
+    //     const docRef = doc(this.fs, `users/${userId}`);
+    //     await updateDoc(docRef, { projectedMiahoot: projectedMiahootRef.id });
+    // }
+
   }
 
   createNewMiahoot(){
-    const lastElement = ELEMENT_DATA.slice(-1)[0];
-    const lastId = lastElement.id+1;
-    this.router.navigate(['/new-miahoot/'+lastId]);
+    // const lastElement = ELEMENT_DATA.slice(-1)[0];
+    // const lastId = lastElement.id+1;
+    // this.router.navigate(['/new-miahoot/'+lastId]);
+    return;
   }
   
 }
