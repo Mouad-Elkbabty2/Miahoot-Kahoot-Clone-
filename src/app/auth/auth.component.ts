@@ -1,14 +1,11 @@
-import { Component, OnInit, OnDestroy, Optional } from '@angular/core';
-import { Auth, authState, signInAnonymously, signOut, User, GoogleAuthProvider, signInWithPopup } from '@angular/fire/auth';
-import { EMPTY, Observable, Subscription } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
-import { traceUntilFirst } from '@angular/fire/performance';
-import { FsUserConverter } from '../data.service';
-import { doc, Firestore, getDoc, setDoc } from '@angular/fire/firestore';
-import { MiahootUser } from '../data.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { User } from '@angular/fire/auth';
+import { EMPTY, filter, map, Observable, of, Subscription, switchMap, tap } from 'rxjs';
+import { Firestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { MiahootService } from '../services/miahoot.service';
-import { updateDoc } from 'firebase/firestore';
+import { AuthService } from '../services/auth.service';
+import { UntypedFormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-auth',
@@ -19,39 +16,30 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   private readonly userDisposable: Subscription|undefined;
   public readonly user: Observable<User | null> = EMPTY;
+  public uid: string | null = null;
+  public id: string;
 
   showLoginButton = false;
   showLogoutButton = false;
 
-  constructor(private auth: Auth, private fs : Firestore, private router : Router, private miService : MiahootService) {
-    if (auth) {
-      authState(this.auth).pipe(
-        tap(async (U: User | null) => {
-          if (!!U) {
-            const user = U; // await this.auth.currentUser;
-            if (user) {
-              const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
-              const snapUser = await getDoc(userDocRef);
-              if (!snapUser.exists()) {
-                setDoc(userDocRef, {
-                  name: user.displayName ?? user.email ?? user.uid,
-                  mail: user.email ?? "",
-                  miahootProjected: 0,
-                } as MiahootUser);
-              }
-            }
-          }
-        })
-      ).subscribe((U: User | null) => {
-        const isLoggedIn = !!U;
-        this.showLoginButton = !isLoggedIn;
-        this.showLogoutButton = isLoggedIn;
-      });
-    }
+  constructor( private fs : Firestore, 
+    private router : Router, 
+    private miService : MiahootService,
+    private auth : AuthService) {
+
+      this.showLoginButton = true;
     
+      this.userDisposable = this.auth.user.subscribe((U) => {
+        if (U) {
+          this.uid = U.uid;
+        }
+      });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(this.user);
+    
+   }
 
   ngOnDestroy(): void {
     if (this.userDisposable) {
@@ -60,64 +48,31 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   async login(userType: number) {
-    const googleProvider = new GoogleAuthProvider();
-    googleProvider.setCustomParameters({
-      prompt: 'select_account'
-    });
+
+    this.auth.login(userType).then(()=>{
+      this.showLogoutButton = true;
+      this.showLoginButton = false;
   
-    try {
-      const credential = await signInWithPopup(this.auth, googleProvider);
-      const user = credential.user;
-  
-      if (user) {
-        const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
-        const snapUser = await getDoc(userDocRef);
-  
-        if (!snapUser.exists()) {
-          localStorage.setItem('userType', JSON.stringify(userType));
-          setDoc(userDocRef, {
-            ...snapUser.data(),
-            name: user.displayName ?? user.email ?? user.uid,
-            mail: user.email ?? "",
-            miahootProjected: 0,
-          } as MiahootUser);
-          
-          // Create teacher record in Spring Boot backend
-          const teacherName = user.displayName || user.email || user.uid;
-          this.miService.createTeacher({ nom: teacherName, fireBaseId : user.uid})
-            .then((teacher) => {
-              console.log("Teacher added successfully");
-              // Update user document with teacherId
-/*               updateDoc(userDocRef, { teacherId: teacher.id });
-              localStorage.setItem('teacherId', teacher.id);  */ 
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-        }
-       /*  else { 
-          localStorage.setItem('teacherId', snapUser.data()?.teacherId?.toString() ?? '');
-        } */
-        localStorage.setItem('userType', JSON.stringify(userType));
-        const teacherId = localStorage.getItem('teacherId');
-        // Navigate based on userType
-        if (userType === 1) {
-          this.router.navigate([`/my-miahoots/${user.uid}`]);  
-        } else {
-          this.router.navigate(['/participant/1']);
-        }
+      // Navigate based on userType
+      if (userType === 1) {
+        this.router.navigate([`/my-miahoots/${this.id}`]);  
+      } else {
+        this.router.navigate(['/participant/1']);
       }
-    } catch(err) {
-      console.error("On a tué brutalement la fenetre de log...");
-    }
+    }).catch(err=>console.log("Error:"+err));
   }
 
   async loginAnonymously() {
-    return await signInAnonymously(this.auth);
+    return await this.auth.loginAnonymously();
   }
 
   async logout() {
+
+    this.showLogoutButton = false;
+    this.showLoginButton = true;
+
     localStorage.clear();
-    return await signOut(this.auth);
+    this.router.navigate([`/`]); 
+    return await this.auth.logout();
   }
 }

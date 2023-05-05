@@ -8,4 +8,4 @@
 </div>
 <button class="nav-link" *ngIf="showLoginButton" (click)="loginAnonymously()">Connexion Anonyme</button>
 <button class="nav-link" *ngIf="showLoginButton" (click)="login(1)">Se connecter</button>
-<button class="nav-link"  (click)="logout()">logout</button>
+<button class="nav-link" *ngIf="showLogoutButton" (click)="logout()">logout</button>

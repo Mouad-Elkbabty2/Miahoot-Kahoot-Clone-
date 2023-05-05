@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { LoginService } from '../services/login.service';
 import { FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -21,18 +20,6 @@ export class LoginComponent {
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  constructor(private loginService: LoginService) {}
-
-  login(): void {
-    this.loginService.login('votre_email', 'votre_mot_de_passe');
-  }
-
-  googleSignIn(userType : number){
-    this.loginService.googleSignIn(userType);
-  }
-
-  logout(): void {
-    this.loginService.logout();
-  }
+  constructor() {}
 
 }

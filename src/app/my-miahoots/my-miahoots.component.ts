@@ -84,7 +84,7 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
   }
 
   async lectureMiahoot(miahootId: number){
-    
+
     // Update the user's projectedMiahoot field in Firestore
     if (this.user) {
       const userId = this.user.uid;
