@@ -1,4 +1,4 @@
-import { Component, ElementRef,ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, ElementRef,ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MiahootService } from '../services/miahoot.service';
 import { Miahoot } from '../models/models';
@@ -39,7 +39,8 @@ export class NewMiahootComponent implements OnInit {
 
   constructor(private elementRef: ElementRef, 
               private route: ActivatedRoute,
-              private miService: MiahootService,) { }
+              private miService: MiahootService,
+              private cdRef: ChangeDetectorRef ) { }
 
   ngOnInit() {
     console.log(this.id+" initialized");
@@ -74,18 +75,23 @@ export class NewMiahootComponent implements OnInit {
         document.querySelector<HTMLInputElement>(`#réponses-${i}`)!.value = '';
         this.newCorrect[i] = false;
       }
-  }
+    }
+    this.cdRef.detectChanges();
   }
 
   saveRep(j: number, id : number | undefined) {
-    let rep = document.querySelector<HTMLInputElement>(`#editRéponse-${j}`)?.value;    
-    this.miService.updateReponse(id,{label:rep,estValide:false});
+    let rep = document.querySelector<HTMLInputElement>(`#editRéponse-${j}`)?.value;       
+    this.miService.updateReponse(id,{label:rep,estValide:false})
+                  .then(() => {
+                    this.cdRef.detectChanges();
+                  });
     const label = this.miService.getResponseById(id).then(res => res.label)
     this.editingIndexrep[j] = -1;
   }
 
   supprimeQuest(id: number | undefined){
     this.miService.deleteQuestion(id);
+    this.cdRef.detectChanges();
   }
 
   supprimeRep(id : number | undefined){
@@ -96,33 +102,21 @@ export class NewMiahootComponent implements OnInit {
   }
 
   ajouterQuestion(){
-    this.miService.createQuestion(this.id,{label:this.newQuestion});
-    window.location.reload();
+    this.miService.createQuestion(this.id,{label:this.newQuestion}).then(()=>this.cdRef.detectChanges());
   }
 
   ajouterReponse(i: number,questId: number | undefined){
     let rep = document.querySelector<HTMLInputElement>(`#réponse-${i}`)?.value;
     if(rep != null){
       if (rep.trim()) {
-        this.miService.createReponse(questId,{label:rep,estValide:this.estValide});
+        this.miService.createReponse(questId,{label:rep,estValide:this.estValide})
+                      .then(()=>{
+                        this.cdRef.detectChanges();
+                      });
         document.querySelector<HTMLInputElement>(`#réponses-${i}`)!.value = '';
         this.newCorrect[i] = false;
       }
   }
+  
 }
-    // delete miahoot
-/*   delete(id: number) {
-    this.miahootService.deleteMiahoot(id).subscribe(
-      () => console.log("miahoot deleted successfully"),
-      error => console.error(error)
-    );
-  } */
-
-/*   createMiahoot() {
-    const miahoot = {};
-    this.miahootService.createMiahoot(miahoot);
-  }
- */
-
-
 }

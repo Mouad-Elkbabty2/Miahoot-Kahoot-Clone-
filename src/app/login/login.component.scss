@@ -1,38 +1,39 @@
-:host {
-    display: flex;
-    justify-content: center;
-    margin: 100px 100px;
-  }
+.box{
+  height : 700px;
+  background-image: url('https://img.freepik.com/vecteurs-premium/professeur-dessin-anime-debout-cote-tableau_29190-4062.jpg?w=2000'); 
+  background-size: cover;
+  background-position: center;
+}
 
-  .mat-form-field {
-    width: 100%;
-    min-width: 300px;
-  }
+.button{
+  text-align: center;
+  background-color: #ff007f !important;
+  border : 1px solid transparent;
+  font-size: 20px;
+  color : white;
+  display: inline;
+  margin-right: 5px;
+  padding: 2%;
+}
 
-  mat-card-title,
-  mat-card-content {
-    display: table-caption;
-    justify-content: center;
-  }
+.button:hover{
+  background-color: #1abc9c !important;
+  border : 1px solid #1abc9c;
+  color : white;
+}
 
-  .error {
-    padding: 16px;
-    width: 300px;
-    color: white;
-    background-color: red;
-  }
-
-  .button {
-    display: flex;
-    justify-content: flex-end;
-  }
-
-  input{
-    border: 0px;
-    width: 100%;
-    border-bottom: 2px solid #1abc9c;
-  }
+.box .mat-card-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
 
 
-
-
+.box2{
+  height : 700px;
+  background-image: url('https://img.freepik.com/free-vector/college-university-students-group-young-happy-people-standing-isolated-white-background_575670-66.jpg?w=2000'); 
+  background-size: cover;
+  background-position: center;
+}

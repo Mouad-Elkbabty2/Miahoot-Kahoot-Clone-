@@ -1,5 +1,5 @@
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { addDoc, collection, doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {MatSort, Sort} from '@angular/material/sort';
@@ -51,7 +51,8 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
     private fs : Firestore, 
     private miService : MiahootService,
     private route: ActivatedRoute,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdRef: ChangeDetectorRef
   ) {
     authState(auth).subscribe((user) => {
       this.user = user;
@@ -95,8 +96,11 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
 >>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
   }
 
-  deleteMiahoot(miahoot: Miahoot): void {
+  deleteMiahoot(id:number,miahoot: Miahoot): void {
     this.dataSource.data = this.dataSource.data.filter(m => m !== miahoot);
+    this.miService.deleteMiahoot(id)
+                  .then(() => console.log("miahoot deleted"))
+                  .catch(err=> console.log(err));
   }
 
   async lectureMiahoot(miahootId: number){
@@ -162,4 +166,14 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
 >>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
   }
   
+  getStatusDisplayValue(status: string): string {
+    if (status === 'PRESENTED') {
+      return 'Présenté';
+    } else if (status === 'NOT_PRESENTED') {
+      return 'Pas encore présenté';
+    } else {
+      return '';
+    }
+  }
+
 }
