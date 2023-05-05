@@ -82,13 +82,9 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
                   .catch(err=> console.log(err));
   }
 
-<<<<<<< HEAD
-  async lectureMiahoot(miahootId: number){
-=======
   lectureMiahoot(miahootId: number){
     //Ajouter le miahoot correspondant au miahootId a la collection projectedMiahoots
     const miahoot = this.miService.getMiahoot(miahootId);
->>>>>>> 2f9a9a0f7808cb32a7cd5e5c0121fc1dba53a094
 
     // Update the user's projectedMiahoot field in Firestore
     if (this.user) {

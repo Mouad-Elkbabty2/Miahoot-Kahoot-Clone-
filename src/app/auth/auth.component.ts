@@ -14,8 +14,8 @@ import { UntypedFormBuilder } from '@angular/forms';
 })
 export class AuthComponent implements OnInit, OnDestroy {
 
-  private readonly userDisposable: Subscription|undefined;
-  public readonly user: Observable<User | null> = EMPTY;
+  private userDisposable: Subscription|undefined;
+  public user: Observable<User | null> = EMPTY;
   public uid: string | null = null;
   public id: string;
 
@@ -28,6 +28,8 @@ export class AuthComponent implements OnInit, OnDestroy {
     private auth : AuthService) {
 
       this.showLoginButton = true;
+      this.user = this.auth.user;
+
     
       this.userDisposable = this.auth.user.subscribe((U) => {
         if (U) {
@@ -37,9 +39,15 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log(this.user);
-    
-   }
+    this.userDisposable = this.auth.user.subscribe((user) => {
+      if (user) {
+        this.uid = user.uid;
+        console.log("user: ", user);
+      } else {
+        this.uid = null;
+      }
+    })
+  }
 
   ngOnDestroy(): void {
     if (this.userDisposable) {
@@ -48,18 +56,18 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   async login(userType: number) {
-
-    this.auth.login(userType).then(()=>{
-      this.showLogoutButton = true;
+    this.auth.login(userType).then( id =>{
+      this.showLogoutButton = true; 
       this.showLoginButton = false;
   
       // Navigate based on userType
       if (userType === 1) {
-        this.router.navigate([`/my-miahoots/${this.id}`]);  
+        this.router.navigate([`/my-miahoots/${id}`]);  
       } else {
         this.router.navigate(['/participant/1']);
       }
     }).catch(err=>console.log("Error:"+err));
+
   }
 
   async loginAnonymously() {

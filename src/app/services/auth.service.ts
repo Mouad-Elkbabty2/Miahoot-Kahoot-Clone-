@@ -52,15 +52,15 @@ export class AuthService implements OnDestroy {
     googleProvider.setCustomParameters({
       prompt: 'select_account'
     });
-
+  
     try {
       const credential = await signInWithPopup(this.auth, googleProvider);
       const user = credential.user;
-
+  
       if (user) {
         const userDocRef = doc(this.fs, `users/${user.uid}`).withConverter(FsUserConverter);
         const snapUser = await getDoc(userDocRef);
-
+  
         if (!snapUser.exists()) {
           localStorage.setItem('userType', JSON.stringify(userType));
           setDoc(userDocRef, {
@@ -69,10 +69,10 @@ export class AuthService implements OnDestroy {
             mail: user.email ?? "",
             miahootProjected: 0,
           } as MiahootUser);
-          
+  
           // Create teacher record in Spring Boot backend
           const teacherName = user.displayName || user.email || user.uid;
-          this.miService.createTeacher({ nom: teacherName, fireBaseId : user.uid})
+          this.miService.createTeacher({ nom: teacherName, fireBaseId: user.uid })
             .then((teacher) => {
               console.log("Teacher added successfully");
               // Update user document with teacherId
@@ -83,10 +83,13 @@ export class AuthService implements OnDestroy {
         }
         localStorage.setItem('userType', JSON.stringify(userType));
       }
-    } catch(err) {
-      console.error("Error:"+err);
+      return user.uid;
+    } catch (err) {
+      console.error("Error:" + err);
+      return '';
     }
   }
+  
 
   async loginAnonymously() {
     return await signInAnonymously(this.auth);
