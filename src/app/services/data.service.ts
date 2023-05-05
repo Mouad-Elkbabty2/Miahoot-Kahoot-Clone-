@@ -17,41 +17,6 @@ export interface QuestionReponses {
   estCorrecte: boolean[];
 }
 
-export interface Miahoot {
-  id: number;
-  questrep: QuestionReponses[];
-}
-// Exemple d'objet pour tester la structure Miahoot
-const miahoots: Miahoot[] = [
-  {
-    id: 1,
-    questrep: [{
-      question: "Quel est le plus grand pays du monde en termes de surface ?",
-      reponses: ["Russie", "Chine", "États-Unis", "Canada"],
-      estCorrecte: [true, false, false, false]
-    }]
-  },
-  {
-    id: 2,
-    questrep: [{
-      question: "Quel est le plus grand pays du monde en termes de superficie en eau ?",
-      reponses: ["Australie", "Qatar", "Arabie saoudite", "Tunisie"],
-      estCorrecte: [true, false, false, false]
-    },{
-      question: "Quel est le plus grand pays du monde en termes de surface ?",
-      reponses: ["Russie", "Chine", "États-Unis", "Canada"],
-      estCorrecte: [true, false, false, false]
-    }]
-  },
-  {
-    id: 3,
-    questrep: [{
-      question: "Quel est le plus haut sommet du monde ?",
-      reponses: ["Mont Everest", "Kilimandjaro", "Mont Blanc", "Aconcagua"],
-      estCorrecte: [true, false, false, false]
-    }]
-  }, { id: -1, questrep: [{ question: '', reponses: [], estCorrecte: [] }] }
-];
 // fin des éléments à supprimer ou déplacer
 
 export type VOTES = {

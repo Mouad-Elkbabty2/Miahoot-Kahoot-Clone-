@@ -10,26 +10,11 @@ import 'firebase/compat/firestore';
 import { EMPTY, from, Observable, of, switchMap, tap } from 'rxjs';
 import { FsUserConverter, MiahootUser } from '../data.service';
 import { MiahootService } from '../services/miahoot.service';
-<<<<<<< HEAD
-// import { Miahoot } from '../models/models';
-
-=======
 import { CreateMihaootComponent } from '../create-mihaoot/create-mihaoot.component';
 import { MatDialog } from '@angular/material/dialog';
->>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
+import { Miahoot } from '../models/models';
 
-export interface Miahoot {
-  id: number;
-  name: string;
-  date: Date;
-  status : String;
-}
-const ELEMENT_DATA: Miahoot[] = [
-  {id: 1, name: "questionnaire zz", date: new Date("2023-04-25"),status:"en attente"},
-  {id: 2, name: "questionnaire aaa", date: new Date("01/05/2001"),status:"en attente"},
-  {id: 3, name: "questionnaire bbb", date: new Date("2001-05-01"),status:"en attente"},
-  {id: 4, name: "questionnaire alm", date: new Date("2001-09-11"),status:"présenté"},
-];
+
 /**
  * @title Table with sorting
  */
@@ -87,13 +72,8 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
     return;
   }
 
-<<<<<<< HEAD
-  editMiahoot(miahoot: Miahoot) {
-    this.router.navigate(['/new-miahoot/'+miahoot.id]);
-=======
   editMiahoot(miahootId: number) {
     this.router.navigate(['/new-miahoot/'+miahootId]);
->>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
   }
 
   deleteMiahoot(id:number,miahoot: Miahoot): void {
@@ -104,6 +84,7 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
   }
 
   async lectureMiahoot(miahootId: number){
+    
     // Update the user's projectedMiahoot field in Firestore
     if (this.user) {
       const userId = this.user.uid;
@@ -154,16 +135,9 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
   }
 
   createNewMiahoot(){
-<<<<<<< HEAD
-    // const lastElement = ELEMENT_DATA.slice(-1)[0];
-    // const lastId = lastElement.id+1;
-    // this.router.navigate(['/new-miahoot/'+lastId]);
-    return;
-=======
     const id = Number(this.route.snapshot.paramMap.get('id'));
     console.log(id);
     this.router.navigate(['/new-miahoot/'+id]);
->>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
   }
   
   getStatusDisplayValue(status: string): string {
