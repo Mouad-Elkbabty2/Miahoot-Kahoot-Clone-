@@ -9,35 +9,35 @@
 </head>
 
 <body>
-  <h1>Ajouter une question</h1>
+  <h1>{{ miahoots.nom }} </h1>
+  <h2>Ajouter une question</h2>
 
   <form (ngSubmit)="onSubmit()">
-    <input placeholder="Entrez une nouvelle question" type="text" id="question" name="question"
-      [(ngModel)]="newQuestion" />
-    <button type="submit">Ajouter</button>
+    <input placeholder="Entrez une nouvelle question" type="text" id="question" name="question" [(ngModel)]="newQuestion" />
+    <button (click)="ajouterQuestion()" type="submit">Ajouter</button>
   </form>
+
   <ul>
-    <li *ngFor="let questRep of questRep; let i = index">
-      <h3>Question N° {{i+1}} : {{ questRep.question }}
-        <button id="delQuest" (click)="supprimeQuest(i)">
+    <li *ngFor="let question of miahoots.questions; let i = index">
+      <h3>Question N° {{ i+1 }} : {{ question.label }}
+        <button id="delQuest" (click)="supprimeQuest(question.id)">
           <mat-icon>delete_forever</mat-icon>
         </button>
       </h3>
-      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponses-{{i}}" name="réponses-{{i}}" />
-      <button type="button" (click)="ajouteRep(i)">+</button>
+      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponse-{{ i }}" name="réponses-{{ i }}" />
+      <button type="button" (click)="ajouterReponse(i,question.id)">+</button>
+      <input type="checkbox" [(ngModel)]="estValide">
       <ul>
-        <ng-container *ngIf="editable==false">
-          <li *ngFor="let reponse of questRep.reponses; let j = index">
+        <ng-container>
+          <li *ngFor="let reponse of question.responses; let j = index">
             <ng-container *ngIf="editingIndexrep[i] === j">
-              <input placeholder="Entrez une nouvelle réponse" 
-                     type="text" 
-                     [(ngModel)]="tempReponses[i]" />
-              <button id="saveRep"(click)="saveRep(i,j)"><mat-icon>save_alt</mat-icon></button>
+              <input placeholder="Entrez une nouvelle réponse" type="text" id="editRéponse-{{ j }}" value="{{reponse.label}}" />
+              <button id="saveRep" (click)="saveRep(j,reponse.id)"><mat-icon>save_alt</mat-icon></button>
             </ng-container>
             <ng-container *ngIf="editingIndexrep[i] !== j">
-              <span (dblclick)="editRep(i,j)">{{ reponse }}</span>
+              <span (dblclick)="editRep(i,j)">{{ reponse.label }}</span>
             </ng-container>
-            <button id="deleteRep" (click)="supprimeRep(i,j)">
+            <button id="deleteRep" (click)="supprimeRep(reponse.id)">
               <mat-icon>delete</mat-icon>
             </button>
           </li>

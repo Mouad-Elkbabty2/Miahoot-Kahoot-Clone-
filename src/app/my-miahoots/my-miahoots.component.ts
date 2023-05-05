@@ -1,17 +1,22 @@
 import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { addDoc, collection, doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
 import {MatSort, Sort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import { EMPTY, from, Observable, of, switchMap, tap } from 'rxjs';
 import { FsUserConverter, MiahootUser } from '../data.service';
 import { MiahootService } from '../services/miahoot.service';
+<<<<<<< HEAD
 // import { Miahoot } from '../models/models';
 
+=======
+import { CreateMihaootComponent } from '../create-mihaoot/create-mihaoot.component';
+import { MatDialog } from '@angular/material/dialog';
+>>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
 
 export interface Miahoot {
   id: number;
@@ -33,9 +38,10 @@ const ELEMENT_DATA: Miahoot[] = [
   templateUrl: './my-miahoots.component.html',
   styleUrls: ['./my-miahoots.component.scss']
 })
-export class MyMiahootsComponent implements AfterViewInit {
+export class MyMiahootsComponent implements AfterViewInit, OnInit {
+  idTeacher = this.route.snapshot.paramMap.get('id');
   displayedColumns: string[] = ['id', 'name', 'date', 'status' ,'actions'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource: MatTableDataSource<any>;
 
   public user: User | null = null;
 
@@ -43,7 +49,9 @@ export class MyMiahootsComponent implements AfterViewInit {
     private router: Router, 
     private auth: Auth, 
     private fs : Firestore, 
-    private miService : MiahootService
+    private miService : MiahootService,
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) {
     authState(auth).subscribe((user) => {
       this.user = user;
@@ -52,13 +60,39 @@ export class MyMiahootsComponent implements AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort;
 
+  ngOnInit(): void {
+    const id = (this.route.snapshot.paramMap.get('id'));
+    this.miService.miahootsByTeacherId(id)
+    .then(miahoot => {
+      console.log(miahoot);
+      
+      this.dataSource = new MatTableDataSource(miahoot);
+    })
+    .catch(err => console.error(err));
+  }
+    //popup create miahoot
+    openNewMiahootDialog() {
+      const dialogRef = this.dialog.open(CreateMihaootComponent, {
+        data: { teacherId: this.idTeacher }
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
+    
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
     return;
   }
 
+<<<<<<< HEAD
   editMiahoot(miahoot: Miahoot) {
     this.router.navigate(['/new-miahoot/'+miahoot.id]);
+=======
+  editMiahoot(miahootId: number) {
+    this.router.navigate(['/new-miahoot/'+miahootId]);
+>>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
   }
 
   deleteMiahoot(miahoot: Miahoot): void {
@@ -116,10 +150,16 @@ export class MyMiahootsComponent implements AfterViewInit {
   }
 
   createNewMiahoot(){
+<<<<<<< HEAD
     // const lastElement = ELEMENT_DATA.slice(-1)[0];
     // const lastId = lastElement.id+1;
     // this.router.navigate(['/new-miahoot/'+lastId]);
     return;
+=======
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    console.log(id);
+    this.router.navigate(['/new-miahoot/'+id]);
+>>>>>>> eb11b5302759e3873c023de08b251b589943f9ac
   }
   
 }

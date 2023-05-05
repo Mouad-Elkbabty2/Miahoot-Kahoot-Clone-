@@ -36,6 +36,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { CreateMihaootComponent } from './create-mihaoot/create-mihaoot.component';
 
 
 
@@ -53,7 +54,8 @@ import { LoginComponent } from './login/login.component';
     TestApiComponent,
     PresentateurComponent,
     LoggedComponent,
-    LoginComponent
+    LoginComponent,
+    CreateMihaootComponent,
   ],
   imports: [
     BrowserModule,

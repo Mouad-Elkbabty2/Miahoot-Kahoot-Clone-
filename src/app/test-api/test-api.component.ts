@@ -15,7 +15,6 @@ export class TestApiComponent implements OnInit {
   question: any;
   message: string;
   label: string;
-  newTeacher: Teacher = {};
   teacherId: number;
   miahootId : number;
 
@@ -23,8 +22,8 @@ export class TestApiComponent implements OnInit {
 
   ngOnInit(): void {
     //get teacher
-    this.miService.getTeacher(6)
-      .then(teacher => console.log(teacher));
+    const today: Date = new Date();
+    console.log(today);
   }
 
   //get Miahoot
@@ -46,7 +45,7 @@ export class TestApiComponent implements OnInit {
 
   }
 
-  createMiahoot() {
+/*   createMiahoot() {
     const miahoot = {};
     this.miService.createMiahoot(miahoot,this.teacherId)
       .then(() => {
@@ -56,7 +55,7 @@ export class TestApiComponent implements OnInit {
         console.error(error);
         console.log("Failed to create miahoot. Please try again.");
       });
-  }
+  } */
 
   updateMiahoot(id:number) {
     const miahoot = {};
@@ -113,15 +112,16 @@ export class TestApiComponent implements OnInit {
 
 
   //----------------- API Teacher -----------------------
-  createTeacher(): void {
-    this.miService.createTeacher({})
+/*   createTeacher() {
+    this.miService.createTeacher({nom : "Mr Bouhaliw"})
       .then((teacher) => {
-        console.log("teacher added successfully");
+        console.log("teacher added successfully id :" +teacher.id);
+        return teacher;
       })
       .catch((error) => {
         console.error(error);
       });
-  }
+  } */
 
   deleteTeacher() {
     this.miService.deleteTeacher(this.teacherId)
