@@ -1,39 +1,81 @@
-.box{
-  height : 700px;
-  background-image: url('https://img.freepik.com/vecteurs-premium/professeur-dessin-anime-debout-cote-tableau_29190-4062.jpg?w=2000'); 
-  background-size: cover;
-  background-position: center;
+body {
+  height: 100%;
+
+  width: 100%;
+  background-color: hsla(200, 40%, 30%, 0.4);
+  background-image: url("https://78.media.tumblr.com/8cd0a12b7d9d5ba2c7d26f42c25de99f/tumblr_p7n8kqHMuD1uy4lhuo2_1280.png"),
+    url("https://78.media.tumblr.com/5ecb41b654f4e8878f59445b948ede50/tumblr_p7n8on19cV1uy4lhuo1_1280.png");
+  background-repeat: repeat-x;
+  background-position: 0 50%, 0 100%, 0 100%, 0 100%, 0 100%;
+  background-size: 2500px, 800px, 500px 200px, 1000px, 400px 260px;
+  animation: 20s para infinite linear;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.button{
-  text-align: center;
-  background-color: #ff007f !important;
-  border : 1px solid transparent;
-  font-size: 20px;
-  color : white;
-  display: inline;
-  margin-right: 5px;
-  padding: 2%;
+@keyframes para {
+  100% {
+    background-position: -5000px 20%, -800px 95%, 500px 50%, 1000px 100%,
+      400px 0;
+  }
 }
 
-.button:hover{
-  background-color: #1abc9c !important;
-  border : 1px solid #1abc9c;
-  color : white;
+h1 {
+  font-size: 40px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
-.box .mat-card-content {
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.button-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  text-align: center;
+  flex-direction: row;
+  margin-top: 10px;
 }
 
+.button-container button {
+  margin: 0 10px;
+  font-size: 16px;
+  padding: 10px 20px;
+}
 
-.box2{
-  height : 700px;
-  background-image: url('https://img.freepik.com/free-vector/college-university-students-group-young-happy-people-standing-isolated-white-background_575670-66.jpg?w=2000'); 
-  background-size: cover;
-  background-position: center;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.container button {
+  margin-top: 10px;
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 10%;
+}
+
+button:hover {
+  background-color: grey;
+  transition: 1s;
+}
+
+img {
+  float: left;
 }
