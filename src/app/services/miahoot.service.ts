@@ -20,7 +20,7 @@ export class MiahootService {
 
   //------------------ API Miahoot --------------------
 
-  async getMiahoot(id: number): Promise<Miahoot> {
+  async getMiahoot(id: number | undefined): Promise<Miahoot> {
     return firstValueFrom(this.http.get<Miahoot>(`${this.urlMi}/${id}`));
   }
 
@@ -80,7 +80,8 @@ export class MiahootService {
   //------------------ API Reponses ------------------------------------------
 
   async getResponseById(id: number | undefined): Promise<Response> {
-    return firstValueFrom(this.http.get<Response>(`${this.urlReponse}/${id}`));
+    return firstValueFrom(this.http.get<Response>(`${this.urlReponse}/${id}`))
+    .then(reponse => ({...reponse, editMode: false}));
   }
 
   async createReponse(questId : number | undefined,response: Response): Promise<any> {

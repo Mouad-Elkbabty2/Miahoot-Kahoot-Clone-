@@ -23,7 +23,8 @@ export class AuthService implements OnDestroy {
     private router: Router,
     private fs: Firestore,
     private miService: MiahootService,
-    private fa: AngularFireAuth) {
+    private fa: AngularFireAuth,
+    private route : Router) {
     const storedUid = localStorage.getItem('uid');
     
     if (storedUid) {

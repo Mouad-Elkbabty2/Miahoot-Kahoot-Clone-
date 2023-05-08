@@ -1,4 +1,4 @@
-import { Component, ElementRef,ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ChangeDetectionStrategy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MiahootService } from '../services/miahoot.service';
 import { Miahoot } from '../models/models';
@@ -8,11 +8,6 @@ interface QuestionReponses {
   reponses: string[];
   estCorrecte: boolean[];
 }
-
-/* interface Miahoot {
-  id: number;
-  questrep: QuestionReponses[];
-} */
 
 @Component({
   selector: 'app-new-miahoot',
@@ -25,31 +20,20 @@ export class NewMiahootComponent implements OnInit {
   newQuestion = '';
   newReponses: string[] = [];
   newCorrect: boolean[] = [];
-  editable = false;
-  tempReponses: string[] | undefined [] = [];
-  editingIndexrep: number[] = [];
-  editingQuestionIndex: boolean[]=[];
-  //cette variable est pour tester
-  questionRep: QuestionReponses;
-  miahoots : Miahoot;
+  miahoots: Miahoot;
   id = Number(this.route.snapshot.paramMap.get('id'));
-  newResp : string;
-  estValide : boolean;
-  modifiable = false;
+  estValide: boolean;
   updateValide : boolean;
-
-  constructor(private elementRef: ElementRef, 
-              private route: ActivatedRoute,
-              private miService: MiahootService ) { }
+ 
+  constructor(private route: ActivatedRoute, private miService: MiahootService) { }
 
   ngOnInit() {
-    console.log(this.id+" initialized");
+    console.log(this.id + " initialized");
     this.miService.getMiahoot(this.id)
-    .then(miahoot => {
-      console.log(miahoot);
-      this.miahoots = miahoot;
-    })
-    .catch(err => console.error(err));
+      .then(miahoot => {
+        this.miahoots = miahoot;
+      })
+      .catch(err => console.error(err));
   }
 
   onSubmit() {
