@@ -35,12 +35,12 @@ export class NewMiahootComponent implements OnInit {
   id = Number(this.route.snapshot.paramMap.get('id'));
   newResp : string;
   estValide : boolean;
-
+  modifiable = false;
+  updateValide : boolean;
 
   constructor(private elementRef: ElementRef, 
               private route: ActivatedRoute,
-              private miService: MiahootService,
-              private cdRef: ChangeDetectorRef ) { }
+              private miService: MiahootService ) { }
 
   ngOnInit() {
     console.log(this.id+" initialized");
@@ -66,53 +66,29 @@ export class NewMiahootComponent implements OnInit {
     }
   }
 
-  ajouteRep(i: number) {
-    let rep = document.querySelector<HTMLInputElement>(`#réponses-${i}`)?.value;
-    // Vérifier si la nouvelle réponse n'est pas vide (après avoir enlevé les espaces blancs)
-    if(rep != null){
-      if (rep.trim()) {
-        this.questRep[i].reponses.push(rep);
-        document.querySelector<HTMLInputElement>(`#réponses-${i}`)!.value = '';
-        this.newCorrect[i] = false;
-      }
-    }
-    this.cdRef.detectChanges();
-  }
-
   saveRep(j: number, id : number | undefined) {
     let rep = document.querySelector<HTMLInputElement>(`#editRéponse-${j}`)?.value;       
-    this.miService.updateReponse(id,{label:rep,estValide:false})
-                  .then(() => {
-                    this.cdRef.detectChanges();
-                  });
-    const label = this.miService.getResponseById(id).then(res => res.label)
-    this.editingIndexrep[j] = -1;
+    this.miService.updateReponse(id,{label:rep,estValide:this.updateValide,modifiable:false})
+                  .then(() => { this.ngOnInit() }); 
   }
 
   supprimeQuest(id: number | undefined){
-    this.miService.deleteQuestion(id);
-    this.cdRef.detectChanges();
+    this.miService.deleteQuestion(id).then(() => { this.ngOnInit() });
   }
 
   supprimeRep(id : number | undefined){
-    this.miService.deleteReponse(id);
+    this.miService.deleteReponse(id).then(() => { this.ngOnInit() });
   }
-  editRep(i: number, j: number) {
-    this.editingIndexrep[i] = j;
-  }
-
+ 
   ajouterQuestion(){
-    this.miService.createQuestion(this.id,{label:this.newQuestion}).then(()=>this.cdRef.detectChanges());
+    this.miService.createQuestion(this.id,{label:this.newQuestion}).then(() => { this.ngOnInit() });
   }
 
   ajouterReponse(i: number,questId: number | undefined){
     let rep = document.querySelector<HTMLInputElement>(`#réponse-${i}`)?.value;
     if(rep != null){
       if (rep.trim()) {
-        this.miService.createReponse(questId,{label:rep,estValide:this.estValide})
-                      .then(()=>{
-                        this.cdRef.detectChanges();
-                      });
+        this.miService.createReponse(questId,{label:rep,estValide:this.estValide}).then(() => { this.ngOnInit() });
         document.querySelector<HTMLInputElement>(`#réponses-${i}`)!.value = '';
         this.newCorrect[i] = false;
       }

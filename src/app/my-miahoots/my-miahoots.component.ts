@@ -1,18 +1,15 @@
-import {LiveAnnouncer} from '@angular/cdk/a11y';
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Auth, authState, User } from '@angular/fire/auth';
 import { doc, docData, Firestore, setDoc, updateDoc } from '@angular/fire/firestore';
-import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
-import { EMPTY, from, Observable, of, switchMap, tap } from 'rxjs';
-import { FsUserConverter, MiahootUser } from '../data.service';
 import { MiahootService } from '../services/miahoot.service';
 import { CreateMihaootComponent } from '../create-mihaoot/create-mihaoot.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Miahoot } from '../models/models';
+import { DataService } from '../data.service';
 
 
 /**
@@ -25,19 +22,20 @@ import { Miahoot } from '../models/models';
 })
 export class MyMiahootsComponent implements AfterViewInit, OnInit {
   idTeacher = this.route.snapshot.paramMap.get('id');
-  displayedColumns: string[] = ['id', 'name', 'date', 'status' ,'actions'];
-  dataSource: MatTableDataSource<any>;
+  displayedColumns: string[] = ['id', 'name', 'date', 'status', 'actions'];
+  dataSource: MatTableDataSource<Miahoot> = new MatTableDataSource();
+  codePin : number;
 
   public user: User | null = null;
 
   constructor(
-    private router: Router, 
-    private auth: Auth, 
-    private fs : Firestore, 
-    private miService : MiahootService,
+    private router: Router,
+    private auth: Auth,
+    private fs: Firestore,
+    private miService: MiahootService,
     private route: ActivatedRoute,
     private dialog: MatDialog,
-    private cdRef: ChangeDetectorRef
+    private dataService : DataService
   ) {
     authState(auth).subscribe((user) => {
       this.user = user;
@@ -49,40 +47,40 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     const id = (this.route.snapshot.paramMap.get('id'));
     this.miService.miahootsByTeacherId(id)
-    .then(miahoot => {
-      console.log(miahoot);
-      
-      this.dataSource = new MatTableDataSource(miahoot);
-    })
-    .catch(err => console.error(err));
+      .then(miahoot => {
+        console.log(miahoot);
+        this.dataSource.data = miahoot;
+      })
+      .catch(err => console.error(err));
   }
-    //popup create miahoot
-    openNewMiahootDialog() {
-      const dialogRef = this.dialog.open(CreateMihaootComponent, {
-        data: { teacherId: this.idTeacher }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        console.log(`Dialog result: ${result}`);
-      });
-    }
-    
+  //popup create miahoot
+  openNewMiahootDialog() {
+    const dialogRef = this.dialog.open(CreateMihaootComponent, {
+      data: { teacherId: this.idTeacher }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
+
   editMiahoot(miahootId: number) {
-    this.router.navigate(['/new-miahoot/'+miahootId]);
+    this.router.navigate(['/new-miahoot/' + miahootId]);
   }
 
-  deleteMiahoot(id:number,miahoot: Miahoot): void {
+  deleteMiahoot(id: number, miahoot: Miahoot): void {
     this.dataSource.data = this.dataSource.data.filter(m => m !== miahoot);
     this.miService.deleteMiahoot(id)
-                  .then(() => console.log("miahoot deleted"))
-                  .catch(err=> console.log(err));
+      .then(() => console.log("miahoot deleted"))
+      .catch(err => console.log(err));
   }
 
-  lectureMiahoot(miahootId: number){
+  lectureMiahoot(miahootId: number) {
     //Ajouter le miahoot correspondant au miahootId a la collection projectedMiahoots
     const miahoot = this.miService.getMiahoot(miahootId);
 
@@ -98,12 +96,19 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
     }
   }
 
-  createNewMiahoot(){
+
+  async play(miahootId: number){  
+    let doc = await this.dataService.addMiahootToFs(miahootId); 
+    this.router.navigate(['presentateur/'+doc.id]);
+    
+  }
+
+  createNewMiahoot() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     console.log(id);
-    this.router.navigate(['/new-miahoot/'+id]);
+    this.router.navigate(['/new-miahoot/' + id]);
   }
-  
+
   getStatusDisplayValue(status: string): string {
     if (status === 'PRESENTED') {
       return 'Présenté';
@@ -113,5 +118,7 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
       return '';
     }
   }
+
+
 
 }

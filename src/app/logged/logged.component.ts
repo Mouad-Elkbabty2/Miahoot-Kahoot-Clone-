@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { doc, docData, Firestore } from '@angular/fire/firestore';
 import { map, Observable, of, switchMap } from 'rxjs';
-import { FsMiahootProjectedConverter, FsUserConverter, MiahootProjected } from '../data.service';
+import { FsMiahootProjectedConverter, FsUserConverter } from '../data.service';
 
 @Component({
   selector: 'app-logged',

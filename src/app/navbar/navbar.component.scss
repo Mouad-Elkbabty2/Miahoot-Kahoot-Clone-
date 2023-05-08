@@ -1,21 +1,53 @@
 .navbar {
-    background-color: #ff007f !important;
-    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif,
-  }
-
-button{
-    background-color: #ff007f !important;
-    border : 1px solid #fff;
-    color : white;
+  background-color: #ff007f !important;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
 }
 
-button:hover{
-    background-color: #1abc9c !important;
-    border : 1px solid #1abc9c;
-    color : white;
+li.nav-item.ml-auto {
+  display: contents;
 }
+
+button {
+  background-color: #ff007f !important;
+  border: 1px solid #fff;
+  color: white;
+  margin-left: 0.5rem;
+}
+
+button:hover {
+  background-color: #1abc9c !important;
+  border: 1px solid #1abc9c;
+  color: white;
+}
+.profilBlock {
+  display: flex;
+  align-items: center;
+}
+
+.profilePic {
+  border-radius: 50%;
+  width: 45px;
+  margin-right: 10px;
+}
+.profileName{
+  margin-bottom: 0%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+  font-weight: 500;
+  color: white;
+}
+
 @media only screen and (max-width: 768px) {
-    .navbar {
-      background-color: #ff007f;
-    }
+  .navbar {
+    background-color: #ff007f;
   }
+}
+
+a.nav-link {
+  color: #fff;
+}
+
+a.nav-link:hover{
+  cursor: pointer;
+  color: #f4fffddb;
+}

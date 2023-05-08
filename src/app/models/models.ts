@@ -15,7 +15,8 @@ export interface Presentateur {
 export interface Response {
     id?: number;
     label?: string;
-    estValide: boolean;
+    estValide?: boolean;
+    modifiable?:boolean;
 }
 
 export interface Question {
@@ -27,14 +28,23 @@ export interface Question {
 
 export type VOTES = { 
     [participantUID: string]: boolean
-  };
+  } | {};
 
 export interface QCMProjected { 
     question: string; 
-    responses: string[]; // Les réponses possibles 
+    responses: Response[]; // Les réponses possibles 
     votes: VOTES; // Autant d'entrée dans le tableau que de réponses possibles 
 };
 
+
+export interface MiahootProjected { 
+    id: string; 
+    pin? : number;
+    label : string | undefined;
+    creator?: string; 
+    presentator?: string; 
+    currentQCM: QCMProjected[]; 
+} 
 
 export interface Miahoot {
     id?: number;

@@ -1,8 +1,8 @@
 body {
-  background-color: #3b0b40;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif,
-    sans-serif;
+  background-color: #effffa;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   text-align: center;
+  overflow: hidden;
 }
 
 h1 {
@@ -127,6 +127,9 @@ button.disabled {
 }
 
 /* Animation */
+svg.waves{
+  transform: translateY(80px); 
+}
 
 .parallax > use {
   animation: move-forever 25s cubic-bezier(.55,.5,.45,.5)     infinite;

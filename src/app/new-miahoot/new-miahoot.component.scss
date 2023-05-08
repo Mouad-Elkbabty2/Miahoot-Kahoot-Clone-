@@ -63,7 +63,7 @@ input {
   border: none;
   border-bottom: 1px solid gray;
   transition: border-bottom-color 0.2s ease-in-out;
-  width: 15%;
+  width: 30%;
   outline: none; /* pour supprimer le focus */
 }
 
@@ -79,7 +79,12 @@ button {
   padding: 6px 10px;
   color: #ff007f;
 }
-
+h1{
+  color: #1abc9c;
+  text-align: center;
+  justify-content: center;
+  width: 100%;
+}
 button:hover {
   background-color: #1abc9c;
   color: white;
@@ -89,6 +94,14 @@ button:hover {
 input[type="checkbox"]:checked {
   accent-color: #ff007f !important;
   border-radius: 0%;
+}
+
+.valide{
+  color : #1abc9c
+}
+
+input[type="checkbox"] {
+  width: auto;
 }
 
 button:focus {
@@ -139,4 +152,17 @@ h3{
 #deleteRep:hover, #saveRep:hover {
   color: #1abc9c;
   background-color: transparent;
+}
+
+mat-card{
+  width: 75%;
+}
+
+.card-container{
+  display: flex; 
+  justify-content: center;
+}
+
+mat-card.mat-mdc-card.mdc-card {
+  margin-bottom: 20px;
 }

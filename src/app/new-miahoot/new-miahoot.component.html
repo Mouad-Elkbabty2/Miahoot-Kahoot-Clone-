@@ -1,50 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="card-container mt-4">
+<mat-card>
+  <body>
+    <mat-card-header>
+      <h1>{{ miahoots.nom }} </h1>
+    </mat-card-header>
+    <mat-card-content>
+      <h2>Ajouter une question :</h2>
+      <form (ngSubmit)="onSubmit()">
+        <input placeholder="Entrez une nouvelle question" type="text" id="question" name="question"
+          [(ngModel)]="newQuestion" />
+        <button (click)="ajouterQuestion()" type="submit">Ajouter</button>
+      </form>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body>
-  <h1>{{ miahoots.nom }} </h1>
-  <h2>Ajouter une question</h2>
-
-  <form (ngSubmit)="onSubmit()">
-    <input placeholder="Entrez une nouvelle question" type="text" id="question" name="question" [(ngModel)]="newQuestion" />
-    <button (click)="ajouterQuestion()" type="submit">Ajouter</button>
-  </form>
-
-  <ul>
-    <li *ngFor="let question of miahoots.questions; let i = index">
-      <h3>Question N° {{ i+1 }} : {{ question.label }}
-        <button id="delQuest" (click)="supprimeQuest(question.id)">
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-      </h3>
-      <input placeholder="Entrez une nouvelle réponse" type="text" id="réponse-{{ i }}" name="réponses-{{ i }}" />
-      <button type="button" (click)="ajouterReponse(i,question.id)">+</button>
-      <input type="checkbox" [(ngModel)]="estValide">
-      <ul>
-        <ng-container>
-          <li *ngFor="let reponse of question.responses; let j = index">
-            <ng-container *ngIf="editingIndexrep[i] === j">
-              <input placeholder="Entrez une nouvelle réponse" type="text" id="editRéponse-{{ j }}" value="{{reponse.label}}" />
-              <button id="saveRep" (click)="saveRep(j,reponse.id)"><mat-icon>save_alt</mat-icon></button>
-            </ng-container>
-            <ng-container *ngIf="editingIndexrep[i] !== j">
-              <span (dblclick)="editRep(i,j)">{{ reponse.label }}</span>
-            </ng-container>
-            <button id="deleteRep" (click)="supprimeRep(reponse.id)">
-              <mat-icon>delete</mat-icon>
+      <ul class="mt-3">
+        <li *ngFor="let question of miahoots.questions; let i = index">
+          <h3>Question N° {{ i+1 }} : {{ question.label }}
+            <button id="delQuest" (click)="supprimeQuest(question.id)">
+              <mat-icon>delete_forever</mat-icon>
             </button>
-          </li>
-        </ng-container>
+          </h3>
+          <input type="checkbox" [(ngModel)]="estValide">
+          <input placeholder="Entrez une nouvelle réponse" type="text" id="réponse-{{ i }}" name="réponses-{{ i }}" />
+          <button type="button" (click)="ajouterReponse(i,question.id)">+</button>
+          <ul>
+            <ng-container>
+              <li *ngFor="let reponse of question.responses; let j = index">
+                <ng-container *ngIf="reponse.modifiable">
+                  <input type="checkbox" [(ngModel)]="updateValide">
+                  <input placeholder="Entrez une nouvelle réponse" type="text" id="editRéponse-{{ j }}"
+                    value="{{reponse.label}}" />
+                  <button id="saveRep" (click)="saveRep(j,reponse.id)"><mat-icon>save_alt</mat-icon></button>
+                </ng-container>
+                <ng-container *ngIf="!reponse.modifiable">
+                  <span [ngClass]="{'valide' : reponse.estValide}" (dblclick)="reponse.modifiable = true">{{
+                    reponse.label }}</span>
+                </ng-container>
+                <button id="deleteRep" (click)="supprimeRep(reponse.id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </li>
+            </ng-container>
+          </ul>
+        </li>
       </ul>
-    </li>
-  </ul>
-</body>
-
-</html>
+    </mat-card-content>
+  </body>
+</mat-card>
+</div>

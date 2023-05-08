@@ -1,17 +1,22 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">Miahoot</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <app-auth></app-auth>
-            <!-- <button class="nav-link" (click)="onLoginClick()">Se connecter</button> -->
-          </li>
-        </ul>
-      </div>
+  <div class="container-fluid">
+    <a *ngIf="!authS.getIsLoggedIn()" class="navbar-brand" href="#">Miahoot</a>
+    <div *ngIf="authS.getIsLoggedIn()" class="profilBlock">
+      <img class="profilePic" src="{{getUserImage()}} " alt="">
+      <p class="profileName"> {{(this.authS.userSubject | async)?.displayName }} </p>
     </div>
-  </nav>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item ml-auto">
+          <app-auth *ngIf="!authS.getIsLoggedIn()"></app-auth>
+          <a class="nav-link" *ngIf="authS.getIsLoggedIn()" [routerLink]="['/my-miahoots', authS.getUid()]">Consulter mes Miahoot</a>
+          <button class="nav-link" *ngIf="authS.getIsLoggedIn()" (click)="authS.logout()">Logout</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

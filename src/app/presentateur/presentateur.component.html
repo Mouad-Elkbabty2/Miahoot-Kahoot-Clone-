@@ -1,29 +1,31 @@
-<h2>Présentateur</h2>
+<div class="header">
+  <h2>Présentateur</h2>
+  <h3>Entrez pour participer : {{miahootProjected.pin}} </h3>
+</div>
 
 <!--        <div *ngIf="miahoot$ | async as miahoot">       -->
   <mat-card>
-    <mat-card-title>Question n°{{ qcmCourant.id }} : {{ qcmCourant.label }}</mat-card-title>
+    <mat-card-title>Question n° {{i+1}} : {{ miahootProjected.currentQCM[i].question }}</mat-card-title>
     <mat-list>
       <h3 mat-subheader>Réponses :</h3>
       <mat-list-item
-        *ngFor="let reponse of qcmCourant.responses"
+        *ngFor="let reponse of miahootProjected.currentQCM[i].responses; let j = index;"
         [ngStyle]="{
           'background-color': showAnswers && reponse.estValide ? 'lightgreen' : 'inherit'
         }"
       >
-        {{ reponse.id }} : {{ reponse.label }}
+        {{ j+1 }} : {{ reponse.label }}
       </mat-list-item>
     </mat-list>
     <button mat-raised-button (click)="afficherRep()">Afficher les réponses</button>
-    <button mat-raised-button color="primary" [disabled]=" (indexQuestion === 0) || disable"
+    <button mat-raised-button color="primary" [disabled]=" (i === 0)"
      (click)="questionSwitcher(-1)">Question précédente ⬅️</button>
-    <button mat-raised-button color="primary" [disabled]="( miahoot.questions !== undefined &&indexQuestion === miahoot.questions.length - 1 )|| 
-    disable"
-    (click)="questionSwitcher(1)">Question suivante ➡️</button>
+    <button mat-raised-button color="primary" 
+    (click)="questionSwitcher(1)" [disabled]=" (i === miahootProjected.currentQCM.length-1)" >Question suivante ➡️</button>
     <button mat-raised-button (click)="retToMyMiahoot()">Retourner à mes miahoot</button>
   </mat-card>
   
-  
+   
   
   
 <!-- </div>-->
