@@ -1,27 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
-import {
-  DocumentData,
-  DocumentSnapshot,
-  collection,
-  doc,
-  getDoc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-} from 'firebase/firestore';
+import {DocumentData,DocumentSnapshot,collection,doc,getDocs, onSnapshot,query,where,} from 'firebase/firestore';
 import { MiahootProjected, QCMProjected, Response } from '../models/models';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-  from,
-  isEmpty,
-  map,
-  of,
-} from 'rxjs';
+import {Observable,Subscription,map} from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
 
 @Component({
