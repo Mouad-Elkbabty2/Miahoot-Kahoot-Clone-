@@ -1,12 +1,13 @@
-<h2 class="h2">Question N°{{ questionId }}</h2>
-
-<mat-card class="card-container">
-   <mat-card-title>{{ question }}</mat-card-title>
-  <mat-list>
-    <mat-list-item class="list-item" *ngFor="let reponse of reponses" 
-                    (click)="selectionnerReponse(reponse)"
-                    [ngClass]="{ 'selected': reponseSelectionnee && reponseSelectionnee === reponse }">
-      {{ reponse }}
-    </mat-list-item>
-  </mat-list>  
-</mat-card>
+<div *ngIf="miahoot$ | async as miahoot">
+  <h2>{{ miahoot.label }}</h2>
+  <div>
+    <ng-container>
+      <h3>{{ miahoot.currentQCM[miahoot.indexQuestion].question }}</h3>
+      <ul>
+        <li *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses">
+          {{ response.label }}
+        </li>
+      </ul>
+    </ng-container>
+  </div>
+</div>

@@ -23,6 +23,7 @@ export const FsMiahootProjectedConverter: FirestoreDataConverter<MiahootProjecte
     id: snap.id,
     label: snap.get("label"),
     pin : snap.get("pin"),
+    indexQuestion : snap.get("indexQuestion"),
     creator: snap.get("creator"),
     presentator: snap.get("presentator"),
     currentQCM: snap.get("currentQCM"),
@@ -32,7 +33,7 @@ export const FsMiahootProjectedConverter: FirestoreDataConverter<MiahootProjecte
 export interface MiahootUser {
   readonly name: string;
   readonly mail?: string;
-  readonly miahootProjected?: number;
+  readonly miahootProjected?: string;
   teacherId?: number;
   image?: string;
 }
@@ -53,7 +54,7 @@ export interface STATE {
 export class DataService {
 
   obsMiUser: Observable<MiahootUser | undefined>;
-  readonly obsProjectedMiahootID: Observable<number | undefined>;
+  readonly obsProjectedMiahootID: Observable<string | undefined>;
   readonly obsProjectedMiahoot: Observable<undefined | MiahootProjected>;
   public docId:string;
 
@@ -84,6 +85,7 @@ export class DataService {
     const miahootProjected: MiahootProjected = {
       id: '',
       label: '',
+      indexQuestion : 0,
       pin: Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000,
       currentQCM: [{
         question: '',
@@ -117,7 +119,7 @@ export class DataService {
     }
 
     // Mettre à jour le document dans Firestore
-    await setDoc(doc(this.fs, `miahootProjected/${miahootProjected.id}`), miahootProjected, { merge: true });
+    await setDoc(doc(this.fs, `miahootProjected/${miahootProjected.id}`), miahootProjected);
 
     return docRef;
   }

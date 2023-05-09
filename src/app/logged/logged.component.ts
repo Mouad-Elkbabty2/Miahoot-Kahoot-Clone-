@@ -11,7 +11,7 @@ import { FsMiahootProjectedConverter, FsUserConverter } from '../data.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoggedComponent {
-  readonly obsProjectedMiahootID: Observable<number | undefined>;
+  readonly obsProjectedMiahootID: Observable<string | undefined>;
   // readonly obsProjectedMiahoot: Observable<undefined | MiahootProjected >;
 
   constructor(private auth: Auth, private fs: Firestore){

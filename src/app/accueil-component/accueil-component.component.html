@@ -11,15 +11,14 @@
             placeholder="Entrez le PIN..."
             id="pin"
             name="pin"
-            [(ngModel)]="pin"
-          />
-          <button id="submit" (click)="validerPin()">
+            [(ngModel)]="codePin"/>
+          <button id="submit" (click)="submitCodePin()">
             <mat-icon>chevron_right</mat-icon>
           </button>
         </div>
       </div>
-      <p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p>
-      <div *ngIf="pinSaisi && pinValide">
+    <!--   <p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p> -->
+      <div >
         <input
           type="text"
           placeholder="Nom de participant"
@@ -33,7 +32,6 @@
         [ngClass]="{ disabled: !nomSaisi }"
         type="submit"
         [disabled]="!nomSaisi"
-        (click)="test()"
       >
         Rejoindre la partie
       </button>

@@ -44,6 +44,7 @@ export interface MiahootProjected {
     creator?: string; 
     presentator?: string; 
     currentQCM: QCMProjected[]; 
+    indexQuestion : number;
 } 
 
 export interface Miahoot {

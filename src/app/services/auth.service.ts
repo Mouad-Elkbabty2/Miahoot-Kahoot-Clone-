@@ -44,7 +44,7 @@ export class AuthService implements OnDestroy {
                   name: user.displayName ?? user.email ?? user.uid,
                   mail: user.email ?? "",
                   image : user.photoURL,
-                  miahootProjected: 0,
+                  miahootProjected: '',
                 } as MiahootUser);
               }
               // Set uid in local storage on successful login
@@ -87,7 +87,7 @@ export class AuthService implements OnDestroy {
             ...snapUser.data(),
             name: user.displayName ?? user.email ?? user.uid,
             mail: user.email ?? "",
-            miahootProjected: 0,
+            miahootProjected: '',
             image : user.photoURL
           } as MiahootUser);
 

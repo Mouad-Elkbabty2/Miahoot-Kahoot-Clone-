@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'my-miahoots/:id', component: MyMiahootsComponent, canActivate: [AuthGuard]},
   { path: 'new-miahoot/:id', component: NewMiahootComponent, canActivate: [AuthGuard]  }, //canActivate interdit l'accés à certains utilisateur
   { path: 'testApi', component:TestApiComponent},
-  { path: 'participant/:id', component: ParticipantComponent },
+  { path: 'participant/:pin', component: ParticipantComponent },
   { path: 'test', component:AuthComponent},
   { path: 'login', component:LoginComponent},
   { path: 'presentateur/:id', component:PresentateurComponent},
