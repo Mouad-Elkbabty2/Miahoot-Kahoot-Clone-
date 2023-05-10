@@ -1,7 +1,7 @@
 <div *ngIf="miahoot$ | async as miahoot">
   <h2>{{ miahoot.label }}</h2>
   <div *ngIf="miahoot.showQuestion == true; else questionHidden">
-<p> {{miahoot.questionTimer}} </p>
+<p> Il vous reste {{remainingTime}} </p>
 
     <div>
       <ng-container>

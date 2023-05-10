@@ -22,6 +22,8 @@ export class ParticipantComponent implements OnInit {
   idMiahoot: string;
   showQuestion?: boolean;
   questionTimer : number = 0;
+  remainingTime: number = 0;
+  timerInterval : any;
 
 
   constructor(
@@ -34,6 +36,7 @@ export class ParticipantComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    this.startTimer();
     this.pin = this.route.snapshot.paramMap.get('pin') ?? '';
     const miahoot = await this.getMiahootByCodePin(this.pin);
     const miahootProjectedCollectionRef = collection(
@@ -68,17 +71,15 @@ export class ParticipantComponent implements OnInit {
   }
 
   startTimer() {
-    let timer = setInterval(() => {
-      if (this.miahoot && this.miahoot.questionTimer !== undefined && this.miahoot.questionTimer > 0) {
-        this.miahoot.questionTimer--;
+    this.remainingTime = this.miahoot?.questionTimer || 0; // Initialisation de la propriété
+    const interval = setInterval(() => {
+      if (this.remainingTime > 0) {
+        this.remainingTime--; // Décrémentation de la propriété
       } else {
-        clearInterval(timer);
-        // Le temps est écoulé, faire quelque chose ici
+        clearInterval(interval);
       }
     }, 1000);
   }
-  
-  
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
