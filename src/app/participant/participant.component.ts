@@ -20,6 +20,8 @@ export class ParticipantComponent implements OnInit {
   private subscription: Subscription | undefined;
   idMiahoot: string;
   showQuestion?: boolean;
+  questionTimer : number = 0;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -61,17 +63,18 @@ export class ParticipantComponent implements OnInit {
     );
   }
 
-  test() {
-    this.miahoot$?.subscribe(
-      (miahoot) => {
-        console.log(miahoot);
-        this.miahoot = miahoot;
-        this.indexQuestion = miahoot?.indexQuestion ?? -1;
-        this.showQuestion = miahoot?.showQuestion ?? undefined;
-      },
-      (error) => console.error(error)
-    );
+  startTimer() {
+    let timer = setInterval(() => {
+      if (this.miahoot && this.miahoot.questionTimer !== undefined && this.miahoot.questionTimer > 0) {
+        this.miahoot.questionTimer--;
+      } else {
+        clearInterval(timer);
+        // Le temps est écoulé, faire quelque chose ici
+      }
+    }, 1000);
   }
+  
+  
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
@@ -104,9 +107,13 @@ export class ParticipantComponent implements OnInit {
       pin: data['pin'],
       presentator: data['presentator'],
       showQuestion: data['showQuestion'],
+      questionTimer : data['questionTimer']
     };
   }
   submitReponse() {
     console.log('fiya neass htal ghda o ndirha');
   }
+
+
+  
 }
