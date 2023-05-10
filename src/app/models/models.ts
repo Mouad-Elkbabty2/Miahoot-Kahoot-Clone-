@@ -4,10 +4,6 @@ export interface Participant {
     participantMiahoot: number;
   }
   
-  export interface Concepteur {
-    createdMiahoots: number[];
-  }
-  
   export interface Presentateur {
     createdMiahoots: number[];
   }
@@ -50,7 +46,7 @@ export interface Participant {
   
   export interface Miahoot {
     id?: number;
-    concepteur?: Concepteur;
+    concepteur?: number;
     presentateur?: Presentateur;
     participants?: Participant[];
     nom?: string;

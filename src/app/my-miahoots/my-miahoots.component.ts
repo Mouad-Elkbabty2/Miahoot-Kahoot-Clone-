@@ -99,8 +99,14 @@ export class MyMiahootsComponent implements AfterViewInit, OnInit {
   async play(miahootId: number){  
     let doc = await this.dataService.addMiahootToFs(miahootId); 
     this.router.navigate(['presentateur/'+doc.id]);
-    
+    let miahoot = await this.miService.getMiahoot(miahootId);
+    let updatedMiahoot = {
+      ...miahoot, 
+      status: 0
+    };    
+   this.miService.updateMiahoot(miahootId, updatedMiahoot).then((result) => console.log("miahoot updated successfully "+result)); 
   }
+  
 
   createNewMiahoot() {
     const id = Number(this.route.snapshot.paramMap.get('id'));

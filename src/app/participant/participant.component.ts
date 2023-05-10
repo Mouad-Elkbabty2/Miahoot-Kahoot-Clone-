@@ -27,7 +27,6 @@ export class ParticipantComponent implements OnInit {
   reponseIndex:number;
   uid = localStorage.getItem('uid');
   nomUser = localStorage.getItem('nom');
-  selectedResponseIndex: number = -1;
 
 
 
@@ -149,6 +148,5 @@ export class ParticipantComponent implements OnInit {
 
   onResponseClick(responseIndex: number) {
     this.reponseIndex = responseIndex;
-    this.selectedResponseIndex = responseIndex;
   }
 }

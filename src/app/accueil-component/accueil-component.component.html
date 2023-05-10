@@ -1,36 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <body>
-    <h1>MIAHOOT</h1>
-    <form>
-      <div class="input-container">
-        <div class="input-wrapper">
-          <input
-            type="number"
-            pattern="[0-9]*"
-            placeholder="Entrez le PIN..."
-            id="pin"
-            name="pin"
-            [(ngModel)]="codePin"/>
-          <button id="submit">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
-        </div>
+
+<body>
+  <h1>MIAHOOT</h1>
+  <form>
+    <div class="input-container">
+      <div class="input-wrapper">
+        <input type="number" pattern="[0-9]*" placeholder="Entrez le PIN..." id="pin" name="pin"
+          [(ngModel)]="codePin" />
+        <button id="submit">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
       </div>
-    <!--   <p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p> -->  
+    </div>
+    <!--   <p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p> -->
     <div *ngIf="this.authService.getIsLoggedIn()==false">
-        <input
-          type="text"
-          placeholder="Nom de participant"
-          id="nom"
-          name="nom"
-          [(ngModel)]="nom"/>
-      </div>
-      <button type="submit" (click)="submitCodePin()">
-        Rejoindre la partie
-      </button>
-    </form>
-     <!--Waves Container-->
+      <input type="text" placeholder="Nom de participant" id="nom" name="nom" [(ngModel)]="nom" />
+    </div>
+    <button type="submit" (click)="submitCodePin()">
+      Rejoindre la partie
+    </button>
+  </form>
+  <!--Waves Container-->
   <div id="waves">
     <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
@@ -47,8 +38,6 @@
     </svg>
   </div>
   <!--Waves end-->
-  </body>
+</body>
+
 </html>
-
-
-

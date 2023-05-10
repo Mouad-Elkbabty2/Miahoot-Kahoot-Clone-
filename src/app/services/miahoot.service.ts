@@ -33,7 +33,7 @@ export class MiahootService {
   }
 
   async updateMiahoot(id: number, miahoot: Miahoot): Promise<Miahoot> {
-    return firstValueFrom(this.http.put<Miahoot>(`${this.urlMi}/${id}`, miahoot));
+    return firstValueFrom(this.http.patch<Miahoot>(`${this.urlMi}/${id}`, miahoot));
   }
   
 
