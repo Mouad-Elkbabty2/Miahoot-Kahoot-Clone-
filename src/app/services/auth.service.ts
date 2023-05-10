@@ -18,6 +18,7 @@ export class AuthService implements OnDestroy {
   public userSubject = new BehaviorSubject<User | null>(null);
   private isLoggedIn: boolean = false;
   private uid: string;
+  private username: string;
 
   constructor(private auth: Auth,
     private router: Router,
@@ -51,6 +52,7 @@ export class AuthService implements OnDestroy {
               // Set uid in local storage on successful login
               this.isLoggedIn = true;
               this.uid = user.uid;
+              this.username = user.displayName ?? "unknown";
               localStorage.setItem('uid', user.uid);
 
               this.userSubject.next(user);
@@ -130,4 +132,7 @@ export class AuthService implements OnDestroy {
     return this.uid;
   }
 
+  getUsername(){
+    return this.username;
+  }
 }

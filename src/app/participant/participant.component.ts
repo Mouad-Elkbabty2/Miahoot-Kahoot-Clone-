@@ -27,6 +27,7 @@ export class ParticipantComponent implements OnInit {
   reponseIndex:number;
   uid = localStorage.getItem('uid');
   nomUser = localStorage.getItem('nom');
+  selectedResponseIndex: number = -1;
 
 
 
@@ -129,7 +130,7 @@ export class ParticipantComponent implements OnInit {
     this.miahoot$?.subscribe(data => this.indexQuestion = data?.indexQuestion ?? 0)
     const miahootProjectedVotesCollectionRef = doc(
       this.fs,
-      `miahootProjected/${this.idMiahoot}/currentQCM/${this.indexQuestion}`
+      `miahootProjected/${this.idMiahoot}/currentQCM/question${this.indexQuestion}`
     );
   
     // Créer un objet vote pour l'utilisateur actuel
@@ -148,6 +149,6 @@ export class ParticipantComponent implements OnInit {
 
   onResponseClick(responseIndex: number) {
     this.reponseIndex = responseIndex;
-    
+    this.selectedResponseIndex = responseIndex;
   }
 }

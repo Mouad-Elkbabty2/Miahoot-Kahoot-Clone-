@@ -7,7 +7,7 @@
       <ng-container>
         <h3>{{ miahoot.currentQCM[miahoot.indexQuestion].question }}</h3>
         <ul>
-          <li *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses;let i=index" (click)="onResponseClick(i)">
+          <li *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses;let i=index" (click)="onResponseClick(i)" [ngClass]="{ 'selected': this.reponseIndex === i }">
             {{ response.label }}
           </li>
         </ul>

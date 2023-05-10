@@ -5,6 +5,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { collection, doc, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
 import { MiahootProjected, QCMProjected, Response } from '../models/models';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-accueil',
   templateUrl: './accueil-component.component.html',
@@ -22,17 +23,16 @@ export class AccueilComponent implements OnInit {
 
   pin: number;
   nom: string;
-  pins = [1234, 5432, 1312];
   pinSaisi = false;
   pinValide = false;
   nomSaisi = false;
   participantNom = "";
 
+
   obsCurrentQCM : Observable<QCMProjected>;
   private currentQCMSubject = new BehaviorSubject<QCMProjected[]>([]);
 
-  constructor(private route: ActivatedRoute, private fs: Firestore, private router : Router) { 
-  }
+  constructor(private route: ActivatedRoute, private fs: Firestore, private router : Router, public authService: AuthService) {}
 
   public getCurrentQCM(): Observable<QCMProjected[]> {
     console.log(this.miahootProjected.currentQCM);
@@ -68,7 +68,12 @@ export class AccueilComponent implements OnInit {
   
 
   async submitCodePin() {
-    localStorage.setItem('nom',this.nom);
+    if(this.authService.getIsLoggedIn()){
+      localStorage.setItem('nom',this.authService.getUsername());
+    }else{
+      localStorage.setItem('nom',this.nom);
+    }
+    
     this.miahootProjected  = await this.getMiahootByCodePin(this.codePin);
     console.log(this.miahootProjected);
     if(this.miahootProjected){

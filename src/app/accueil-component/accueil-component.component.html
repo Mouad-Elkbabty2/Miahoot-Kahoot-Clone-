@@ -17,20 +17,16 @@
           </button>
         </div>
       </div>
-    <!--   <p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p> -->
-      <div >
+    <!--   <p *ngIf="pinSaisi && !pinValide">Aucun Miahoot trouvé avec ce PIN 😔</p> -->  
+    <div *ngIf="this.authService.getIsLoggedIn()==false">
         <input
           type="text"
           placeholder="Nom de participant"
           id="nom"
           name="nom"
-          [(ngModel)]="nom"
-        />
+          [(ngModel)]="nom"/>
       </div>
-      <button
-        type="submit"
-        (click)="submitCodePin()"
-      >
+      <button type="submit" (click)="submitCodePin()">
         Rejoindre la partie
       </button>
     </form>
