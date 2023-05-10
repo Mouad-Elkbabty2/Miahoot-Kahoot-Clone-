@@ -1,20 +1,19 @@
 <div *ngIf="miahoot$ | async as miahoot">
   <h2>{{ miahoot.label }}</h2>
   <div *ngIf="miahoot.showQuestion == true; else questionHidden">
-<p> Il vous reste {{remainingTime}} </p>
-
+    <p> Il vous reste {{remainingTime}} </p>
+    <button (click)="startTimer()"></button>
     <div>
       <ng-container>
         <h3>{{ miahoot.currentQCM[miahoot.indexQuestion].question }}</h3>
         <ul>
-          <li
-            *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses">
+          <li *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses;let i=index" (click)="onResponseClick(i)">
             {{ response.label }}
           </li>
         </ul>
       </ng-container>
     </div>
-    <button (click)="submitReponse(miahoot.indexQuestion)" class="btn btn-primary">Submit</button>
+    <button (click)="addVote(this.reponseIndex,this.nomUser??'')" class="btn btn-primary">Submit</button>
   </div>
 </div>
 <ng-template #questionHidden>

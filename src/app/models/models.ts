@@ -26,12 +26,14 @@ export interface Participant {
     responses?: Response[];
   }
   
-  export type VOTES = {[participantUID: string]: true} 
+  export type VOTES = {
+    [participantId:string]:number;
+  }; 
   
   export interface QCMProjected {
     question: string;
     responses: Response[]; // Les réponses possibles
-    votes: VOTES; // Autant d'entrée dans le tableau que de réponses possibles
+    votes: VOTES[]; // Autant d'entrée dans le tableau que de réponses possibles
   }
   
   export interface MiahootProjected {

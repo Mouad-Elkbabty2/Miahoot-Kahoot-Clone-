@@ -26,6 +26,7 @@ export class AccueilComponent implements OnInit {
   pinSaisi = false;
   pinValide = false;
   nomSaisi = false;
+  participantNom = "";
 
   obsCurrentQCM : Observable<QCMProjected>;
   private currentQCMSubject = new BehaviorSubject<QCMProjected[]>([]);
@@ -67,6 +68,7 @@ export class AccueilComponent implements OnInit {
   
 
   async submitCodePin() {
+    localStorage.setItem('nom',this.nom);
     this.miahootProjected  = await this.getMiahootByCodePin(this.codePin);
     console.log(this.miahootProjected);
     if(this.miahootProjected){
@@ -115,8 +117,5 @@ export class AccueilComponent implements OnInit {
   }
 
 
-  validerNom() {
-    this.nomSaisi = !!this.nom;
-  }
 }
 

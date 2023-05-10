@@ -24,19 +24,24 @@ export class ParticipantComponent implements OnInit {
   questionTimer : number = 0;
   remainingTime: number = 0;
   timerInterval : any;
+  reponseIndex:number;
+  uid = localStorage.getItem('uid');
+  nomUser = localStorage.getItem('nom');
+
 
 
   constructor(
     private route: ActivatedRoute,
     private fs: Firestore,
     private db: AngularFireDatabase,
-    private auth : Auth
+    private auth : Auth,
   ) {
 
   }
 
-  async ngOnInit(): Promise<void> {
-    this.startTimer();
+  async ngOnInit(): Promise<void> {  
+    console.log();
+     
     this.pin = this.route.snapshot.paramMap.get('pin') ?? '';
     const miahoot = await this.getMiahootByCodePin(this.pin);
     const miahootProjectedCollectionRef = collection(
@@ -71,14 +76,17 @@ export class ParticipantComponent implements OnInit {
   }
 
   startTimer() {
-    this.remainingTime = this.miahoot?.questionTimer || 0; // Initialisation de la propriété
-    const interval = setInterval(() => {
+    this.miahoot$?.subscribe(data => this.remainingTime = data?.questionTimer ?? 0) // Initialisation de la propriété
+    console.log(this.remainingTime);
+    
+    /* const interval = setInterval(() => {
       if (this.remainingTime > 0) {
         this.remainingTime--; // Décrémentation de la propriété
       } else {
         clearInterval(interval);
       }
     }, 1000);
+    return this.remainingTime; */
   }
 
   ngOnDestroy(): void {
@@ -115,32 +123,31 @@ export class ParticipantComponent implements OnInit {
       questionTimer : data['questionTimer']
     };
   }
-  async submitResponse(indexQuestion: number) {
+
+  async addVote(indexReponse: number, participantId: string) {
     // Accéder au doc et au current qcm sur Firebase
-    const miahootProjectedVotesCollectionRef = collection(
+    this.miahoot$?.subscribe(data => this.indexQuestion = data?.indexQuestion ?? 0)
+    const miahootProjectedVotesCollectionRef = doc(
       this.fs,
-      `miahootProjected/${this.idMiahoot}/currentQCM`
+      `miahootProjected/${this.idMiahoot}/currentQCM/${this.indexQuestion}`
     );
   
     // Créer un objet vote pour l'utilisateur actuel
-    let newVote: VOTES = {};
-    if (this.auth.currentUser) {
-      newVote[this.auth.currentUser.uid] = true;
-    }
-  
+    let newVote: VOTES = { [participantId]: indexReponse };
+    
     // Ajouter le nouvel objet vote à la liste des votes actuels
     try {
-      const currentQcmDocRef = doc(miahootProjectedVotesCollectionRef, `${indexQuestion}`);
-      const currentQcmDoc = await getDoc(currentQcmDocRef);
+      const currentQcmDoc = await getDoc(miahootProjectedVotesCollectionRef);
       const currentVotes = currentQcmDoc.data()?.['votes'] ?? [];
       currentVotes.push(newVote);
-      await setDoc(currentQcmDocRef, { votes: currentVotes }, { merge: true });
-      console.log("Vote ajouté avec succès !");
+      await setDoc(miahootProjectedVotesCollectionRef, { votes: currentVotes }, { merge: true }).then(()=> console.log("vote ajouté avec succées"))
     } catch (e) {
       console.error("Erreur lors de l'ajout du vote :", e);
     }
   }
 
-
-  
+  onResponseClick(responseIndex: number) {
+    this.reponseIndex = responseIndex;
+    
+  }
 }

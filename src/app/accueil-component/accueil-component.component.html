@@ -12,7 +12,7 @@
             id="pin"
             name="pin"
             [(ngModel)]="codePin"/>
-          <button id="submit" (click)="submitCodePin()">
+          <button id="submit">
             <mat-icon>chevron_right</mat-icon>
           </button>
         </div>
@@ -25,13 +25,11 @@
           id="nom"
           name="nom"
           [(ngModel)]="nom"
-          (input)="validerNom()"
         />
       </div>
       <button
-        [ngClass]="{ disabled: !nomSaisi }"
         type="submit"
-        [disabled]="!nomSaisi"
+        (click)="submitCodePin()"
       >
         Rejoindre la partie
       </button>
