@@ -139,11 +139,7 @@ export class ParticipantComponent implements OnInit {
       console.error("Erreur lors de l'ajout du vote :", e);
     }
   }
-<<<<<<< HEAD
-  
-=======
 
 
->>>>>>> afd32c2abd9c30c4288a859eb97599742c7fd687
   
 }
