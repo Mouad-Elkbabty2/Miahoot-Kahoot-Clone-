@@ -50,7 +50,6 @@ export const FsMiahootProjectedConverter: FirestoreDataConverter<MiahootProjecte
 
 }
 
-
 @Injectable({
   providedIn: 'root'
 })

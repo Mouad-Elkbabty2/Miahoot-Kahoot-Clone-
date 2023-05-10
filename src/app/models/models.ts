@@ -26,11 +26,7 @@ export interface Participant {
     responses?: Response[];
   }
   
-  export type VOTES =
-    | {
-        [participantUID: string]: boolean;
-      }
-    | {};
+  export type VOTES = {[participantUID: string]: true} 
   
   export interface QCMProjected {
     question: string;

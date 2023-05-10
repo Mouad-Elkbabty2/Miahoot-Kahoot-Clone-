@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
-import {DocumentData,DocumentSnapshot,collection,doc,getDocs, onSnapshot,query,where,} from 'firebase/firestore';
-import { MiahootProjected, QCMProjected, Response } from '../models/models';
+import {DocumentData,DocumentSnapshot,collection,doc,getDocs, onSnapshot,query,where, getDoc, setDoc,} from 'firebase/firestore';
+import { MiahootProjected, QCMProjected, Response, VOTES } from '../models/models';
 import {Observable,Subscription,map} from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-participant',
@@ -24,8 +25,11 @@ export class ParticipantComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fs: Firestore,
-    private db: AngularFireDatabase
-  ) {}
+    private db: AngularFireDatabase,
+    private auth : Auth
+  ) {
+
+  }
 
   async ngOnInit(): Promise<void> {
     this.pin = this.route.snapshot.paramMap.get('pin') ?? '';
@@ -106,7 +110,31 @@ export class ParticipantComponent implements OnInit {
       showQuestion: data['showQuestion'],
     };
   }
-  submitReponse() {
-    console.log('fiya neass htal ghda o ndirha');
+  async submitResponse(indexQuestion: number) {
+    // Accéder au doc et au current qcm sur Firebase
+    const miahootProjectedVotesCollectionRef = collection(
+      this.fs,
+      `miahootProjected/${this.idMiahoot}/currentQCM`
+    );
+  
+    // Créer un objet vote pour l'utilisateur actuel
+    let newVote: VOTES = {};
+    if (this.auth.currentUser) {
+      newVote[this.auth.currentUser.uid] = true;
+    }
+  
+    // Ajouter le nouvel objet vote à la liste des votes actuels
+    try {
+      const currentQcmDocRef = doc(miahootProjectedVotesCollectionRef, `${indexQuestion}`);
+      const currentQcmDoc = await getDoc(currentQcmDocRef);
+      const currentVotes = currentQcmDoc.data()?.['votes'] ?? [];
+      currentVotes.push(newVote);
+      await setDoc(currentQcmDocRef, { votes: currentVotes }, { merge: true });
+      console.log("Vote ajouté avec succès !");
+    } catch (e) {
+      console.error("Erreur lors de l'ajout du vote :", e);
+    }
   }
+  
+  
 }

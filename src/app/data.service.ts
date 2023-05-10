@@ -106,12 +106,14 @@ export class DataService {
     for (let i = 0; i < len; i++) {
       const question = miahoot.questions?.[i];
       const responses = question?.responses ?? [];
-      const votes = responses.map((_, index) => index === i);
+      // const votes = responses.map((_, index) => index === i);
+      const votes = []; 
 
       const qcm: QCMProjected = {
         question: question?.label ?? '',
         responses,
-        votes: votes.reduce((acc, val, index) => ({ ...acc, [index]: val }), {})
+        // votes: votes.reduce((acc, val, index) => ({ ...acc, [index]: val }), {})
+        votes: []
       };
 
       qcms.push(qcm);
