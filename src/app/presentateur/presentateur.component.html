@@ -10,24 +10,33 @@
   {{ showQuestion ? "Cacher la Question" : "Afficher la Question" }}
 </button>
 
+<div>
+  <label for="questionTimer">Durée du timer (en secondes) :</label>
+  <input type="number" id="questionTimer" [(ngModel)]="questionTimer" />
+</div>
+
 <!--        <div *ngIf="miahoot$ | async as miahoot">       -->
 <div *ngIf="showQuestion">
   <mat-card>
     <mat-card>
       <div class="timer" *ngIf="showTimer">
         <p>Il vous reste</p>
-        {{ formatTime(remainingTime) }}
+        {{ formatTime(remainingTime ?? 0) }}
       </div>
       <mat-card-title
         >Question n° {{ miahootProjected.indexQuestion + 1 }} :
-        {{ miahootProjected.currentQCM[miahootProjected.indexQuestion].question }}</mat-card-title
+        {{
+          miahootProjected.currentQCM[miahootProjected.indexQuestion].question
+        }}</mat-card-title
       >
     </mat-card>
     <mat-list>
       <h3 mat-subheader>Réponses :</h3>
       <mat-list-item
         *ngFor="
-          let reponse of miahootProjected.currentQCM[miahootProjected.indexQuestion].responses;
+          let reponse of miahootProjected.currentQCM[
+            miahootProjected.indexQuestion
+          ].responses;
           let j = index
         "
         [ngClass]="{
@@ -59,7 +68,10 @@
       mat-raised-button
       color="primary"
       (click)="questionSwitcher(1)"
-      [disabled]="miahootProjected.indexQuestion === miahootProjected.currentQCM.length - 1"
+      [disabled]="
+        miahootProjected.indexQuestion ===
+        miahootProjected.currentQCM.length - 1
+      "
     >
       Question suivante ➡️
     </button>

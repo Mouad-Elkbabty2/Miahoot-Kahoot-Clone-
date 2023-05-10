@@ -28,8 +28,9 @@ export class PresentateurComponent {
   miahootId = this.route.snapshot.paramMap.get('id');
   showQuestion = false;
   showTimer = false;
-  remainingTime = 10;
+  remainingTime?: number;
   timerInterval: any;
+  questionTimer = 0;
 
   constructor(
     private router: Router,
@@ -40,9 +41,7 @@ export class PresentateurComponent {
 
   ngOnInit(): void {
     this.getMiahootById(this.miahootId ?? '');
-
   }
-
 
   async getMiahootById(id: string) {
     const miahootDocRef = doc(this.fs, `miahootProjected/${id}`).withConverter(
@@ -52,9 +51,10 @@ export class PresentateurComponent {
     this.miahootProjected = snapMiahoot.data() as MiahootProjected;
   }
 
-  inverse() {
+  async inverse() {
     this.showQuestion = !this.showQuestion;
-
+    const docRef = doc(this.fs, `miahootProjected/${this.miahootId}`);
+    await setDoc(docRef, { showQuestion: this.showQuestion }, { merge: true });
     if (this.showQuestion) {
       this.startTimer();
     } else {
@@ -62,35 +62,64 @@ export class PresentateurComponent {
     }
   }
 
-  async nextQuestion(id: string,i : number) {
-    const docProjectedMiahoot = doc(this.fs, `miahootProjected/${id}`).withConverter(FsMiahootProjectedConverter);
+  async nextQuestion(id: string, i: number) {
+    const docProjectedMiahoot = doc(
+      this.fs,
+      `miahootProjected/${id}`
+    ).withConverter(FsMiahootProjectedConverter);
 
     const snapMiahoot = await getDoc(docProjectedMiahoot);
     this.miahootProjected = snapMiahoot.data() as MiahootProjected;
-    
-    this.miahootProjected.indexQuestion += i ;
-    this.miahootProjected.creator = this.miahootProjected.creator || 'default_creator';
-    this.miahootProjected.presentator = this.miahootProjected.presentator || 'default_creator';
 
-    setDoc(doc(this.fs, `miahootProjected/${id}`),  this.miahootProjected, { merge: true }); 
+    this.miahootProjected.indexQuestion += i;
+    this.miahootProjected.creator =
+      this.miahootProjected.creator || 'default_creator';
+    this.miahootProjected.presentator =
+      this.miahootProjected.presentator || 'default_creator';
+
+    await setDoc(
+      doc(this.fs, `miahootProjected/${id}`),
+      this.miahootProjected,
+      {
+        merge: true,
+      }
+    );
+    this.afficherRep();
+    await this.inverse(); // Inverser l'affichage de la question et démarrer le timer
+    this.startTimer();
   }
 
   async questionSwitcher(i: number) {
     this.stopTimer();
-    await this.nextQuestion(this.miahootId ?? '',i);
+    await this.nextQuestion(this.miahootId ?? '', i);
+    await this.inverse();
     this.startTimer();
   }
 
-  startTimer() {
+  async startTimer() {
     this.showTimer = true;
-    this.remainingTime = 10;
 
+    const docRef = doc(this.fs, `miahootProjected/${this.miahootId}`);
+
+    if (this.questionTimer !== undefined) {
+      await setDoc(
+        docRef,
+        { questionTimer: this.questionTimer },
+        { merge: true }
+      );
+    }
+
+    this.remainingTime = this.questionTimer; // Initialisation du temps restant avec la valeur du timer
+
+    const startTime = Date.now();
     this.timerInterval = setInterval(() => {
-      this.remainingTime--;
+      const currentTime = Date.now();
+      const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+      this.remainingTime = Math.max(this.questionTimer - elapsedSeconds, 0);
 
       if (this.remainingTime <= 0) {
         this.stopTimer();
-        this.showAnswers = true; // Afficher automatiquement les réponses lorsque le temps est écoulé
+        this.showAnswers = true;
       }
     }, 1000);
   }

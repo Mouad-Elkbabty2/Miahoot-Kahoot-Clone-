@@ -1,11 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
-import { DocumentData, DocumentSnapshot, collection, doc, getDoc, getDocs, onSnapshot, query, where } from 'firebase/firestore';
+import {
+  DocumentData,
+  DocumentSnapshot,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  onSnapshot,
+  query,
+  where,
+} from 'firebase/firestore';
 import { MiahootProjected, QCMProjected, Response } from '../models/models';
-import { BehaviorSubject, Observable, Subscription, from, isEmpty, map, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  from,
+  isEmpty,
+  map,
+  of,
+} from 'rxjs';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-
 
 @Component({
   selector: 'app-participant',
@@ -13,7 +30,6 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
   styleUrls: ['./participant.component.scss'],
 })
 export class ParticipantComponent implements OnInit {
-
   pin = this.route.snapshot.paramMap.get('pin') ?? '';
   miahootProjected: any;
   miahoot$: Observable<MiahootProjected | null> | undefined;
@@ -21,17 +37,26 @@ export class ParticipantComponent implements OnInit {
   indexQuestion = 0;
   private subscription: Subscription | undefined;
   idMiahoot: string;
+  showQuestion?: boolean;
 
-  constructor(private route: ActivatedRoute, private fs: Firestore, private db: AngularFireDatabase) { }
+  constructor(
+    private route: ActivatedRoute,
+    private fs: Firestore,
+    private db: AngularFireDatabase
+  ) {}
 
   async ngOnInit(): Promise<void> {
     this.pin = this.route.snapshot.paramMap.get('pin') ?? '';
     const miahoot = await this.getMiahootByCodePin(this.pin);
-    const miahootProjectedCollectionRef = collection(this.fs, 'miahootProjected');
+    const miahootProjectedCollectionRef = collection(
+      this.fs,
+      'miahootProjected'
+    );
     const docRef = doc(miahootProjectedCollectionRef, miahoot.id);
 
     this.miahoot$ = new Observable<DocumentSnapshot>((observer) => {
-      const unsubscribe = onSnapshot(docRef,
+      const unsubscribe = onSnapshot(
+        docRef,
         (docSnapshot) => {
           observer.next(docSnapshot);
         },
@@ -43,7 +68,10 @@ export class ParticipantComponent implements OnInit {
     }).pipe(
       map((docSnapshot) => {
         if (docSnapshot.exists()) {
-          return { id: docSnapshot.id, ...docSnapshot.data() } as MiahootProjected;
+          return {
+            id: docSnapshot.id,
+            ...docSnapshot.data(),
+          } as MiahootProjected;
         } else {
           return null;
         }
@@ -57,6 +85,7 @@ export class ParticipantComponent implements OnInit {
         console.log(miahoot);
         this.miahoot = miahoot;
         this.indexQuestion = miahoot?.indexQuestion ?? -1;
+        this.showQuestion = miahoot?.showQuestion ?? undefined;
       },
       (error) => console.error(error)
     );
@@ -67,8 +96,14 @@ export class ParticipantComponent implements OnInit {
   }
 
   async getMiahootByCodePin(codePin: string): Promise<MiahootProjected> {
-    const miahootProjectedCollectionRef = collection(this.fs, 'miahootProjected');
-    const req = query(miahootProjectedCollectionRef, where('pin', '==', parseInt(codePin, 10)));
+    const miahootProjectedCollectionRef = collection(
+      this.fs,
+      'miahootProjected'
+    );
+    const req = query(
+      miahootProjectedCollectionRef,
+      where('pin', '==', parseInt(codePin, 10))
+    );
     const snap = await getDocs(req);
 
     if (snap.empty) {
@@ -86,7 +121,10 @@ export class ParticipantComponent implements OnInit {
       indexQuestion: data['indexQuestion'],
       pin: data['pin'],
       presentator: data['presentator'],
+      showQuestion: data['showQuestion'],
     };
   }
-
+  submitReponse() {
+    console.log('fiya neass htal ghda o ndirha');
+  }
 }

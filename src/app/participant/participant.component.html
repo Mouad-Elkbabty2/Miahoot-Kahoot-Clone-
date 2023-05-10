@@ -1,13 +1,24 @@
 <div *ngIf="miahoot$ | async as miahoot">
   <h2>{{ miahoot.label }}</h2>
-  <div>
-    <ng-container>
-      <h3>{{ miahoot.currentQCM[miahoot.indexQuestion].question }}</h3>
-      <ul>
-        <li *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses">
-          {{ response.label }}
-        </li>
-      </ul>
-    </ng-container>
+  <div *ngIf="miahoot.showQuestion == true; else questionHidden">
+    <div>
+      <ng-container>
+        <h3>{{ miahoot.currentQCM[miahoot.indexQuestion].question }}</h3>
+        <ul>
+          <li
+            *ngFor="
+              let response of miahoot.currentQCM[miahoot.indexQuestion]
+                .responses
+            "
+          >
+            {{ response.label }}
+          </li>
+        </ul>
+      </ng-container>
+    </div>
+    <button (click)="submitReponse()" class="btn btn-primary">Submit</button>
   </div>
 </div>
+<ng-template #questionHidden>
+  <p>La question est masquée pour le moment par le présentateur .</p>
+</ng-template>
