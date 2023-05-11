@@ -81,3 +81,42 @@ mat-card {
   font-weight: bold;
   transition: width 0.5s ease-in-out;
 }
+
+button {
+  margin: 7px 7px;
+  border-radius: 0%;
+  border: 2px solid #2196f3;
+  transition: 1s;
+  padding: 8px;
+  cursor: pointer;
+  color:#fff;
+  background-color: #2196f3;
+  font-weight: 500;
+}
+
+li {
+  padding: 10px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  list-style-type: none;
+}
+
+li:hover {
+  background-color: #eee;
+}
+
+
+.vrai{
+  background-color: #c7e7c3;
+}
+
+.faux{
+  background-color: #f6bfbf;
+}

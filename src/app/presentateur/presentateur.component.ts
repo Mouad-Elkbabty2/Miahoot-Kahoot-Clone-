@@ -58,7 +58,11 @@ export class PresentateurComponent {
   totalVotes: number;
   showParticipants: boolean = false;
   showVotes: boolean = false;
-  voteResults : any[];
+  voteResults : {[participantId: string]: number} = {};
+  participantVotes: {name: string, count: number, options: string[]}[] = [];
+  lastVotes : {[participantId: string]: any} = {};
+  voteDesparticipants : number[];
+
 
   constructor(
     private router: Router,
@@ -181,7 +185,6 @@ export class PresentateurComponent {
     const questionDoc = await getDoc(questionRef);
     const votes = questionDoc.data()?.['votes'];
     const participantIds: string[] = [];
-
     if (votes) {
       for (const vote of votes) {
         const participantId = Object.keys(vote)[0];
@@ -190,9 +193,13 @@ export class PresentateurComponent {
         }
       }
     }
+
     this.showParticipants = !this.showParticipants;
 
     this.participantNames = participantIds;
+
+    this.getVotesParticipant(indexQuestion);
+
   }
 
   async getVotes(indexQuestion: number) {
@@ -217,26 +224,43 @@ export class PresentateurComponent {
     this.totalVotes = this.votes.reduce((acc, curr) => acc + curr, 0);
 
   }
-  async getPersonnes(indexQuestion: number) {
+  async getVotesParticipant(indexQuestion: number) {
+    const questionRef = doc(this.fs, `miahootProjected/${this.miahootId}/currentQCM/question${indexQuestion}`).withConverter(QuestionVoteConverter);
+    const questionDoc = await getDoc(questionRef);
+    const votes = questionDoc.data()?.votes ?? [];
+
+
+    const votesUniques = votes.reduce((V, v) => ({ ...V, ...v }), {} as VOTES)
+    const stats = Object.keys(votesUniques).reduce(
+      (S, v) => {
+        const choix = votesUniques[v]
+        S[choix] = 1 + (S[choix] ?? 0);
+        return S;
+      },
+      [] as number[] // nombre de fois qu'on a voté vote
+    )
+      this.voteDesparticipants = stats;
+      
+  }
+
+  async getVoteCounts(indexQuestion: number) {
     const questionRef = doc(this.fs, `miahootProjected/${this.miahootId}/currentQCM/question${indexQuestion}`);
     const questionDoc = await getDoc(questionRef);
     const votes = questionDoc.data()?.['votes'];
+    const voteCounts: {[participantId: string]: number} = {};
   
-    const result: { name: string, option: string, value: any }[] = [];
-  
-    for (const name in votes) {
-      const vote = votes[name];
-      for (const option in vote) {
-        const value = vote[option];
-        result.push({ name, option, value });
+    if (votes) {
+      for (const vote of votes) {
+        const participantId = Object.keys(vote)[0];
+        if (!voteCounts[participantId]) {
+          voteCounts[participantId] = 0;
+        }
+        voteCounts[participantId]++;
       }
     }
-  
-    this.voteResults = result;
-    return this.voteResults;
+    this.voteResults =voteCounts ;
+    return voteCounts;
   }
-  
-
-    
+      
 
 }

@@ -61,17 +61,21 @@
     <button mat-raised-button (click)="retToMyMiahoot()">
       Retourner à mes miahoot
     </button>
-  </mat-card>
+  </mat-card>s
 </div>
 
 <button (click)="getNamesFromVotesCollection(miahootProjected.indexQuestion)">
   Afficher les noms des participants
 </button>
 
-<ul *ngIf="this.showParticipants">
-  <li *ngFor="let name of participantNames">{{ name }}</li>
+<ul *ngIf="showParticipants">
+  <li *ngFor="let name of participantNames; let i=index" [ngClass]="{'vrai' : miahootProjected.currentQCM[indexQuestion].responses[i].estValide,'faux' : !miahootProjected.currentQCM[indexQuestion].responses[i].estValide}" >
+    {{ name }} a repondu   {{miahootProjected.currentQCM[indexQuestion].responses[i].label }}
+  </li>
 </ul>
+
 <button (click)="getVotes(miahootProjected.indexQuestion)"> voir les nombres de vote </button>
+
 <ul *ngIf="this.showVotes">
   <li *ngFor="let reponse of miahootProjected.currentQCM[miahootProjected.indexQuestion].responses; let j = index">
     <div class="reponse-label">{{reponse.label}}</div>
@@ -82,11 +86,10 @@
     </div>
   </li>
 </ul>
-
-<button (click)="getPersonnes(miahootProjected.indexQuestion)">Submit</button>
-<ul>
-  <li *ngFor="let vote of voteResults">{{vote.name}} : {{vote.value}}</li>
-</ul>
-
+    <button (click)="getVoteCounts(miahootProjected.indexQuestion)"> afficher les reponses des gens </button>
+    
+    <ul *ngFor="let item of voteResults | keyvalue">
+      <li>{{ item.key }} a repondu {{ item.value }} fois </li>
+    </ul>
 
 <!-- </div>-->
