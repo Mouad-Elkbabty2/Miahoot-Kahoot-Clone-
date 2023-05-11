@@ -21,11 +21,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCardModule } from '@angular/material/card';
 import { AuthComponent } from './auth/auth.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MiahootService } from './services/miahoot.service';
 import { HttpClientModule } from '@angular/common/http';
@@ -37,10 +37,7 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { CreateMihaootComponent } from './create-mihaoot/create-mihaoot.component';
-
-
-
-
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   declarations: [
@@ -72,22 +69,19 @@ import { CreateMihaootComponent } from './create-mihaoot/create-mihaoot.componen
     MatSelectModule,
     MatSortModule,
     FormsModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
     MatListModule,
     CommonModule,
     MatChipsModule,
     MatCardModule,
     HttpClientModule,
+    NgxQRCodeModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
-
   ],
-  providers: [
-    MiahootService,
-    AuthGuard
-  ],
-  bootstrap: [AppComponent]
+  providers: [MiahootService, AuthGuard],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

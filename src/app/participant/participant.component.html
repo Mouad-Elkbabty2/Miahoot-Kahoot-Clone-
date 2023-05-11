@@ -1,21 +1,35 @@
 <div *ngIf="miahoot$ | async as miahoot">
   <h2>{{ miahoot.label }}</h2>
   <div *ngIf="miahoot.showQuestion == true; else questionHidden">
-    <p> Il vous reste {{remainingTime}} </p>
-    <button (click)="startTimer()"></button>
+    <p>{{ formatTime(remainingTime) }}</p>
+    <!-- Appel de la fonction formatTime() -->
     <div>
       <ng-container>
         <h3>{{ miahoot.currentQCM[miahoot.indexQuestion].question }}</h3>
         <ul>
-          <li *ngFor="let response of miahoot.currentQCM[miahoot.indexQuestion].responses;let i=index" (click)="onResponseClick(i)" [ngClass]="{ 'selected': this.reponseIndex === i }">
+          <li
+            *ngFor="
+              let response of miahoot.currentQCM[miahoot.indexQuestion]
+                .responses;
+              let i = index
+            "
+            (click)="onResponseClick(i)"
+            [ngClass]="{ selected: this.reponseIndex === i }"
+          >
             {{ response.label }}
           </li>
         </ul>
       </ng-container>
     </div>
-    <button (click)="addVote(this.reponseIndex,this.nomUser??'')" class="btn btn-primary">Submit</button>
+    <button
+      (click)="addVote(this.reponseIndex, this.nomUser ?? '')"
+      class="btn btn-primary"
+      [disabled]="remainingTime === 0"
+    >
+      Submit
+    </button>
   </div>
 </div>
 <ng-template #questionHidden>
-  <p>La question est masquée pour le moment par le présentateur .</p>
+  <p>La question est masquée pour le moment par le présentateur.</p>
 </ng-template>

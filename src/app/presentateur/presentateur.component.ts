@@ -6,11 +6,21 @@ import {
   QCMProjected,
   Question,
 } from '../models/models';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+  where,
+} from 'firebase/firestore';
 import { Firestore } from '@angular/fire/firestore';
 import { FsMiahootProjectedConverter } from '../data.service';
 import { AuthService } from '../services/auth.service';
 import { PresentateurService } from '../services/presentateur.service';
+import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @Component({
   selector: 'app-presentateur',
@@ -31,6 +41,7 @@ export class PresentateurComponent {
   remainingTime?: number;
   timerInterval: any;
   questionTimer = 0;
+  participantNames: string[];
 
   constructor(
     private router: Router,
@@ -145,5 +156,33 @@ export class PresentateurComponent {
 
   retToMyMiahoot() {
     this.router.navigate(['/my-miahoots/' + this.auth.getUid()]);
+  }
+  async getNamesFromVotesCollection(participantId: string): Promise<string[]> {
+    const participantRef = doc(this.fs, `participants/${participantId}`);
+    const votesQuery = query(
+      collection(this.fs, 'currentQCM'),
+      where('participantMiahoot', '==', participantRef)
+    );
+    const votesSnapshot = await getDocs(votesQuery);
+
+    const names: string[] = [];
+    votesSnapshot.forEach((doc) => {
+      const vote = doc.data();
+      const questionIndex = parseInt(doc.id, 10);
+      const participantIndex = vote[participantId];
+      const participantName =
+        this.miahootProjected.currentQCM[questionIndex].votes[participantIndex][
+          'nom'
+        ];
+      names.push(String(participantName));
+    });
+
+    return names;
+  }
+  async getParticipantNames() {
+    const participantId = 'participantId'; // Remplacez 'participantId' par l'ID du participant pour lequel vous souhaitez obtenir les noms
+    const names = await this.getNamesFromVotesCollection(participantId);
+    console.log(names); // Affiche les noms des participants dans la console
+    this.participantNames = names; // Assignez les noms à une variable dans votre composant pour les afficher dans l'interface utilisateur
   }
 }

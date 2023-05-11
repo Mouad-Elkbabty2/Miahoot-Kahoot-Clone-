@@ -1,6 +1,10 @@
 <div class="header">
   <h2>Présentateur {{ miahootProjected.presentator }}</h2>
   <h3>Entrez pour participer : {{ miahootProjected.pin }}</h3>
+  <h4>Code QR :</h4>
+  <!--<ngx-qrcode [qrc-value]="qrCodeValue"></ngx-qrcode>-->
+
+  <p>{{ miahootProjected.pin }}</p>
 </div>
 <button
   id="toggleButton"
@@ -80,5 +84,12 @@
     </button>
   </mat-card>
 </div>
+<button (click)="getParticipantNames()">
+  Afficher les noms des participants
+</button>
+
+<ul>
+  <li *ngFor="let name of participantNames">{{ name }}</li>
+</ul>
 
 <!-- </div>-->

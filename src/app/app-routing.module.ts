@@ -11,23 +11,29 @@ import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { PresentateurComponent } from './presentateur/presentateur.component';
 
-
-
 const routes: Routes = [
-  {path: '',title: 'Accueil', component: AccueilComponent,},
-  { path: 'my-miahoots/:id', component: MyMiahootsComponent, canActivate: [AuthGuard]},
-  { path: 'new-miahoot/:id', component: NewMiahootComponent, canActivate: [AuthGuard]  }, //canActivate interdit l'accés à certains utilisateur
-  { path: 'testApi', component:TestApiComponent},
+  { path: '', title: 'Accueil', component: AccueilComponent },
+  {
+    path: 'my-miahoots/:id',
+    component: MyMiahootsComponent,
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'new-miahoot/:id',
+    component: NewMiahootComponent,
+    canActivate: [AuthGuard],
+  }, //canActivate interdit l'accés à certains utilisateur
+  { path: 'testApi', component: TestApiComponent },
   { path: 'participant/:pin', component: ParticipantComponent },
-  { path: 'test', component:AuthComponent},
-  { path: 'login', component:LoginComponent},
-  { path: 'presentateur/:id', component:PresentateurComponent},
-  { path: '**', redirectTo: '' }
+  { path: 'test', component: AuthComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'presentateur/:id', component: PresentateurComponent },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes), FormsModule],
-  
-  exports: [RouterModule]
+
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
