@@ -1,18 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Firestore } from '@angular/fire/firestore';
-import {
-  DocumentData,
-  DocumentSnapshot,
-  collection,
-  doc,
-  getDocs,
-  onSnapshot,
-  query,
-  where,
-  getDoc,
-  setDoc,
-} from 'firebase/firestore';
+import {DocumentData,DocumentSnapshot,collection,doc,getDocs,onSnapshot,query,where,getDoc,setDoc} from 'firebase/firestore';
 import {
   MiahootProjected,
   QCMProjected,

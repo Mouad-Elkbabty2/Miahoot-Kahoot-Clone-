@@ -5,8 +5,10 @@ import {
   MiahootProjected,
   QCMProjected,
   Question,
+  VOTES,
 } from '../models/models';
 import {
+  FirestoreDataConverter,
   collection,
   doc,
   getDoc,
@@ -21,6 +23,16 @@ import { FsMiahootProjectedConverter } from '../data.service';
 import { AuthService } from '../services/auth.service';
 import { PresentateurService } from '../services/presentateur.service';
 import { NgxQRCodeModule } from 'ngx-qrcode2';
+
+interface QuestionVote {
+  votes: VOTES[];
+}
+
+export const QuestionVoteConverter: FirestoreDataConverter<QuestionVote> = {
+  fromFirestore: snap => ({ votes: snap.get('votes') }),
+  toFirestore: vc => vc
+}
+
 
 @Component({
   selector: 'app-presentateur',
@@ -42,13 +54,18 @@ export class PresentateurComponent {
   timerInterval: any;
   questionTimer = 0;
   participantNames: string[];
+  votes: number[];
+  totalVotes: number;
+  showParticipants: boolean = false;
+  showVotes: boolean = false;
+  voteResults : any[];
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private fs: Firestore,
     private auth: AuthService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getMiahootById(this.miahootId ?? '');
@@ -157,32 +174,69 @@ export class PresentateurComponent {
   retToMyMiahoot() {
     this.router.navigate(['/my-miahoots/' + this.auth.getUid()]);
   }
-  async getNamesFromVotesCollection(participantId: string): Promise<string[]> {
-    const participantRef = doc(this.fs, `participants/${participantId}`);
-    const votesQuery = query(
-      collection(this.fs, 'currentQCM'),
-      where('participantMiahoot', '==', participantRef)
-    );
-    const votesSnapshot = await getDocs(votesQuery);
 
-    const names: string[] = [];
-    votesSnapshot.forEach((doc) => {
-      const vote = doc.data();
-      const questionIndex = parseInt(doc.id, 10);
-      const participantIndex = vote[participantId];
-      const participantName =
-        this.miahootProjected.currentQCM[questionIndex].votes[participantIndex][
-          'nom'
-        ];
-      names.push(String(participantName));
-    });
 
-    return names;
+  async getNamesFromVotesCollection(indexQuestion: number) {
+    const questionRef = doc(this.fs, `miahootProjected/${this.miahootId}/currentQCM/question${indexQuestion}`);
+    const questionDoc = await getDoc(questionRef);
+    const votes = questionDoc.data()?.['votes'];
+    const participantIds: string[] = [];
+
+    if (votes) {
+      for (const vote of votes) {
+        const participantId = Object.keys(vote)[0];
+        if (!participantIds.includes(participantId)) {
+          participantIds.push(participantId);
+        }
+      }
+    }
+    this.showParticipants = !this.showParticipants;
+
+    this.participantNames = participantIds;
   }
-  async getParticipantNames() {
-    const participantId = 'participantId'; // Remplacez 'participantId' par l'ID du participant pour lequel vous souhaitez obtenir les noms
-    const names = await this.getNamesFromVotesCollection(participantId);
-    console.log(names); // Affiche les noms des participants dans la console
-    this.participantNames = names; // Assignez les noms à une variable dans votre composant pour les afficher dans l'interface utilisateur
+
+  async getVotes(indexQuestion: number) {
+    const questionRef = doc(this.fs, `miahootProjected/${this.miahootId}/currentQCM/question${indexQuestion}`).withConverter(QuestionVoteConverter);
+    const questionDoc = await getDoc(questionRef);
+    const votes = questionDoc.data()?.votes ?? [];
+
+
+    const votesUniques = votes.reduce((V, v) => ({ ...V, ...v }), {} as VOTES)
+    const stats = Object.keys(votesUniques).reduce(
+      (S, v) => {
+        const choix = votesUniques[v]
+        S[choix] = 1 + (S[choix] ?? 0);
+        return S;
+      },
+      [] as number[] // nombre de fois qu'on a voté vote
+    )
+
+    this.votes = stats;
+    this.showVotes = !this.showVotes;
+
+    this.totalVotes = this.votes.reduce((acc, curr) => acc + curr, 0);
+
   }
+  async getPersonnes(indexQuestion: number) {
+    const questionRef = doc(this.fs, `miahootProjected/${this.miahootId}/currentQCM/question${indexQuestion}`);
+    const questionDoc = await getDoc(questionRef);
+    const votes = questionDoc.data()?.['votes'];
+  
+    const result: { name: string, option: string, value: any }[] = [];
+  
+    for (const name in votes) {
+      const vote = votes[name];
+      for (const option in vote) {
+        const value = vote[option];
+        result.push({ name, option, value });
+      }
+    }
+  
+    this.voteResults = result;
+    return this.voteResults;
+  }
+  
+
+    
+
 }

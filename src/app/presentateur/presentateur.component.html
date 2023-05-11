@@ -2,15 +2,12 @@
   <h2>Présentateur {{ miahootProjected.presentator }}</h2>
   <h3>Entrez pour participer : {{ miahootProjected.pin }}</h3>
   <h4>Code QR :</h4>
-  <!--<ngx-qrcode [qrc-value]="qrCodeValue"></ngx-qrcode>-->
+  <!-- <ngx-qrcode [qrcodeData]="miahootProjected.pin" (qrcodeSuccess)="submitCodePin()"></ngx-qrcode> -->
 
   <p>{{ miahootProjected.pin }}</p>
 </div>
-<button
-  id="toggleButton"
-  [ngClass]="showQuestion ? 'hide-question-button' : 'show-question-button'"
-  (click)="inverse()"
->
+<button id="toggleButton" [ngClass]="showQuestion ? 'hide-question-button' : 'show-question-button'"
+  (click)="inverse()">
   {{ showQuestion ? "Cacher la Question" : "Afficher la Question" }}
 </button>
 
@@ -27,56 +24,38 @@
         <p>Il vous reste</p>
         {{ formatTime(remainingTime ?? 0) }}
       </div>
-      <mat-card-title
-        >Question n° {{ miahootProjected.indexQuestion + 1 }} :
+      <mat-card-title>Question n° {{ miahootProjected.indexQuestion + 1 }} :
         {{
-          miahootProjected.currentQCM[miahootProjected.indexQuestion].question
-        }}</mat-card-title
-      >
+        miahootProjected.currentQCM[miahootProjected.indexQuestion].question
+        }}</mat-card-title>
     </mat-card>
     <mat-list>
       <h3 mat-subheader>Réponses :</h3>
-      <mat-list-item
-        *ngFor="
+      <mat-list-item *ngFor="
           let reponse of miahootProjected.currentQCM[
             miahootProjected.indexQuestion
           ].responses;
           let j = index
-        "
-        [ngClass]="{
+        " [ngClass]="{
           'correct-answer': showAnswers && reponse.estValide,
           'incorrect-answer': showAnswers && !reponse.estValide
-        }"
-      >
+        }">
         {{ j + 1 }} : {{ reponse.label }}
-        <mat-icon *ngIf="showAnswers && reponse.estValide" class="answer-icon"
-          >check_circle</mat-icon
-        >
-        <mat-icon *ngIf="showAnswers && !reponse.estValide" class="answer-icon"
-          >cancel</mat-icon
-        >
+        <mat-icon *ngIf="showAnswers && reponse.estValide" class="answer-icon">check_circle</mat-icon>
+        <mat-icon *ngIf="showAnswers && !reponse.estValide" class="answer-icon">cancel</mat-icon>
       </mat-list-item>
     </mat-list>
     <button mat-raised-button (click)="afficherRep()">
       {{ showAnswers ? "Cacher les réponses" : "Afficher les réponses" }}
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="miahootProjected.indexQuestion === 0"
-      (click)="questionSwitcher(-1)"
-    >
+    <button mat-raised-button color="primary" [disabled]="miahootProjected.indexQuestion === 0"
+      (click)="questionSwitcher(-1)">
       Question précédente ⬅️
     </button>
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="questionSwitcher(1)"
-      [disabled]="
+    <button mat-raised-button color="primary" (click)="questionSwitcher(1)" [disabled]="
         miahootProjected.indexQuestion ===
         miahootProjected.currentQCM.length - 1
-      "
-    >
+      ">
       Question suivante ➡️
     </button>
     <button mat-raised-button (click)="retToMyMiahoot()">
@@ -84,12 +63,30 @@
     </button>
   </mat-card>
 </div>
-<button (click)="getParticipantNames()">
+
+<button (click)="getNamesFromVotesCollection(miahootProjected.indexQuestion)">
   Afficher les noms des participants
 </button>
 
-<ul>
+<ul *ngIf="this.showParticipants">
   <li *ngFor="let name of participantNames">{{ name }}</li>
 </ul>
+<button (click)="getVotes(miahootProjected.indexQuestion)"> voir les nombres de vote </button>
+<ul *ngIf="this.showVotes">
+  <li *ngFor="let reponse of miahootProjected.currentQCM[miahootProjected.indexQuestion].responses; let j = index">
+    <div class="reponse-label">{{reponse.label}}</div>
+    <div class="pourcentage-bar-container">
+      <div class="pourcentage-bar" [style.width.%]="(votes[j] / totalVotes * 100).toFixed(2)">
+        {{ (votes[j] / totalVotes * 100).toFixed(2) }}%
+      </div>
+    </div>
+  </li>
+</ul>
+
+<button (click)="getPersonnes(miahootProjected.indexQuestion)">Submit</button>
+<ul>
+  <li *ngFor="let vote of voteResults">{{vote.name}} : {{vote.value}}</li>
+</ul>
+
 
 <!-- </div>-->
