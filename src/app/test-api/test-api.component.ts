@@ -104,11 +104,11 @@ export class TestApiComponent implements OnInit {
   }
 
   // update question label by id
-  updateQuestionLabel(id: number, label: string): void {
-    this.miService.updateQuestion(id, label)
-      .then(response => console.log(response))
-      .catch(error => console.error(error));
-  }
+  // updateQuestionLabel(id: number, question: Question): void {
+  //   this.miService.updateQuestion(id, question)
+  //     .then(response => console.log(response))
+  //     .catch(error => console.error(error));
+  // }
 
 
   //----------------- API Teacher -----------------------

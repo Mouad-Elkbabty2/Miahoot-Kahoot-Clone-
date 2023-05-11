@@ -55,10 +55,9 @@ export class MiahootService {
     return firstValueFrom(this.http.delete(`${this.urlQuestion}/${id}`));
   }
 
-  async updateQuestion(id: number, label: string): Promise<any> {
-    return firstValueFrom(this.http.put(`${this.urlQuestion}/${id}`, label));
+  async updateQuestion(id: number | undefined, quest : Question | undefined): Promise<any> {
+    return firstValueFrom(this.http.patch(`${this.urlQuestion}/${id}`, quest));
   }
-
   //----------------- API Teacher -----------------------
 
   async getTeacher(id: number): Promise<Teacher> {

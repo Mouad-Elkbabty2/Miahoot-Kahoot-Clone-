@@ -30,10 +30,27 @@ export class NewMiahootComponent implements OnInit {
   ngOnInit() {
     console.log(this.id + " initialized");
     this.miService.getMiahoot(this.id)
-      .then(miahoot => {
-        this.miahoots = miahoot;
-      })
-      .catch(err => console.error(err));
+    .then(miahoot => {
+      console.log(miahoot);
+      this.miahoots = miahoot;
+      this.miahoots.questions?.sort((a, b) => {
+        if (a.id !== undefined && b.id !== undefined) {
+          return a.id - b.id;
+        } else {
+          return 0;
+        }
+      });
+      for(let i = 0; this.miahoots.questions?.length !== undefined && i < this.miahoots.questions?.length ; i++ ){
+        this.miahoots.questions[i].responses?.sort((a, b) => {
+          if (a.id !== undefined && b.id !== undefined) {
+            return a.id - b.id;
+          } else {
+            return 0;
+          }
+        });
+      }
+    })
+    .catch(err => console.error(err));
   }
 
   onSubmit() {
@@ -53,6 +70,12 @@ export class NewMiahootComponent implements OnInit {
   saveRep(j: number, id : number | undefined) {
     let rep = document.querySelector<HTMLInputElement>(`#editRéponse-${j}`)?.value;       
     this.miService.updateReponse(id,{label:rep,estValide:this.updateValide,modifiable:false})
+                  .then(() => { this.ngOnInit() }); 
+  }
+
+  saveQuest(i: number , id : number | undefined){
+    let ques = document.querySelector<HTMLInputElement>(`#editQuestion-${i}`)?.value;       
+    this.miService.updateQuestion(id,{label : ques,modifiable : false})
                   .then(() => { this.ngOnInit() }); 
   }
 

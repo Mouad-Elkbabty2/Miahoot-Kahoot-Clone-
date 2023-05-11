@@ -17,9 +17,10 @@ export interface Participant {
   
   export interface Question {
     id?: number;
-    label: string;
+    label?: string;
     miahoot?: string;
     responses?: Response[];
+    modifiable?: boolean;
   }
   
   export type VOTES = {

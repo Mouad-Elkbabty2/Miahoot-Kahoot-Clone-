@@ -103,6 +103,24 @@ export class DataService {
     const qcms: QCMProjected[] = [];
     const len = miahoot.questions?.length ?? 0;
 
+    // tri des questions du miahoot par id
+    miahoot.questions?.sort((a, b) => {
+      if (a.id !== undefined && b.id !== undefined) {
+        return a.id - b.id;
+      } else {
+        return 0;
+      }
+    });
+    for(let i = 0; miahoot.questions?.length !== undefined && i < miahoot.questions?.length ; i++ ){
+      miahoot.questions[i].responses?.sort((a, b) => {
+        if (a.id !== undefined && b.id !== undefined) {
+          return a.id - b.id;
+        } else {
+          return 0;
+        }
+      });
+    }
+
     for (let i = 0; i < len; i++) {
       const question = miahoot.questions?.[i];
       const responses = question?.responses ?? [];
