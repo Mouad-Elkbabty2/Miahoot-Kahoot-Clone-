@@ -22,7 +22,6 @@ import { Firestore } from '@angular/fire/firestore';
 import { FsMiahootProjectedConverter } from '../data.service';
 import { AuthService } from '../services/auth.service';
 import { PresentateurService } from '../services/presentateur.service';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 interface QuestionVote {
   votes: VOTES[];
@@ -197,6 +196,8 @@ export class PresentateurComponent {
     this.showParticipants = !this.showParticipants;
 
     this.participantNames = participantIds;
+    console.log(this.participantNames);
+    
 
     this.getVotesParticipant(indexQuestion);
 

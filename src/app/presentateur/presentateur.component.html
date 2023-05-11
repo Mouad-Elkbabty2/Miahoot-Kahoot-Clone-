@@ -69,8 +69,8 @@
 </button>
 
 <ul *ngIf="showParticipants">
-  <li *ngFor="let name of participantNames; let i=index" [ngClass]="{'vrai' : miahootProjected.currentQCM[indexQuestion].responses[i].estValide,'faux' : !miahootProjected.currentQCM[indexQuestion].responses[i].estValide}" >
-    {{ name }} a repondu   {{miahootProjected.currentQCM[indexQuestion].responses[i].label }}
+  <li *ngFor="let name of participantNames; let i=index" >
+    {{ name }} a repondu  {{voteDesparticipants[i] }}
   </li>
 </ul>
 

@@ -37,7 +37,6 @@ import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthGuard } from './guard/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { CreateMihaootComponent } from './create-mihaoot/create-mihaoot.component';
-import { NgxQRCodeModule } from 'ngx-qrcode2';
 
 @NgModule({
   schemas: [ NO_ERRORS_SCHEMA ],
@@ -76,7 +75,6 @@ import { NgxQRCodeModule } from 'ngx-qrcode2';
     MatChipsModule,
     MatCardModule,
     HttpClientModule,
-    NgxQRCodeModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
