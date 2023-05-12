@@ -36,7 +36,7 @@
               <ng-container>
                 <li *ngFor="let reponse of question.responses; let j = index">
                   <ng-container *ngIf="reponse.modifiable">
-                    <input type="checkbox" [(ngModel)]="updateValide">
+                    <input type="checkbox" [(ngModel)]="updateValide" >
                     <input placeholder="Entrez une nouvelle réponse" type="text" id="editRéponse-{{ j }}"
                       value="{{reponse.label}}" />
                     <button id="saveRep" (click)="saveRep(j,reponse.id)"><mat-icon>save_alt</mat-icon></button>
